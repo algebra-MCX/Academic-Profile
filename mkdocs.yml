@@ -106,10 +106,13 @@ nav:
         - Pre-training:
           - 大模型预训练概述: Work/LLM/Pre-training/大模型预训练全解析：定义、数据处理、流程及多阶段训练逻辑.md
           - 预训练数据: Work/LLM/Pre-training/预训练数据.md
+          - 基于SentencePiece扩充LLaMa中文词表: Work/LLM/Pre-training/扩充词表.md
 
       - paper解读:
         - tech_report:
           - Deepseek:
+            - Deepseek：基座模型发展: Work/paper/read/tech_report/Deepseek/整体解读.md
+            - Deepseek：reasoning: Work/paper/read/tech_report/Deepseek/整体解读2.md
             - Deepseek v3: Work/paper/read/tech_report/Deepseek/DeepSeek_v3.md
             - Deepseek r1: Work/paper/read/tech_report/Deepseek/Deepseek_r1.md
         - RM:
@@ -122,6 +125,8 @@ nav:
 
   - Projects: 
     - AI infra:
+      - c和cpp基础:
+        - conpile and link: Work/project/AI infra/c和cpp基础/compile.md
       - 大模型推理框架:
         - 项目结构: Work/project/AI infra/大模型推理框架/项目结构.md
 
