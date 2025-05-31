@@ -119,6 +119,10 @@ nav:
           - TTRL: Work/paper/read/RM/TTRL.md
           - LCPO: Work/paper/read/RM/LCPO.md
 
+        - EmbodiedAI:
+          - 机器人基座模型与VLA概述（1）: Work/paper/read/EmbodiedAI/Robot.md
+          - 机器人基座模型与VLA概述（2）: Work/paper/read/EmbodiedAI/Robot2.md
+
   - 其他有用技术:
     - git和github:
       - git理解: Work/Others/git/git理解.md
