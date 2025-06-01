@@ -127,6 +127,11 @@ nav:
     - git和github:
       - git理解: Work/Others/git/git理解.md
 
+    - cpp:
+      - C++基础语法:
+        -  cpp基础语法: Work/Others/cpp/cpp基础语法/基础语法.md
+        
+
   - Projects: 
     - AI infra:
       - c和cpp基础:
