@@ -102,6 +102,8 @@ nav:
             - BERT: Work/LLM/LLM_Architecture/Encoder_only/BERT.md
             - Sentence-BERT: Work/LLM/LLM_Architecture/Encoder_only/Sentence_BERT.md
 
+        - 量化: Work/LLM/量化.md
+
 
         - Pre-training:
           - 大模型预训练概述: Work/LLM/Pre-training/大模型预训练全解析：定义、数据处理、流程及多阶段训练逻辑.md
@@ -120,8 +122,10 @@ nav:
           - LCPO: Work/paper/read/RM/LCPO.md
 
         - EmbodiedAI:
-          - 机器人基座模型与VLA概述（1）: Work/paper/read/EmbodiedAI/Robot.md
-          - 机器人基座模型与VLA概述（2）: Work/paper/read/EmbodiedAI/Robot2.md
+          - 机器人基座模型与VLA概述: Work/paper/read/EmbodiedAI/VLA.md
+          - ALOHA机器人平台：低成本、高精度双臂操作及其进展深度解析: Work/paper/read/EmbodiedAI/ALOHA.md
+          - 通用智能体与机器人Transformer：Gato和RT-1技术解析及与LLM Transformer的异同: Work/paper/read/EmbodiedAI/Gato和RT-1.md
+          - RT-1: Work/paper/read/EmbodiedAI/RT-1.md
 
   - 其他有用技术:
     - git和github:
