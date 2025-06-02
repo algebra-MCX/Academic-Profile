@@ -117,15 +117,15 @@ nav:
             - Deepseek：reasoning: Work/paper/read/tech_report/Deepseek/整体解读2.md
             - Deepseek v3: Work/paper/read/tech_report/Deepseek/DeepSeek_v3.md
             - Deepseek r1: Work/paper/read/tech_report/Deepseek/Deepseek_r1.md
-        - RM:
-          - TTRL: Work/paper/read/RM/TTRL.md
-          - LCPO: Work/paper/read/RM/LCPO.md
 
         - EmbodiedAI:
           - 机器人基座模型与VLA概述: Work/paper/read/EmbodiedAI/VLA.md
           - ALOHA机器人平台：低成本、高精度双臂操作及其进展深度解析: Work/paper/read/EmbodiedAI/ALOHA.md
           - 通用智能体与机器人Transformer：Gato和RT-1技术解析及与LLM Transformer的异同: Work/paper/read/EmbodiedAI/Gato和RT-1.md
-          - RT-1: Work/paper/read/EmbodiedAI/RT-1.md
+
+        - RM:
+          - TTRL: Work/paper/read/RM/TTRL.md
+          - LCPO: Work/paper/read/RM/LCPO.md
 
   - 其他有用技术:
     - git和github:
