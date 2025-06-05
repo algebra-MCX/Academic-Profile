@@ -1,0 +1,5561 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://algebra-mcx.github.io/Academic-Profile/Work/Classical_Algorithms/DL/NLP/transformer/attention2/">
+      
+      
+        <link rel="prev" href="../attention/">
+      
+      
+        <link rel="next" href="../FFN_activation/">
+      
+      
+      <link rel="icon" href="../../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>Attention(2) - Chenxi Ma</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../../stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Wcowin/Wcowin.github.io@main/docs/stylesheets/link.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Wcowin/Wcowin.github.io@main/docs/stylesheets/card2.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Wcowin/Wcowin.github.io@main/docs/stylesheets/customize.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Wcowin/Wcowin.github.io@main/docs/stylesheets/ziti.css">
+    
+    <script>__md_scope=new URL("../../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#attention2" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../../../.." title="Chenxi Ma" class="md-header__button md-logo" aria-label="Chenxi Ma" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Chenxi Ma
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Attention(2)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 2c-1.05 0-2.05.16-3 .46 4.06 1.27 7 5.04 7 9.54s-2.94 8.27-7 9.54c.95.3 1.95.46 3 .46a10 10 0 0 0 10-10A10 10 0 0 0 9 2"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/algebra-MCX/Academic-Profile" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Academic-Profile
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../../../../paper/method/blogs/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  AI
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../Others/git/git%E7%90%86%E8%A7%A3/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  其他有用技术
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../project/AI%20infra/c%E5%92%8Ccpp%E5%9F%BA%E7%A1%80/compile/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Projects
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../publications/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Publications
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../cv.md" class="md-tabs__link">
+          
+  
+  
+    
+  
+  CV
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../contact/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contact me
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../../tags/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Tags
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../../.." title="Chenxi Ma" class="md-nav__button md-logo" aria-label="Chenxi Ma" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Chenxi Ma
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/algebra-MCX/Academic-Profile" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Academic-Profile
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    AI
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            AI
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1_1" id="__nav_1_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Blogs
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            Blogs
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_1" id="__nav_1_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    论文写作
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            论文写作
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../paper/method/blogs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    如何找idea
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../paper/method/blogs_write/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    论文写作
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_1_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_2" id="__nav_1_1_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Classical Algorithms
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_1_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            Classical Algorithms
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_1_2_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_2_1" id="__nav_1_1_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    DL
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_1_2_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_1_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            DL
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_1_2_1_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_2_1_1" id="__nav_1_1_2_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    NLP
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_1_1_2_1_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_1_2_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            NLP
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_1_2_1_1_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_2_1_1_1" id="__nav_1_1_2_1_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    transformer
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="6" aria-labelledby="__nav_1_1_2_1_1_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_1_2_1_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            transformer
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../transformer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Transformer
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tokenization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Tokenization分词器
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BPE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Tokenization补充
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../word_embedding/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Word Embedding词嵌入
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Pos_embed/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Positional Embedding位置编码
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../attention/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Attention注意力
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Attention(2)
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Attention(2)
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      多头注意力机制
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cnn" class="md-nav__link">
+    <span class="md-ellipsis">
+      多头注意力机制的理解：从 CNN 视角出发
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="多头注意力机制的理解：从 CNN 视角出发">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      一、为什么引入多头注意力？
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      二、多头注意力的基本流程
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      三、为什么要分头计算？而不是直接用一个大矩阵？
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      多头注意力机制流程
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="多头注意力机制流程">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      基本思想
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      输入
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      多头注意力机制计算流程
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="多头注意力机制计算流程">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#qkv-head" class="md-nav__link">
+    <span class="md-ellipsis">
+      线性变换生成 Q、K、V（每个 head 独立）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-head" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 每个 head 单独计算注意力
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-head" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 拼接所有 head 的输出
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. 最终线性变换
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      输出
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      总结图示（文字版）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cnn_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      类比理解（图像 CNN）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      四、相对位置编码的作用（补充说明）
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cnn_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      多头注意力机制与CNN关系的数学解析
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cnn_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      多头注意力与 CNN 的关系（论文核心思路）
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="多头注意力与 CNN 的关系（论文核心思路）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      向量定义
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="向量定义">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#v-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      V 向量（Value）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#r-relative-position" class="md-nav__link">
+    <span class="md-ellipsis">
+      R 向量（Relative Position）
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      注意力得分计算
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      注意力分布特性
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      参数 α 的作用
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cnn_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      多头注意力机制如何扩展到二维？和 CNN 的类比
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="多头注意力机制如何扩展到二维？和 CNN 的类比">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      一、从一维到二维的扩展
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#v-r" class="md-nav__link">
+    <span class="md-ellipsis">
+      二、V 和 R 向量的二维扩展
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="二、V 和 R 向量的二维扩展">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#v-value_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      V 向量（Value）：
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#r-relative-position_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      R 向量（Relative Position）：
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      三、注意力得分计算
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      四、多头机制模拟卷积核
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cnn_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      五、与 CNN 的对比分析
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transformer" class="md-nav__link">
+    <span class="md-ellipsis">
+      六、Transformer 层数叠加的意义
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      七、总结类比
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      结论
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-multi-head-attention-head" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Multi-Head Attention 中每个 head 为什么要降维？
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Multi-Head Attention 中每个 head 为什么要降维？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    <span class="md-ellipsis">
+      原因：
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-transformer" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Transformer 的权重共享
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Transformer 的权重共享">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    <span class="md-ellipsis">
+      目的：
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    <span class="md-ellipsis">
+      实现方式：
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_24" class="md-nav__link">
+    <span class="md-ellipsis">
+      注意事项：
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-mhamqagqa" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 不同类型的多头注意力：MHA、MQA、GQA
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 不同类型的多头注意力：MHA、MQA、GQA">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#grouped-query" class="md-nav__link">
+    <span class="md-ellipsis">
+      Grouped-query
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mhamulti-head-attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      MHA（Multi-Head Attention）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mqamulti-query-attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      MQA（Multi-Query Attention）
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MQA（Multi-Query Attention）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_25" class="md-nav__link">
+    <span class="md-ellipsis">
+      公式示意：
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gqagrouped-query-attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      GQA（Grouped-Query Attention）
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_26" class="md-nav__link">
+    <span class="md-ellipsis">
+      区别
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="区别">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-mhamulti-head-attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. MHA（Multi-Head Attention）
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. MHA（Multi-Head Attention）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_27" class="md-nav__link">
+    <span class="md-ellipsis">
+      特点：
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_28" class="md-nav__link">
+    <span class="md-ellipsis">
+      关键代码：
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_29" class="md-nav__link">
+    <span class="md-ellipsis">
+      分头操作：
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-mqamulti-query-attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. MQA（Multi-Query Attention）
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. MQA（Multi-Query Attention）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_30" class="md-nav__link">
+    <span class="md-ellipsis">
+      特点：
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_31" class="md-nav__link">
+    <span class="md-ellipsis">
+      关键代码：
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_32" class="md-nav__link">
+    <span class="md-ellipsis">
+      分头操作：
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-gqagrouped-query-attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. GQA（Grouped-Query Attention）
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. GQA（Grouped-Query Attention）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_33" class="md-nav__link">
+    <span class="md-ellipsis">
+      特点：
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_34" class="md-nav__link">
+    <span class="md-ellipsis">
+      关键代码：
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_35" class="md-nav__link">
+    <span class="md-ellipsis">
+      分头操作：
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_36" class="md-nav__link">
+    <span class="md-ellipsis">
+      总结对比
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="总结对比">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_37" class="md-nav__link">
+    <span class="md-ellipsis">
+      核心区别：
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FFN_activation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    FFN和激活函数
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Mask/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Mask掩码
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Normalization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Normalization
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Enco_Deco/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Encoder and Decoder
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_2_2" id="__nav_1_1_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    RL
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_1_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            RL
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../RL/PPO/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PPO
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_3" id="__nav_1_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    LLM
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            LLM
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_3_1" id="__nav_1_1_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    LLM Architecture
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_1_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            LLM Architecture
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_3_1_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_3_1_1" id="__nav_1_1_3_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Encoder-only
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_1_1_3_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_3_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            Encoder-only
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../LLM/LLM_Architecture/Encoder_only/%E9%A2%84%E8%AE%AD%E7%BB%83%E4%BB%BB%E5%8A%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Encoder-only预训练任务
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../LLM/LLM_Architecture/Encoder_only/BERT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    BERT
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../LLM/LLM_Architecture/Encoder_only/Sentence_BERT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Sentence-BERT
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_3_2" id="__nav_1_1_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Pre-training
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_1_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            Pre-training
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../LLM/Pre-training/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E9%A2%84%E8%AE%AD%E7%BB%83%E5%85%A8%E8%A7%A3%E6%9E%90%EF%BC%9A%E5%AE%9A%E4%B9%89%E3%80%81%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E3%80%81%E6%B5%81%E7%A8%8B%E5%8F%8A%E5%A4%9A%E9%98%B6%E6%AE%B5%E8%AE%AD%E7%BB%83%E9%80%BB%E8%BE%91/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    大模型预训练概述
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../LLM/Pre-training/%E9%A2%84%E8%AE%AD%E7%BB%83%E6%95%B0%E6%8D%AE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    预训练数据
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../LLM/Pre-training/%E6%89%A9%E5%85%85%E8%AF%8D%E8%A1%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    基于SentencePiece扩充LLaMa中文词表
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_4" id="__nav_1_1_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    paper解读
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_1_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_4">
+            <span class="md-nav__icon md-icon"></span>
+            paper解读
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_4_1" id="__nav_1_1_4_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    tech_report
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_1_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            tech_report
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_4_1_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_4_1_1" id="__nav_1_1_4_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Deepseek
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_1_1_4_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_4_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            Deepseek
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../paper/read/tech_report/Deepseek/%E6%95%B4%E4%BD%93%E8%A7%A3%E8%AF%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deepseek：基座模型发展
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../paper/read/tech_report/Deepseek/%E6%95%B4%E4%BD%93%E8%A7%A3%E8%AF%BB2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deepseek：reasoning
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../paper/read/tech_report/Deepseek/DeepSeek_v3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deepseek v3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../paper/read/tech_report/Deepseek/Deepseek_r1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deepseek r1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_4_2" id="__nav_1_1_4_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    EmbodiedAI
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_1_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            EmbodiedAI
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../paper/read/EmbodiedAI/VLA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    机器人基座模型与VLA概述
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../paper/read/EmbodiedAI/ALOHA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ALOHA机器人平台：低成本、高精度双臂操作及其进展深度解析
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../paper/read/EmbodiedAI/Gato%E5%92%8CRT-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    通用智能体与机器人Transformer：Gato和RT-1技术解析及与LLM Transformer的异同
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../paper/read/EmbodiedAI/Octo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Octo——机器人操控的通用框架
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../paper/read/EmbodiedAI/Crossformer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Cross-former
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../paper/read/EmbodiedAI/GR-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    GR-1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../paper/read/EmbodiedAI/GR-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    GR-2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_4_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_4_3" id="__nav_1_1_4_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    RM
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_1_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            RM
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../paper/read/RM/TTRL/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TTRL
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../paper/read/RM/LCPO/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LCPO
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    其他有用技术
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            其他有用技术
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    git和github
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            git和github
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Others/git/git%E7%90%86%E8%A7%A3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    git理解
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    cpp
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            cpp
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_1" id="__nav_2_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    C++基础语法
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            C++基础语法
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Others/cpp/cpp%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    cpp基础语法
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Projects
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Projects
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    AI infra
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            AI infra
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1_1" id="__nav_3_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    c和cpp基础
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            c和cpp基础
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../project/AI%20infra/c%E5%92%8Ccpp%E5%9F%BA%E7%A1%80/compile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    conpile and link
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1_2" id="__nav_3_1_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    大模型推理框架
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            大模型推理框架
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../project/AI%20infra/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8E%A8%E7%90%86%E6%A1%86%E6%9E%B6/%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    项目结构
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Publications
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Publications
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../publications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Conferences
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    CV
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            CV
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../cv.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    个人简历
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../contact/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Contact me
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Tags
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Tags
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    个人标签
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      多头注意力机制
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cnn" class="md-nav__link">
+    <span class="md-ellipsis">
+      多头注意力机制的理解：从 CNN 视角出发
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="多头注意力机制的理解：从 CNN 视角出发">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      一、为什么引入多头注意力？
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      二、多头注意力的基本流程
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      三、为什么要分头计算？而不是直接用一个大矩阵？
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      多头注意力机制流程
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="多头注意力机制流程">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      基本思想
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      输入
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      多头注意力机制计算流程
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="多头注意力机制计算流程">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#qkv-head" class="md-nav__link">
+    <span class="md-ellipsis">
+      线性变换生成 Q、K、V（每个 head 独立）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-head" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 每个 head 单独计算注意力
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-head" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 拼接所有 head 的输出
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. 最终线性变换
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      输出
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      总结图示（文字版）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cnn_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      类比理解（图像 CNN）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      四、相对位置编码的作用（补充说明）
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cnn_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      多头注意力机制与CNN关系的数学解析
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cnn_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      多头注意力与 CNN 的关系（论文核心思路）
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="多头注意力与 CNN 的关系（论文核心思路）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      向量定义
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="向量定义">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#v-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      V 向量（Value）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#r-relative-position" class="md-nav__link">
+    <span class="md-ellipsis">
+      R 向量（Relative Position）
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      注意力得分计算
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      注意力分布特性
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      参数 α 的作用
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cnn_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      多头注意力机制如何扩展到二维？和 CNN 的类比
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="多头注意力机制如何扩展到二维？和 CNN 的类比">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      一、从一维到二维的扩展
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#v-r" class="md-nav__link">
+    <span class="md-ellipsis">
+      二、V 和 R 向量的二维扩展
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="二、V 和 R 向量的二维扩展">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#v-value_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      V 向量（Value）：
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#r-relative-position_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      R 向量（Relative Position）：
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      三、注意力得分计算
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      四、多头机制模拟卷积核
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cnn_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      五、与 CNN 的对比分析
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transformer" class="md-nav__link">
+    <span class="md-ellipsis">
+      六、Transformer 层数叠加的意义
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      七、总结类比
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      结论
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-multi-head-attention-head" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Multi-Head Attention 中每个 head 为什么要降维？
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Multi-Head Attention 中每个 head 为什么要降维？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    <span class="md-ellipsis">
+      原因：
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-transformer" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Transformer 的权重共享
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Transformer 的权重共享">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    <span class="md-ellipsis">
+      目的：
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    <span class="md-ellipsis">
+      实现方式：
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_24" class="md-nav__link">
+    <span class="md-ellipsis">
+      注意事项：
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-mhamqagqa" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 不同类型的多头注意力：MHA、MQA、GQA
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 不同类型的多头注意力：MHA、MQA、GQA">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#grouped-query" class="md-nav__link">
+    <span class="md-ellipsis">
+      Grouped-query
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mhamulti-head-attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      MHA（Multi-Head Attention）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mqamulti-query-attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      MQA（Multi-Query Attention）
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MQA（Multi-Query Attention）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_25" class="md-nav__link">
+    <span class="md-ellipsis">
+      公式示意：
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gqagrouped-query-attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      GQA（Grouped-Query Attention）
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_26" class="md-nav__link">
+    <span class="md-ellipsis">
+      区别
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="区别">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-mhamulti-head-attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. MHA（Multi-Head Attention）
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. MHA（Multi-Head Attention）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_27" class="md-nav__link">
+    <span class="md-ellipsis">
+      特点：
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_28" class="md-nav__link">
+    <span class="md-ellipsis">
+      关键代码：
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_29" class="md-nav__link">
+    <span class="md-ellipsis">
+      分头操作：
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-mqamulti-query-attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. MQA（Multi-Query Attention）
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. MQA（Multi-Query Attention）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_30" class="md-nav__link">
+    <span class="md-ellipsis">
+      特点：
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_31" class="md-nav__link">
+    <span class="md-ellipsis">
+      关键代码：
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_32" class="md-nav__link">
+    <span class="md-ellipsis">
+      分头操作：
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-gqagrouped-query-attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. GQA（Grouped-Query Attention）
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. GQA（Grouped-Query Attention）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_33" class="md-nav__link">
+    <span class="md-ellipsis">
+      特点：
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_34" class="md-nav__link">
+    <span class="md-ellipsis">
+      关键代码：
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_35" class="md-nav__link">
+    <span class="md-ellipsis">
+      分头操作：
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_36" class="md-nav__link">
+    <span class="md-ellipsis">
+      总结对比
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="总结对比">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_37" class="md-nav__link">
+    <span class="md-ellipsis">
+      核心区别：
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/algebra-MCX/Academic-Profile/edit/main/docs/Work/Classical_Algorithms/DL/NLP/transformer/attention2.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/algebra-MCX/Academic-Profile/raw/main/docs/Work/Classical_Algorithms/DL/NLP/transformer/attention2.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+<div><h1 id="attention2">Attention（2）<a class="headerlink" href="#attention2" title="Permanent link">¶</a></h1>
+<h2 id="_1">多头注意力机制<a class="headerlink" href="#_1" title="Permanent link">¶</a></h2>
+<p><img alt="f16" src="../../../../../images/algorithm_img/att16.png"></p>
+<h2 id="cnn">多头注意力机制的理解：从 CNN 视角出发<a class="headerlink" href="#cnn" title="Permanent link">¶</a></h2>
+<h3 id="_2">一、为什么引入多头注意力？<a class="headerlink" href="#_2" title="Permanent link">¶</a></h3>
+<ul>
+<li>单头注意力只能捕捉一种语义关系；</li>
+<li>多头注意力通过并行计算多个不同语义空间中的注意力结果，提升模型表达能力；</li>
+<li>最终将这些“多视角”的结果拼接后，再通过一个线性变换输出。</li>
+</ul>
+<h3 id="_3">二、多头注意力的基本流程<a class="headerlink" href="#_3" title="Permanent link">¶</a></h3>
+<ol>
+<li>输入数据（如词向量矩阵）；</li>
+<li>使用不同的参数矩阵分别生成三组 Q、K、V；</li>
+<li>并行计算三次注意力，得到三个不同语义空间下的输出；</li>
+<li>将三组输出<strong>按维度拼接</strong>，形成更高维的表示；</li>
+<li>再乘以一个统一的权重矩阵 W，输出最终结果。</li>
+</ol>
+<h3 id="_4">三、为什么要分头计算？而不是直接用一个大矩阵？<a class="headerlink" href="#_4" title="Permanent link">¶</a></h3>
+<ul>
+<li>如果直接使用一个大的注意力矩阵：</li>
+<li>模型难以学习到多种语义特征；</li>
+<li>缺乏对不同语义通道的独立建模；</li>
+<li>分头计算相当于在不同子空间中提取信息；</li>
+<li>类似于 CNN 中的多个卷积核，各自提取不同特征。</li>
+</ul>
+<h2 id="_5">多头注意力机制流程<a class="headerlink" href="#_5" title="Permanent link">¶</a></h2>
+<h3 id="_6">基本思想<a class="headerlink" href="#_6" title="Permanent link">¶</a></h3>
+<p>将输入映射到多个不同的语义子空间中，分别进行注意力计算，再将结果融合输出，增强模型表达能力。</p>
+<h3 id="_7">输入<a class="headerlink" href="#_7" title="Permanent link">¶</a></h3>
+<ul>
+<li>一个词向量矩阵 $ X \in \mathbb{R}^{n \times d_{\text{model}}} $</li>
+<li>$ n $：序列长度（token 数量）</li>
+<li>$ d_{\text{model}} $：词向量维度</li>
+</ul>
+<h3 id="_8">多头注意力机制计算流程<a class="headerlink" href="#_8" title="Permanent link">¶</a></h3>
+<h4 id="qkv-head">线性变换生成 Q、K、V（每个 head 独立）<a class="headerlink" href="#qkv-head" title="Permanent link">¶</a></h4>
+<p>对于每一个 attention head：</p>
+<div class="arithmatex">\[
+Q_i = X W_Q^i,\quad K_i = X W_K^i,\quad V_i = X W_V^i
+\]</div>
+<p>其中：</p>
+<ul>
+<li>$ W_Q^i, W_K^i, W_V^i \in \mathbb{R}^{d_{\text{model}} \times d_k} $ 是可学习参数；</li>
+<li>$ i = 1,2,...,h $，表示第 $ i $ 个 head；</li>
+<li>$ h $：head 的数量；</li>
+<li>$ d_k $：每个 head 的维度（通常 $ d_k = d_{\text{model}} / h $）</li>
+</ul>
+<hr>
+<h4 id="2-head">2. 每个 head 单独计算注意力<a class="headerlink" href="#2-head" title="Permanent link">¶</a></h4>
+<p>使用缩放点积注意力公式：</p>
+<div class="arithmatex">\[
+\text{Attention}(Q_i, K_i, V_i) = \text{softmax}\left( \frac{Q_i K_i^T}{\sqrt{d_k}} \right) V_i
+\]</div>
+<p>得到每个 head 的输出 $ \text{Head}_i $</p>
+<h4 id="3-head">3. 拼接所有 head 的输出<a class="headerlink" href="#3-head" title="Permanent link">¶</a></h4>
+<div class="arithmatex">\[
+\text{Concat}(\text{Head}_1, \text{Head}_2, ..., \text{Head}_h)
+\]</div>
+<p>拼接后维度为：$ n \times d_{\text{model}} $</p>
+<h4 id="4">4. 最终线性变换<a class="headerlink" href="#4" title="Permanent link">¶</a></h4>
+<p>乘以权重矩阵 $ W_O \in \mathbb{R}^{d_{\text{model}} \times d_{\text{model}}} $：</p>
+<div class="arithmatex">\[
+\text{MultiHead}(Q,K,V) = \text{Concat}(...) W_O
+\]</div>
+<h3 id="_9">输出<a class="headerlink" href="#_9" title="Permanent link">¶</a></h3>
+<ul>
+<li>一个新的词向量矩阵，形状与输入相同：$ \mathbb{R}^{n \times d_{\text{model}}} $</li>
+<li>包含了从多个语义子空间聚合而来的上下文信息</li>
+</ul>
+<h3 id="_10">总结图示（文字版）<a class="headerlink" href="#_10" title="Permanent link">¶</a></h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span>
+<span class="normal"><a href="#__codelineno-0-4">4</a></span>
+<span class="normal"><a href="#__codelineno-0-5">5</a></span>
+<span class="normal"><a href="#__codelineno-0-6">6</a></span>
+<span class="normal"><a href="#__codelineno-0-7">7</a></span>
+<span class="normal"><a href="#__codelineno-0-8">8</a></span>
+<span class="normal"><a href="#__codelineno-0-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>Input X
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>   ↓
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>Linear: W_Q, W_K, W_V → 得到 Q, K, V
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>   ↓
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a>Split into h heads → 每个 head 计算自注意力
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a>   ↓
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a>Concat all heads
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a>   ↓
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a>Linear: W_O → Output
+</code></pre></div></td></tr></table></div>
+<hr>
+<h3 id="cnn_1">类比理解（图像 CNN）<a class="headerlink" href="#cnn_1" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>注意力机制</th>
+<th>CNN</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>每个 head</td>
+<td>一个卷积核</td>
+</tr>
+<tr>
+<td>多头注意力</td>
+<td>多通道特征提取</td>
+</tr>
+<tr>
+<td>Concat + Linear</td>
+<td>1×1 卷积整合通道信息</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_11">四、相对位置编码的作用（补充说明）<a class="headerlink" href="#_11" title="Permanent link">¶</a></h3>
+<ul>
+<li>引入相对位置编码是为了让注意力机制更好地捕捉序列的局部依赖；</li>
+<li>它使得模型能像 CNN 一样关注相邻元素的关系；</li>
+<li>在一些论文中，作者通过实验设定（如输入全为0、W设为单位矩阵等），验证了这种 CNN 特征提取能力的存在；</li>
+<li>相关设定如下：</li>
+<li>所有输入设为 0；</li>
+<li>W 设为单位矩阵；</li>
+<li>R 向量所有 head 共享，V 各自不同；</li>
+</ul>
+<p>这样可以简化问题，便于分析注意力机制是否具有类似 CNN 的局部归纳偏置。</p>
+<h2 id="cnn_2">多头注意力机制与CNN关系的数学解析<a class="headerlink" href="#cnn_2" title="Permanent link">¶</a></h2>
+<p><img alt="f18" src="../../../../../images/algorithm_img/att18.png"></p>
+<p><img alt="f17" src="../../../../../images/algorithm_img/att17.png"></p>
+<h2 id="cnn_3">多头注意力与 CNN 的关系（论文核心思路）<a class="headerlink" href="#cnn_3" title="Permanent link">¶</a></h2>
+<p>为了体现多头注意力与卷积神经网络（CNN）的联系，作者设计了特殊的 <strong>R 向量</strong> 和 <strong>V 向量</strong>。</p>
+<h3 id="_12">向量定义<a class="headerlink" href="#_12" title="Permanent link">¶</a></h3>
+<h4 id="v-value">V 向量（Value）<a class="headerlink" href="#v-value" title="Permanent link">¶</a></h4>
+<ul>
+<li>第一维：1  </li>
+<li>第二维：$ -2\delta $  </li>
+<li>整体乘上一个可学习参数 $ -\alpha $</li>
+</ul>
+<p>形式为：
+$$
+V = -\alpha \cdot [1, -2\delta]
+$$</p>
+<h4 id="r-relative-position">R 向量（Relative Position）<a class="headerlink" href="#r-relative-position" title="Permanent link">¶</a></h4>
+<ul>
+<li>第一项：$ \delta^2 $</li>
+<li>第二项：$ \delta $</li>
+</ul>
+<p>形式为：
+$$
+R = [\delta^2, \delta]
+$$</p>
+<p>其中 $ \delta = q - k $，表示 query 与 key 的相对位置。</p>
+<hr>
+<h3 id="_13">注意力得分计算<a class="headerlink" href="#_13" title="Permanent link">¶</a></h3>
+<p>通过内积得到注意力得分：</p>
+<div class="arithmatex">\[
+A = V \cdot R = -\alpha (1 \cdot \delta^2 + (-2\delta) \cdot \delta) = -\alpha \delta^2
+\]</div>
+<p>进一步变形为：
+$$
+A = -\alpha (\delta - \Delta)^2 + C
+$$</p>
+<p>这是一个关于 $ \delta $ 的<strong>二次函数</strong>，最大值出现在 $ \delta = \Delta $。</p>
+<hr>
+<h3 id="_14">注意力分布特性<a class="headerlink" href="#_14" title="Permanent link">¶</a></h3>
+<ul>
+<li>
+<p>当 $ \delta = \Delta $，注意力得分最高；</p>
+<blockquote>
+<p><span class="arithmatex">\(\Delta\)</span>是一个可学习的位置偏移参数，用于控制注意力机制中“最大关注点的位置”</p>
+</blockquote>
+</li>
+<li>
+<p>随着距离增大，得分下降；</p>
+</li>
+<li>形成“窗口效应”：当前 token 更关注其附近 token；</li>
+<li>类似于 <strong>一维卷积操作中的滑动窗口机制</strong>。</li>
+</ul>
+<hr>
+<h3 id="_15">参数 α 的作用<a class="headerlink" href="#_15" title="Permanent link">¶</a></h3>
+<ul>
+<li>控制影响范围的“宽度”；</li>
+<li>$ \alpha \to \infty $：只关注最中心的那个 token；</li>
+<li>$ \alpha $ 较小：周围 token 对当前 token 的影响更大；</li>
+<li>相当于控制 CNN 中的<strong>感受野大小</strong>。</li>
+</ul>
+<p><img alt="f19" src="../../../../../images/algorithm_img/att19.png"></p>
+<h2 id="cnn_4">多头注意力机制如何扩展到二维？和 CNN 的类比<a class="headerlink" href="#cnn_4" title="Permanent link">¶</a></h2>
+<h3 id="_16">一、从一维到二维的扩展<a class="headerlink" href="#_16" title="Permanent link">¶</a></h3>
+<ul>
+<li>在一维中，Q、K 是标量，<span class="arithmatex">\(\delta = q - k\)</span> 是一个数；</li>
+<li>在二维中，Q 和 K 变成向量（如位置坐标）；</li>
+<li><span class="arithmatex">\(\delta = q - k\)</span> 也变成一个向量，表示两个位置之间的相对偏移；</li>
+</ul>
+<p>例如：
+- Q = (1, 4)，K = (3, 2) → <span class="arithmatex">\(\delta = (-2, 2)\)</span></p>
+<hr>
+<h3 id="v-r">二、V 和 R 向量的二维扩展<a class="headerlink" href="#v-r" title="Permanent link">¶</a></h3>
+<p>为了适应二维空间，对 V 和 R 进行如下设计：</p>
+<h4 id="v-value_1">V 向量（Value）：<a class="headerlink" href="#v-value_1" title="Permanent link">¶</a></h4>
+<div class="arithmatex">\[
+V = -\alpha \cdot [1,\ -2\delta_1,\ -2\delta_2]
+\]</div>
+<h4 id="r-relative-position_1">R 向量（Relative Position）：<a class="headerlink" href="#r-relative-position_1" title="Permanent link">¶</a></h4>
+<div class="arithmatex">\[
+R = [\|\delta\|^2,\ \delta_1,\ \delta_2]
+\]</div>
+<p>其中 <span class="arithmatex">\(\delta = (\delta_1, \delta_2)\)</span> 是相对偏移向量。</p>
+<hr>
+<h3 id="_17">三、注意力得分计算<a class="headerlink" href="#_17" title="Permanent link">¶</a></h3>
+<p><img alt="f20" src="../../../../../images/algorithm_img/att20.png"></p>
+<p>通过内积得到注意力得分：</p>
+<div class="arithmatex">\[
+A = V \cdot R = -\alpha(\|\delta\|^2 - 2\delta_1^2 - 2\delta_2^2) = \alpha\|\delta\|^2
+\]</div>
+<p>进一步变形为：
+$$
+A = -\alpha |\delta - \Delta|^2 + C
+$$</p>
+<p>这个函数在 <span class="arithmatex">\(\delta = \Delta\)</span> 时取得最大值，模拟了类似卷积核的局部响应区域。</p>
+<hr>
+<h3 id="_18">四、多头机制模拟卷积核<a class="headerlink" href="#_18" title="Permanent link">¶</a></h3>
+<ul>
+<li>每个 head 学习不同的 <span class="arithmatex">\(\Delta\)</span>，即关注不同方向或位置；</li>
+<li>如设计 9 个 head，分别对应 3×3 卷积核中的每个位置；</li>
+<li>最终拼接所有 head 的输出，形成“多通道”特征图；</li>
+<li>再通过线性变换（W 矩阵），相当于进行 1×1 卷积整合通道信息；</li>
+</ul>
+<blockquote>
+<p>这就构成了一个与 CNN 非常相似的结构。</p>
+</blockquote>
+<hr>
+<h3 id="cnn_5">五、与 CNN 的对比分析<a class="headerlink" href="#cnn_5" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>CNN</th>
+<th>Transformer（多头注意力）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>局部建模</td>
+<td>固定感受野</td>
+<td>动态学习关注区域</td>
+</tr>
+<tr>
+<td>参数设定</td>
+<td>固定卷积核</td>
+<td>每个 head 自主学习 <span class="arithmatex">\(\Delta\)</span></td>
+</tr>
+<tr>
+<td>感受野控制</td>
+<td>卷积核大小决定</td>
+<td><span class="arithmatex">\(\alpha\)</span> 控制影响范围</td>
+</tr>
+<tr>
+<td>远距离依赖</td>
+<td>无法直接建模</td>
+<td>支持任意距离的注意力</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="transformer">六、Transformer 层数叠加的意义<a class="headerlink" href="#transformer" title="Permanent link">¶</a></h3>
+<ul>
+<li>类似于 CNN 中的层叠卷积层：</li>
+<li>浅层：捕捉局部词义关系；</li>
+<li>中间层：理解短语级语义；</li>
+<li>深层：掌握段落、篇章级语义；</li>
+<li>多层叠加使模型具备逐层抽象的能力。</li>
+</ul>
+<hr>
+<h3 id="_19">七、总结类比<a class="headerlink" href="#_19" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>注意力机制</th>
+<th>类比 CNN</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>每个 attention head</td>
+<td>一个卷积核</td>
+</tr>
+<tr>
+<td>多 head 输出拼接</td>
+<td>多通道特征图</td>
+</tr>
+<tr>
+<td>最终线性层</td>
+<td>1×1 卷积整合</td>
+</tr>
+<tr>
+<td>相对位置编码</td>
+<td>模拟局部归纳偏置</td>
+</tr>
+<tr>
+<td>多层叠加</td>
+<td>提升语义抽象能力</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="_20">结论<a class="headerlink" href="#_20" title="Permanent link">¶</a></h3>
+<p>通过合理设计 V 和 R 向量，我们可以让多头注意力机制在二维空间中呈现出与 CNN 极其相似的建模能力。<br>
+但它更加灵活，不仅限于局部邻域，还能建模远距离依赖关系。<br>
+这种类比为我们理解视觉 Transformer（ViT）、图像处理任务等提供了非常直观的视角。</p>
+<h3 id="2-multi-head-attention-head"><strong>2. Multi-Head Attention 中每个 head 为什么要降维？</strong><a class="headerlink" href="#2-multi-head-attention-head" title="Permanent link">¶</a></h3>
+<h4 id="_21"><strong>原因：</strong><a class="headerlink" href="#_21" title="Permanent link">¶</a></h4>
+<ol>
+<li><strong>并行关注多种子空间信息</strong>：</li>
+<li>
+<p>每个 head 学习不同方面的特征，从而捕捉更丰富的语义信息。</p>
+</li>
+<li>
+<p><strong>减少计算量</strong>：</p>
+</li>
+<li>如果每个 head 使用原始维度 $ d_{\text{model}} $ 进行计算，复杂度会很高。</li>
+<li>将输入向量维度 $ d_{\text{model}} $ 均分到 $ h $ 个 head 上，每个 head 的维度变为 $ d_{\text{model}} / h $，降低了单个 head 的计算复杂度，整体效率更高。</li>
+</ol>
+<hr>
+<h3 id="3-transformer"><strong>3. Transformer 的权重共享</strong><a class="headerlink" href="#3-transformer" title="Permanent link">¶</a></h3>
+<h4 id="_22"><strong>目的：</strong><a class="headerlink" href="#_22" title="Permanent link">¶</a></h4>
+<ul>
+<li>减少参数量，提高模型效率。</li>
+</ul>
+<h4 id="_23"><strong>实现方式：</strong><a class="headerlink" href="#_23" title="Permanent link">¶</a></h4>
+<ul>
+<li>在某些变体或特定实现中，允许 Encoder 或 Decoder 的不同层之间共享参数。</li>
+<li>权重共享可行的原因：</li>
+<li>Transformer 的各层结构相同（自注意力 + 前馈网络）的堆叠设计；</li>
+<li>实验表明，权重共享不会显著削弱模型性能，同时大幅减少参数量。</li>
+</ul>
+<h4 id="_24"><strong>注意事项：</strong><a class="headerlink" href="#_24" title="Permanent link">¶</a></h4>
+<ul>
+<li>Transformer 原始论文（Vaswani et al.）并未明确要求所有层都共享参数。</li>
+<li>实际项目中可根据需求灵活选择是否进行权重共享。</li>
+</ul>
+<h3 id="1-mhamqagqa"><strong>1. 不同类型的多头注意力：MHA、MQA、GQA</strong><a class="headerlink" href="#1-mhamqagqa" title="Permanent link">¶</a></h3>
+<p><img alt="f22" src="../../../../../images/algorithm_img/att30.png"></p>
+<h4 id="grouped-query"><strong>Grouped-query</strong><a class="headerlink" href="#grouped-query" title="Permanent link">¶</a></h4>
+<p><strong>Multi-head Attention (MHA)</strong>：</p>
+<ul>
+<li>每个 head 都有独立的 Query、Key 和 Value 矩阵。</li>
+<li>标准的多头注意力机制，每个 head 的参数是独立的。</li>
+</ul>
+<p><strong>Multi-query Attention (MQA)</strong>：</p>
+<ul>
+<li>所有的 head 共享同一个 Key 和 Value 矩阵。</li>
+<li>每个 head 只保留独立的 Query 参数，大大减少了 Key 和 Value 矩阵的参数量。</li>
+</ul>
+<p><strong>Grouped-query Attention (GQA)</strong>：</p>
+<ul>
+<li>将 Query 分为若干组（Group），每组共享一个 Key 和 Value 矩阵。</li>
+<li>GQA 是 MHA 和 MQA 的折中方案：<ul>
+<li>GQA-1：只有一个组，等价于 MQA；</li>
+<li>GQA-H：每组与头数相等，等价于 MHA；</li>
+<li>GQA-N：介于 MHA 和 MQA 之间，分组一定数量的 Query 共享一组 Key 和 Value 矩阵。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="mhamulti-head-attention"><strong>MHA（Multi-Head Attention）</strong><a class="headerlink" href="#mhamulti-head-attention" title="Permanent link">¶</a></h3>
+<ul>
+<li>
+<p><strong>标准做法</strong>：假设有 $ h $ 个头，每个头都有<strong>单独</strong>的线性映射 $ W_i^Q, W_i^K, W_i^V $：
+  $$
+  \text{head}_i = \text{Attention}(QW_i^Q, KW_i^K, VW_i^V)
+  $$
+  然后将这些头的输出拼接：
+  $$
+  \text{MultiHead}(Q, K, V) = \text{Concat}(\text{head}_1, ..., \text{head}_h) W^O
+  $$</p>
+</li>
+<li>
+<p><strong>含义</strong>：让模型可并行学习到不同子空间的注意力，“一个头”关注词性信息，“另一个头”关注句法结构信息，等等。</p>
+</li>
+<li>
+<p><strong>优点</strong>：表达力强，兼容自注意力和跨注意力等多场景；</p>
+</li>
+<li>
+<p><strong>缺点</strong>：参数量大，尤其在 Key / Value 维度上重复了多组。</p>
+</li>
+</ul>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-1-10">10</a></span>
+<span class="normal"><a href="#__codelineno-1-11">11</a></span>
+<span class="normal"><a href="#__codelineno-1-12">12</a></span>
+<span class="normal"><a href="#__codelineno-1-13">13</a></span>
+<span class="normal"><a href="#__codelineno-1-14">14</a></span>
+<span class="normal"><a href="#__codelineno-1-15">15</a></span>
+<span class="normal"><a href="#__codelineno-1-16">16</a></span>
+<span class="normal"><a href="#__codelineno-1-17">17</a></span>
+<span class="normal"><a href="#__codelineno-1-18">18</a></span>
+<span class="normal"><a href="#__codelineno-1-19">19</a></span>
+<span class="normal"><a href="#__codelineno-1-20">20</a></span>
+<span class="normal"><a href="#__codelineno-1-21">21</a></span>
+<span class="normal"><a href="#__codelineno-1-22">22</a></span>
+<span class="normal"><a href="#__codelineno-1-23">23</a></span>
+<span class="normal"><a href="#__codelineno-1-24">24</a></span>
+<span class="normal"><a href="#__codelineno-1-25">25</a></span>
+<span class="normal"><a href="#__codelineno-1-26">26</a></span>
+<span class="normal"><a href="#__codelineno-1-27">27</a></span>
+<span class="normal"><a href="#__codelineno-1-28">28</a></span>
+<span class="normal"><a href="#__codelineno-1-29">29</a></span>
+<span class="normal"><a href="#__codelineno-1-30">30</a></span>
+<span class="normal"><a href="#__codelineno-1-31">31</a></span>
+<span class="normal"><a href="#__codelineno-1-32">32</a></span>
+<span class="normal"><a href="#__codelineno-1-33">33</a></span>
+<span class="normal"><a href="#__codelineno-1-34">34</a></span>
+<span class="normal"><a href="#__codelineno-1-35">35</a></span>
+<span class="normal"><a href="#__codelineno-1-36">36</a></span>
+<span class="normal"><a href="#__codelineno-1-37">37</a></span>
+<span class="normal"><a href="#__codelineno-1-38">38</a></span>
+<span class="normal"><a href="#__codelineno-1-39">39</a></span>
+<span class="normal"><a href="#__codelineno-1-40">40</a></span>
+<span class="normal"><a href="#__codelineno-1-41">41</a></span>
+<span class="normal"><a href="#__codelineno-1-42">42</a></span>
+<span class="normal"><a href="#__codelineno-1-43">43</a></span>
+<span class="normal"><a href="#__codelineno-1-44">44</a></span>
+<span class="normal"><a href="#__codelineno-1-45">45</a></span>
+<span class="normal"><a href="#__codelineno-1-46">46</a></span>
+<span class="normal"><a href="#__codelineno-1-47">47</a></span>
+<span class="normal"><a href="#__codelineno-1-48">48</a></span>
+<span class="normal"><a href="#__codelineno-1-49">49</a></span>
+<span class="normal"><a href="#__codelineno-1-50">50</a></span>
+<span class="normal"><a href="#__codelineno-1-51">51</a></span>
+<span class="normal"><a href="#__codelineno-1-52">52</a></span>
+<span class="normal"><a href="#__codelineno-1-53">53</a></span>
+<span class="normal"><a href="#__codelineno-1-54">54</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">nn</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="k">class</span><span class="w"> </span><span class="nc">MultiHeadAttention</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">):</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a>        <span class="nb">super</span><span class="p">(</span><span class="n">MultiHeadAttention</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">num_heads</span> <span class="o">=</span> <span class="n">num_heads</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a>        <span class="c1"># 将隐藏层维度（hidden_size）平均分配给每个注意力头（head）</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">head_dim</span> <span class="o">=</span> <span class="n">hidden_size</span> <span class="o">//</span> <span class="n">num_heads</span>  
+<a id="__codelineno-1-10" name="__codelineno-1-10"></a>
+<a id="__codelineno-1-11" name="__codelineno-1-11"></a>        <span class="c1"># 初始化Q、K、V投影矩阵</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">q_linear</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">)</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">k_linear</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">)</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">v_linear</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">)</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15"></a>
+<a id="__codelineno-1-16" name="__codelineno-1-16"></a>        <span class="c1"># 输出线性层</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">o_linear</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">)</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18"></a>
+<a id="__codelineno-1-19" name="__codelineno-1-19"></a>    <span class="c1"># hidden_state: 输入张量，形状为 [batch_size, seq_len, hidden_size]，表示一批句子或文本的嵌入向量</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hidden_state</span><span class="p">,</span> <span class="n">attention_mask</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21"></a>        <span class="n">batch_size</span> <span class="o">=</span> <span class="n">hidden_state</span><span class="o">.</span><span class="n">size</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22"></a>
+<a id="__codelineno-1-23" name="__codelineno-1-23"></a>        <span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">q_linear</span><span class="p">(</span><span class="n">hidden_state</span><span class="p">)</span>
+<a id="__codelineno-1-24" name="__codelineno-1-24"></a>        <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">k_linear</span><span class="p">(</span><span class="n">hidden_state</span><span class="p">)</span>
+<a id="__codelineno-1-25" name="__codelineno-1-25"></a>        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">v_linear</span><span class="p">(</span><span class="n">hidden_state</span><span class="p">)</span>
+<a id="__codelineno-1-26" name="__codelineno-1-26"></a>
+<a id="__codelineno-1-27" name="__codelineno-1-27"></a>        <span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">split_head</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+<a id="__codelineno-1-28" name="__codelineno-1-28"></a>        <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">split_head</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<a id="__codelineno-1-29" name="__codelineno-1-29"></a>        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">split_head</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+<a id="__codelineno-1-30" name="__codelineno-1-30"></a>
+<a id="__codelineno-1-31" name="__codelineno-1-31"></a>        <span class="c1"># 计算注意力分数</span>
+<a id="__codelineno-1-32" name="__codelineno-1-32"></a>        <span class="n">attention_scores</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">key</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">))</span> <span class="o">/</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">head_dim</span><span class="p">))</span>
+<a id="__codelineno-1-33" name="__codelineno-1-33"></a>
+<a id="__codelineno-1-34" name="__codelineno-1-34"></a>        <span class="k">if</span> <span class="n">attention_mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-1-35" name="__codelineno-1-35"></a>            <span class="n">attention_scores</span> <span class="o">+=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">attention_mask</span><span class="p">)</span> <span class="o">*</span> <span class="o">-</span><span class="mf">1e9</span>
+<a id="__codelineno-1-36" name="__codelineno-1-36"></a>
+<a id="__codelineno-1-37" name="__codelineno-1-37"></a>        <span class="c1"># 对注意力分数进行归一化</span>
+<a id="__codelineno-1-38" name="__codelineno-1-38"></a>        <span class="n">attention_probs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">attention_scores</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-1-39" name="__codelineno-1-39"></a>
+<a id="__codelineno-1-40" name="__codelineno-1-40"></a>        <span class="n">output</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">attention_probs</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+<a id="__codelineno-1-41" name="__codelineno-1-41"></a>
+<a id="__codelineno-1-42" name="__codelineno-1-42"></a>        <span class="c1"># 对注意力输出进行拼接</span>
+<a id="__codelineno-1-43" name="__codelineno-1-43"></a>        <span class="c1"># transpose(1, 2)：将 head 维度和序列长度调换回来；</span>
+<a id="__codelineno-1-44" name="__codelineno-1-44"></a>        <span class="c1"># contiguous()：确保内存连续；</span>
+<a id="__codelineno-1-45" name="__codelineno-1-45"></a>        <span class="c1"># view(...)：将多个 head 的结果拼接成一个大的向量，恢复到 [batch_size, seq_len, hidden_size]。</span>
+<a id="__codelineno-1-46" name="__codelineno-1-46"></a>        <span class="n">output</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">contiguous</span><span class="p">()</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_dim</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_heads</span><span class="p">)</span>
+<a id="__codelineno-1-47" name="__codelineno-1-47"></a>
+<a id="__codelineno-1-48" name="__codelineno-1-48"></a>        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">o_linear</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+<a id="__codelineno-1-49" name="__codelineno-1-49"></a>
+<a id="__codelineno-1-50" name="__codelineno-1-50"></a>        <span class="k">return</span> <span class="n">output</span>
+<a id="__codelineno-1-51" name="__codelineno-1-51"></a>
+<a id="__codelineno-1-52" name="__codelineno-1-52"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">split_head</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+<a id="__codelineno-1-53" name="__codelineno-1-53"></a>        <span class="n">batch_size</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<a id="__codelineno-1-54" name="__codelineno-1-54"></a>        <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_heads</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_dim</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="mqamulti-query-attention"><strong>MQA（Multi-Query Attention）</strong><a class="headerlink" href="#mqamulti-query-attention" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>出处</strong>：Google 在 2019 年论文《Fast Transformer Decoding: One Write-Head is All You Need》。</li>
+<li><strong>核心思想</strong>：在多头解码场景下，所有头共享同一份 Key 和 Value，只有 Query 不同。</li>
+<li>这样 Key、Value 的参数就只需要 1 组，大幅减少参数量、提高解码速度；</li>
+<li>但也会带来一定性能损失，因为多头不再在 Key/Value 维度各自独立建模。</li>
+</ul>
+<h4 id="_25"><strong>公式示意</strong>：<a class="headerlink" href="#_25" title="Permanent link">¶</a></h4>
+<p>$$
+\text{head}_i = \text{Attention}(QW_i^Q, K^<em>, V^</em>)
+$$
+其中 $ K^<em>, V^</em> $ 是共享的 Key、Value。</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-2-10">10</a></span>
+<span class="normal"><a href="#__codelineno-2-11">11</a></span>
+<span class="normal"><a href="#__codelineno-2-12">12</a></span>
+<span class="normal"><a href="#__codelineno-2-13">13</a></span>
+<span class="normal"><a href="#__codelineno-2-14">14</a></span>
+<span class="normal"><a href="#__codelineno-2-15">15</a></span>
+<span class="normal"><a href="#__codelineno-2-16">16</a></span>
+<span class="normal"><a href="#__codelineno-2-17">17</a></span>
+<span class="normal"><a href="#__codelineno-2-18">18</a></span>
+<span class="normal"><a href="#__codelineno-2-19">19</a></span>
+<span class="normal"><a href="#__codelineno-2-20">20</a></span>
+<span class="normal"><a href="#__codelineno-2-21">21</a></span>
+<span class="normal"><a href="#__codelineno-2-22">22</a></span>
+<span class="normal"><a href="#__codelineno-2-23">23</a></span>
+<span class="normal"><a href="#__codelineno-2-24">24</a></span>
+<span class="normal"><a href="#__codelineno-2-25">25</a></span>
+<span class="normal"><a href="#__codelineno-2-26">26</a></span>
+<span class="normal"><a href="#__codelineno-2-27">27</a></span>
+<span class="normal"><a href="#__codelineno-2-28">28</a></span>
+<span class="normal"><a href="#__codelineno-2-29">29</a></span>
+<span class="normal"><a href="#__codelineno-2-30">30</a></span>
+<span class="normal"><a href="#__codelineno-2-31">31</a></span>
+<span class="normal"><a href="#__codelineno-2-32">32</a></span>
+<span class="normal"><a href="#__codelineno-2-33">33</a></span>
+<span class="normal"><a href="#__codelineno-2-34">34</a></span>
+<span class="normal"><a href="#__codelineno-2-35">35</a></span>
+<span class="normal"><a href="#__codelineno-2-36">36</a></span>
+<span class="normal"><a href="#__codelineno-2-37">37</a></span>
+<span class="normal"><a href="#__codelineno-2-38">38</a></span>
+<span class="normal"><a href="#__codelineno-2-39">39</a></span>
+<span class="normal"><a href="#__codelineno-2-40">40</a></span>
+<span class="normal"><a href="#__codelineno-2-41">41</a></span>
+<span class="normal"><a href="#__codelineno-2-42">42</a></span>
+<span class="normal"><a href="#__codelineno-2-43">43</a></span>
+<span class="normal"><a href="#__codelineno-2-44">44</a></span>
+<span class="normal"><a href="#__codelineno-2-45">45</a></span>
+<span class="normal"><a href="#__codelineno-2-46">46</a></span>
+<span class="normal"><a href="#__codelineno-2-47">47</a></span>
+<span class="normal"><a href="#__codelineno-2-48">48</a></span>
+<span class="normal"><a href="#__codelineno-2-49">49</a></span>
+<span class="normal"><a href="#__codelineno-2-50">50</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">nn</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="k">class</span><span class="w"> </span><span class="nc">MultiQueryAttention</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">):</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6"></a>        <span class="nb">super</span><span class="p">(</span><span class="n">MultiQueryAttention</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">num_heads</span> <span class="o">=</span> <span class="n">num_heads</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">head_dim</span> <span class="o">=</span> <span class="n">hidden_size</span> <span class="o">//</span> <span class="n">num_heads</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9"></a>
+<a id="__codelineno-2-10" name="__codelineno-2-10"></a>        <span class="c1"># 初始化Q、K、V投影矩阵</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">q_linear</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">)</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">k_linear</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_dim</span><span class="p">)</span>  <span class="c1">###</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">v_linear</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_dim</span><span class="p">)</span>  <span class="c1">###</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14"></a>
+<a id="__codelineno-2-15" name="__codelineno-2-15"></a>        <span class="c1"># 输出线性层</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">o_linear</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">)</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17"></a>
+<a id="__codelineno-2-18" name="__codelineno-2-18"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hidden_state</span><span class="p">,</span> <span class="n">attention_mask</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19"></a>        <span class="n">batch_size</span> <span class="o">=</span> <span class="n">hidden_state</span><span class="o">.</span><span class="n">size</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20"></a>
+<a id="__codelineno-2-21" name="__codelineno-2-21"></a>        <span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">q_linear</span><span class="p">(</span><span class="n">hidden_state</span><span class="p">)</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22"></a>        <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">k_linear</span><span class="p">(</span><span class="n">hidden_state</span><span class="p">)</span>
+<a id="__codelineno-2-23" name="__codelineno-2-23"></a>        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">v_linear</span><span class="p">(</span><span class="n">hidden_state</span><span class="p">)</span>
+<a id="__codelineno-2-24" name="__codelineno-2-24"></a>
+<a id="__codelineno-2-25" name="__codelineno-2-25"></a>        <span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">split_head</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+<a id="__codelineno-2-26" name="__codelineno-2-26"></a>        <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">split_head</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-2-27" name="__codelineno-2-27"></a>        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">split_head</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-2-28" name="__codelineno-2-28"></a>
+<a id="__codelineno-2-29" name="__codelineno-2-29"></a>        <span class="c1"># 计算注意力分数</span>
+<a id="__codelineno-2-30" name="__codelineno-2-30"></a>        <span class="n">attention_scores</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">key</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">))</span> <span class="o">/</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">head_dim</span><span class="p">))</span>
+<a id="__codelineno-2-31" name="__codelineno-2-31"></a>
+<a id="__codelineno-2-32" name="__codelineno-2-32"></a>        <span class="k">if</span> <span class="n">attention_mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-2-33" name="__codelineno-2-33"></a>            <span class="n">attention_scores</span> <span class="o">+=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">attention_mask</span><span class="p">)</span> <span class="o">*</span> <span class="o">-</span><span class="mf">1e9</span>
+<a id="__codelineno-2-34" name="__codelineno-2-34"></a>
+<a id="__codelineno-2-35" name="__codelineno-2-35"></a>        <span class="c1"># 对注意力分数进行归一化</span>
+<a id="__codelineno-2-36" name="__codelineno-2-36"></a>        <span class="n">attention_probs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">attention_scores</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-2-37" name="__codelineno-2-37"></a>
+<a id="__codelineno-2-38" name="__codelineno-2-38"></a>        <span class="n">output</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">attention_probs</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+<a id="__codelineno-2-39" name="__codelineno-2-39"></a>        <span class="n">output</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">contiguous</span><span class="p">()</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_dim</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_heads</span><span class="p">)</span>
+<a id="__codelineno-2-40" name="__codelineno-2-40"></a>        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">o_linear</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+<a id="__codelineno-2-41" name="__codelineno-2-41"></a>
+<a id="__codelineno-2-42" name="__codelineno-2-42"></a>        <span class="k">return</span> <span class="n">output</span>
+<a id="__codelineno-2-43" name="__codelineno-2-43"></a>
+<a id="__codelineno-2-44" name="__codelineno-2-44"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">split_head</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">head_num</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<a id="__codelineno-2-45" name="__codelineno-2-45"></a>        <span class="n">batch_size</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<a id="__codelineno-2-46" name="__codelineno-2-46"></a>
+<a id="__codelineno-2-47" name="__codelineno-2-47"></a>        <span class="k">if</span> <span class="n">head_num</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-2-48" name="__codelineno-2-48"></a>            <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_heads</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_dim</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-2-49" name="__codelineno-2-49"></a>        <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-2-50" name="__codelineno-2-50"></a>            <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">head_num</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_dim</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="gqagrouped-query-attention"><strong>GQA（Grouped-Query Attention）</strong><a class="headerlink" href="#gqagrouped-query-attention" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>出处</strong>：Google 2023 年论文《GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints》。</li>
+<li><strong>目的</strong>：折中 MHA 与 MQA 在性能与速度上的矛盾。</li>
+<li><strong>做法</strong>：将 $ h $ 个 Query 头分为 $ G $ 组 ($ 1 \leq G \leq h $)。每组使用独立的 $ K, V $；所以分组越少越接近 MQA，共享程度越高，速度快但表达力受限；分组越多越接近 MHA，速度较慢但表达力更强。</li>
+<li><strong>当 $ G = 1 $ 时</strong>：只有一个 Key/Value 表示，等同于 MQA；当 $ G = h $ 时，每个头都有独立 Key/Value，等同于 MHA。</li>
+</ul>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-3-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-3-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-3-10">10</a></span>
+<span class="normal"><a href="#__codelineno-3-11">11</a></span>
+<span class="normal"><a href="#__codelineno-3-12">12</a></span>
+<span class="normal"><a href="#__codelineno-3-13">13</a></span>
+<span class="normal"><a href="#__codelineno-3-14">14</a></span>
+<span class="normal"><a href="#__codelineno-3-15">15</a></span>
+<span class="normal"><a href="#__codelineno-3-16">16</a></span>
+<span class="normal"><a href="#__codelineno-3-17">17</a></span>
+<span class="normal"><a href="#__codelineno-3-18">18</a></span>
+<span class="normal"><a href="#__codelineno-3-19">19</a></span>
+<span class="normal"><a href="#__codelineno-3-20">20</a></span>
+<span class="normal"><a href="#__codelineno-3-21">21</a></span>
+<span class="normal"><a href="#__codelineno-3-22">22</a></span>
+<span class="normal"><a href="#__codelineno-3-23">23</a></span>
+<span class="normal"><a href="#__codelineno-3-24">24</a></span>
+<span class="normal"><a href="#__codelineno-3-25">25</a></span>
+<span class="normal"><a href="#__codelineno-3-26">26</a></span>
+<span class="normal"><a href="#__codelineno-3-27">27</a></span>
+<span class="normal"><a href="#__codelineno-3-28">28</a></span>
+<span class="normal"><a href="#__codelineno-3-29">29</a></span>
+<span class="normal"><a href="#__codelineno-3-30">30</a></span>
+<span class="normal"><a href="#__codelineno-3-31">31</a></span>
+<span class="normal"><a href="#__codelineno-3-32">32</a></span>
+<span class="normal"><a href="#__codelineno-3-33">33</a></span>
+<span class="normal"><a href="#__codelineno-3-34">34</a></span>
+<span class="normal"><a href="#__codelineno-3-35">35</a></span>
+<span class="normal"><a href="#__codelineno-3-36">36</a></span>
+<span class="normal"><a href="#__codelineno-3-37">37</a></span>
+<span class="normal"><a href="#__codelineno-3-38">38</a></span>
+<span class="normal"><a href="#__codelineno-3-39">39</a></span>
+<span class="normal"><a href="#__codelineno-3-40">40</a></span>
+<span class="normal"><a href="#__codelineno-3-41">41</a></span>
+<span class="normal"><a href="#__codelineno-3-42">42</a></span>
+<span class="normal"><a href="#__codelineno-3-43">43</a></span>
+<span class="normal"><a href="#__codelineno-3-44">44</a></span>
+<span class="normal"><a href="#__codelineno-3-45">45</a></span>
+<span class="normal"><a href="#__codelineno-3-46">46</a></span>
+<span class="normal"><a href="#__codelineno-3-47">47</a></span>
+<span class="normal"><a href="#__codelineno-3-48">48</a></span>
+<span class="normal"><a href="#__codelineno-3-49">49</a></span>
+<span class="normal"><a href="#__codelineno-3-50">50</a></span>
+<span class="normal"><a href="#__codelineno-3-51">51</a></span>
+<span class="normal"><a href="#__codelineno-3-52">52</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">torch</span><span class="w"> </span><span class="kn">import</span> <span class="n">nn</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="k">class</span><span class="w"> </span><span class="nc">GroupQueryAttention</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">,</span> <span class="n">num_heads</span><span class="p">,</span> <span class="n">group_num</span><span class="p">):</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a>        <span class="nb">super</span><span class="p">(</span><span class="n">GroupQueryAttention</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">num_heads</span> <span class="o">=</span> <span class="n">num_heads</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">head_dim</span> <span class="o">=</span> <span class="n">hidden_size</span> <span class="o">//</span> <span class="n">num_heads</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">group_num</span> <span class="o">=</span> <span class="n">group_num</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10"></a>
+<a id="__codelineno-3-11" name="__codelineno-3-11"></a>        <span class="c1"># 初始化Q、K、V投影矩阵</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">q_linear</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">)</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">k_linear</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">group_num</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_dim</span><span class="p">)</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">v_linear</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">group_num</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_dim</span><span class="p">)</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15"></a>
+<a id="__codelineno-3-16" name="__codelineno-3-16"></a>        <span class="c1"># 输出线性层</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">o_linear</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">)</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18"></a>
+<a id="__codelineno-3-19" name="__codelineno-3-19"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hidden_state</span><span class="p">,</span> <span class="n">attention_mask</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20"></a>        <span class="n">batch_size</span> <span class="o">=</span> <span class="n">hidden_state</span><span class="o">.</span><span class="n">size</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21"></a>
+<a id="__codelineno-3-22" name="__codelineno-3-22"></a>        <span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">q_linear</span><span class="p">(</span><span class="n">hidden_state</span><span class="p">)</span>
+<a id="__codelineno-3-23" name="__codelineno-3-23"></a>        <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">k_linear</span><span class="p">(</span><span class="n">hidden_state</span><span class="p">)</span>
+<a id="__codelineno-3-24" name="__codelineno-3-24"></a>        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">v_linear</span><span class="p">(</span><span class="n">hidden_state</span><span class="p">)</span>
+<a id="__codelineno-3-25" name="__codelineno-3-25"></a>
+<a id="__codelineno-3-26" name="__codelineno-3-26"></a>        <span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">split_head</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+<a id="__codelineno-3-27" name="__codelineno-3-27"></a>        <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">split_head</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">group_num</span><span class="p">)</span>
+<a id="__codelineno-3-28" name="__codelineno-3-28"></a>        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">split_head</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">group_num</span><span class="p">)</span>
+<a id="__codelineno-3-29" name="__codelineno-3-29"></a>
+<a id="__codelineno-3-30" name="__codelineno-3-30"></a>        <span class="c1"># 计算注意力分数</span>
+<a id="__codelineno-3-31" name="__codelineno-3-31"></a>        <span class="n">attention_scores</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">key</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">))</span> <span class="o">/</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">head_dim</span><span class="p">))</span>
+<a id="__codelineno-3-32" name="__codelineno-3-32"></a>
+<a id="__codelineno-3-33" name="__codelineno-3-33"></a>        <span class="k">if</span> <span class="n">attention_mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-3-34" name="__codelineno-3-34"></a>            <span class="n">attention_scores</span> <span class="o">+=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">attention_mask</span><span class="p">)</span> <span class="o">*</span> <span class="o">-</span><span class="mf">1e9</span>
+<a id="__codelineno-3-35" name="__codelineno-3-35"></a>
+<a id="__codelineno-3-36" name="__codelineno-3-36"></a>        <span class="c1"># 对注意力分数进行归一化</span>
+<a id="__codelineno-3-37" name="__codelineno-3-37"></a>        <span class="n">attention_probs</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">attention_scores</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-3-38" name="__codelineno-3-38"></a>
+<a id="__codelineno-3-39" name="__codelineno-3-39"></a>        <span class="n">output</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">attention_probs</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+<a id="__codelineno-3-40" name="__codelineno-3-40"></a>        <span class="n">output</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">contiguous</span><span class="p">()</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_dim</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_heads</span><span class="p">)</span>
+<a id="__codelineno-3-41" name="__codelineno-3-41"></a>        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">o_linear</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+<a id="__codelineno-3-42" name="__codelineno-3-42"></a>
+<a id="__codelineno-3-43" name="__codelineno-3-43"></a>        <span class="k">return</span> <span class="n">output</span>
+<a id="__codelineno-3-44" name="__codelineno-3-44"></a>
+<a id="__codelineno-3-45" name="__codelineno-3-45"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">split_head</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">group_num</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<a id="__codelineno-3-46" name="__codelineno-3-46"></a>        <span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_len</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">()[:</span><span class="mi">2</span><span class="p">]</span>
+<a id="__codelineno-3-47" name="__codelineno-3-47"></a>
+<a id="__codelineno-3-48" name="__codelineno-3-48"></a>        <span class="k">if</span> <span class="n">group_num</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-3-49" name="__codelineno-3-49"></a>            <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_heads</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_dim</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-3-50" name="__codelineno-3-50"></a>        <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-3-51" name="__codelineno-3-51"></a>            <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="p">:,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">group_num</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_heads</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_dim</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_heads</span> <span class="o">//</span> <span class="n">group_num</span><span class="p">,</span> <span class="n">group_num</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_dim</span><span class="p">)</span>
+<a id="__codelineno-3-52" name="__codelineno-3-52"></a>            <span class="k">return</span> <span class="n">x</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="_26">区别<a class="headerlink" href="#_26" title="Permanent link">¶</a></h2>
+<h3 id="1-mhamulti-head-attention"><strong>1. MHA（Multi-Head Attention）</strong><a class="headerlink" href="#1-mhamulti-head-attention" title="Permanent link">¶</a></h3>
+<h4 id="_27"><strong>特点：</strong><a class="headerlink" href="#_27" title="Permanent link">¶</a></h4>
+<ul>
+<li><strong>每个头独立</strong>：每个注意力头都有独立的 $ Q, K, V $ 投影矩阵。</li>
+<li><strong>参数量大</strong>：每个头都有一组独立的 $ W_Q, W_K, W_V $ 矩阵，因此参数量较大。</li>
+<li><strong>灵活性强</strong>：每个头可以学习不同的特征，表达能力更强。</li>
+</ul>
+<h4 id="_28"><strong>关键代码：</strong><a class="headerlink" href="#_28" title="Permanent link">¶</a></h4>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
+<span class="normal"><a href="#__codelineno-4-2">2</a></span>
+<span class="normal"><a href="#__codelineno-4-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="bp">self</span><span class="o">.</span><span class="n">q_linear</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">)</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="bp">self</span><span class="o">.</span><span class="n">k_linear</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">)</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="bp">self</span><span class="o">.</span><span class="n">v_linear</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>每个线性层的输出维度都是 <code>hidden_size</code>，表示每个头都有独立的 $ Q, K, V $ 向量。</li>
+</ul>
+<h4 id="_29"><strong>分头操作：</strong><a class="headerlink" href="#_29" title="Permanent link">¶</a></h4>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
+<span class="normal"><a href="#__codelineno-5-2">2</a></span>
+<span class="normal"><a href="#__codelineno-5-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">split_head</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a>    <span class="n">batch_size</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a>    <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_heads</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_dim</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>将输入张量按 <code>num_heads</code> 分成多个 head，每个 head 处理一部分维度。</li>
+</ul>
+<hr>
+<h3 id="2-mqamulti-query-attention"><strong>2. MQA（Multi-Query Attention）</strong><a class="headerlink" href="#2-mqamulti-query-attention" title="Permanent link">¶</a></h3>
+<h4 id="_30"><strong>特点：</strong><a class="headerlink" href="#_30" title="Permanent link">¶</a></h4>
+<ul>
+<li><strong>共享 Key 和 Value</strong>：所有头共享同一份 $ K $ 和 $ V $，只有 $ Q $ 是独立的。</li>
+<li><strong>参数量小</strong>：减少了 $ K $ 和 $ V $ 的参数量，提高了解码速度。</li>
+<li><strong>性能损失</strong>：由于共享 $ K $ 和 $ V $，多头无法在 $ K/V $ 维度上独立建模，可能影响性能。</li>
+</ul>
+<h4 id="_31"><strong>关键代码：</strong><a class="headerlink" href="#_31" title="Permanent link">¶</a></h4>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
+<span class="normal"><a href="#__codelineno-6-2">2</a></span>
+<span class="normal"><a href="#__codelineno-6-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="bp">self</span><span class="o">.</span><span class="n">q_linear</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">)</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="bp">self</span><span class="o">.</span><span class="n">k_linear</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_dim</span><span class="p">)</span>  <span class="c1">###</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="bp">self</span><span class="o">.</span><span class="n">v_linear</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_dim</span><span class="p">)</span>  <span class="c1">###</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>$ Q $ 的投影矩阵输出维度是 <code>hidden_size</code>，而 $ K $ 和 $ V $ 的投影矩阵输出维度是 <code>head_dim</code>（即 <code>hidden_size // num_heads</code>），因为它们是共享的。</li>
+</ul>
+<h4 id="_32"><strong>分头操作：</strong><a class="headerlink" href="#_32" title="Permanent link">¶</a></h4>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
+<span class="normal"><a href="#__codelineno-7-2">2</a></span>
+<span class="normal"><a href="#__codelineno-7-3">3</a></span>
+<span class="normal"><a href="#__codelineno-7-4">4</a></span>
+<span class="normal"><a href="#__codelineno-7-5">5</a></span>
+<span class="normal"><a href="#__codelineno-7-6">6</a></span>
+<span class="normal"><a href="#__codelineno-7-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">split_head</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">head_num</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a>    <span class="n">batch_size</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a>
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a>    <span class="k">if</span> <span class="n">head_num</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5"></a>        <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_heads</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_dim</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6"></a>    <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7"></a>        <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">head_num</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_dim</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>对于 $ Q $，按 <code>num_heads</code> 分头；对于 $ K $ 和 $ V $，只分成一组（<code>head_num=1</code>）。</li>
+</ul>
+<hr>
+<h3 id="3-gqagrouped-query-attention"><strong>3. GQA（Grouped-Query Attention）</strong><a class="headerlink" href="#3-gqagrouped-query-attention" title="Permanent link">¶</a></h3>
+<h4 id="_33"><strong>特点：</strong><a class="headerlink" href="#_33" title="Permanent link">¶</a></h4>
+<ul>
+<li><strong>折中设计</strong>：介于 MHA 和 MQA 之间，将 Query 头分为若干组，每组共享 $ K $ 和 $ V $。</li>
+<li><strong>灵活调整</strong>：通过调整组数 $ G $，可以在 MHA 和 MQA 之间平衡性能与效率：</li>
+<li>$ G = 1 $：等同于 MQA；</li>
+<li>$ G = h $：等同于 MHA；</li>
+<li>中间值：兼顾速度和表达力。</li>
+</ul>
+<h4 id="_34"><strong>关键代码：</strong><a class="headerlink" href="#_34" title="Permanent link">¶</a></h4>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
+<span class="normal"><a href="#__codelineno-8-2">2</a></span>
+<span class="normal"><a href="#__codelineno-8-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="bp">self</span><span class="o">.</span><span class="n">q_linear</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">)</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2"></a><span class="bp">self</span><span class="o">.</span><span class="n">k_linear</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">group_num</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_dim</span><span class="p">)</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="bp">self</span><span class="o">.</span><span class="n">v_linear</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">group_num</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_dim</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>$ Q $ 的投影矩阵输出维度是 <code>hidden_size</code>，而 $ K $ 和 $ V $ 的投影矩阵输出维度是 <code>group_num * head_dim</code>，表示每组共享一个 $ K $ 和 $ V $。</li>
+</ul>
+<h4 id="_35"><strong>分头操作：</strong><a class="headerlink" href="#_35" title="Permanent link">¶</a></h4>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span>
+<span class="normal"><a href="#__codelineno-9-2">2</a></span>
+<span class="normal"><a href="#__codelineno-9-3">3</a></span>
+<span class="normal"><a href="#__codelineno-9-4">4</a></span>
+<span class="normal"><a href="#__codelineno-9-5">5</a></span>
+<span class="normal"><a href="#__codelineno-9-6">6</a></span>
+<span class="normal"><a href="#__codelineno-9-7">7</a></span>
+<span class="normal"><a href="#__codelineno-9-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">split_head</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">group_num</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a>    <span class="n">batch_size</span><span class="p">,</span> <span class="n">seq_len</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">()[:</span><span class="mi">2</span><span class="p">]</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3"></a>
+<a id="__codelineno-9-4" name="__codelineno-9-4"></a>    <span class="k">if</span> <span class="n">group_num</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5"></a>        <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_heads</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_dim</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6"></a>    <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7"></a>        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="p">:,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">group_num</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_heads</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_dim</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_heads</span> <span class="o">//</span> <span class="n">group_num</span><span class="p">,</span> <span class="n">group_num</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">head_dim</span><span class="p">)</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8"></a>        <span class="k">return</span> <span class="n">x</span>
+</code></pre></div></td></tr></table></div>
+<ul>
+<li>对于 $ Q $，按 <code>num_heads</code> 分头；对于 $ K $ 和 $ V $，按 <code>group_num</code> 分组，并扩展到每个组。</li>
+</ul>
+<hr>
+<h3 id="_36"><strong>总结对比</strong><a class="headerlink" href="#_36" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>MHA</th>
+<th>MQA</th>
+<th>GQA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>$ Q $ 的处理</strong></td>
+<td>每个头独立</td>
+<td>每个头独立</td>
+<td>每个头独立</td>
+</tr>
+<tr>
+<td><strong>$ K $ 的处理</strong></td>
+<td>每个头独立</td>
+<td>所有头共享</td>
+<td>每组共享</td>
+</tr>
+<tr>
+<td><strong>$ V $ 的处理</strong></td>
+<td>每个头独立</td>
+<td>所有头共享</td>
+<td>每组共享</td>
+</tr>
+<tr>
+<td><strong>参数量</strong></td>
+<td>最大</td>
+<td>最小</td>
+<td>可调</td>
+</tr>
+<tr>
+<td><strong>灵活性</strong></td>
+<td>最强</td>
+<td>最弱</td>
+<td>可调</td>
+</tr>
+<tr>
+<td><strong>适用场景</strong></td>
+<td>表达能力强，但参数量大</td>
+<td>参数量小，适合解码加速</td>
+<td>平衡性能与效率，适用于多种场景</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h4 id="_37"><strong>核心区别：</strong><a class="headerlink" href="#_37" title="Permanent link">¶</a></h4>
+<ol>
+<li>
+<p><strong>MHA vs. MQA：</strong></p>
+</li>
+<li>
+<p>MHA：每个头完全独立，参数量大，表达能力强。</p>
+</li>
+<li>
+<p>MQA：所有头共享 $ K $ 和 $ V $，参数量小，解码速度快，但性能可能下降。</p>
+</li>
+<li>
+<p><strong>MQA vs. GQA：</strong></p>
+</li>
+<li>
+<p>MQA：极端情况，所有头共享 $ K $ 和 $ V $。</p>
+</li>
+<li>
+<p>GQA：折中方案，将头分为多组，每组共享 $ K $ 和 $ V $，灵活性更高。</p>
+</li>
+<li>
+<p><strong>MHA vs. GQA：</strong></p>
+</li>
+<li>
+<p>MHA：每个头独立，表达能力强。</p>
+</li>
+<li>GQA：通过分组共享 $ K $ 和 $ V $，在 MHA 和 MQA 之间找到平衡。</li>
+</ol></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../attention/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Attention注意力">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Attention注意力
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../FFN_activation/" class="md-footer__link md-footer__link--next" aria-label="Next: FFN和激活函数">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                FFN和激活函数
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../../../../..", "features": ["announce.dismiss", "navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "search.share", "navigation.expand", "navigation.indexes", "content.tabs.link", "content.tooltips", "content.code.copy", "content.code.select", "content.action.edit", "content.action.view", "content.code.annotate"], "search": "../../../../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": {"\u003ctag\u003e": "\u003cidentifier\u003e"}, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+        <script src="https://kit.fontawesome.com/2b1d8a9758.js"></script>
+      
+        <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"></script>
+      
+        <script src="../../../../../../javascripts/extra.js"></script>
+      
+        <script src="../../../../../../javascripts/bannerSlider.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/gh/Wcowin/Wcowin.github.io@main/docs/javascripts/extra.js"></script>
+      
+        <script src="../../../../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://github.com/Wcowin/Wcowin.github.io/blob/main/docs/javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/gh/Wcowin/Wcowin.github.io@main/docs/javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+      
+        <script src="../../../../../../javascripts/backbound1.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mermaid@10.0.2/dist/add-html-label-6e56ed67.min.js"></script>
+      
+        <script src="https://res.zvo.cn/translate/translate.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/gh/Wcowin/Wcowin.github.io@main/docs/javascripts/view.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax @3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,4113 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://algebra-mcx.github.io/Academic-Profile/Work/paper/read/EmbodiedAI/Crossformer/">
+      
+      
+        <link rel="prev" href="../Octo/">
+      
+      
+        <link rel="next" href="../GR-1/">
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>Cross-former - Chenxi Ma</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Wcowin/Wcowin.github.io@main/docs/stylesheets/link.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Wcowin/Wcowin.github.io@main/docs/stylesheets/card2.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Wcowin/Wcowin.github.io@main/docs/stylesheets/customize.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Wcowin/Wcowin.github.io@main/docs/stylesheets/ziti.css">
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#crossformer" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../../.." title="Chenxi Ma" class="md-header__button md-logo" aria-label="Chenxi Ma" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Chenxi Ma
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Cross-former
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 2c-1.05 0-2.05.16-3 .46 4.06 1.27 7 5.04 7 9.54s-2.94 8.27-7 9.54c.95.3 1.95.46 3 .46a10 10 0 0 0 10-10A10 10 0 0 0 9 2"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/algebra-MCX/Academic-Profile" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Academic-Profile
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../../method/blogs/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  AI
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../Others/git/git%E7%90%86%E8%A7%A3/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  其他有用技术
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../project/AI%20infra/c%E5%92%8Ccpp%E5%9F%BA%E7%A1%80/compile/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Projects
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../publications/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Publications
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../cv.md" class="md-tabs__link">
+          
+  
+  
+    
+  
+  CV
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../contact/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contact me
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../tags/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Tags
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Chenxi Ma" class="md-nav__button md-logo" aria-label="Chenxi Ma" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Chenxi Ma
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/algebra-MCX/Academic-Profile" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Academic-Profile
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    AI
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            AI
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1_1" id="__nav_1_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Blogs
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            Blogs
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_1" id="__nav_1_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    论文写作
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            论文写作
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../method/blogs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    如何找idea
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../method/blogs_write/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    论文写作
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_2" id="__nav_1_1_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Classical Algorithms
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            Classical Algorithms
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_2_1" id="__nav_1_1_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    DL
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_1_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            DL
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_2_1_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_2_1_1" id="__nav_1_1_2_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    NLP
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_1_1_2_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_2_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            NLP
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_2_1_1_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_2_1_1_1" id="__nav_1_1_2_1_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    transformer
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="6" aria-labelledby="__nav_1_1_2_1_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_2_1_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            transformer
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Classical_Algorithms/DL/NLP/transformer/transformer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Transformer
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Classical_Algorithms/DL/NLP/transformer/tokenization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Tokenization分词器
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Classical_Algorithms/DL/NLP/transformer/BPE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Tokenization补充
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Classical_Algorithms/DL/NLP/transformer/word_embedding/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Word Embedding词嵌入
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Classical_Algorithms/DL/NLP/transformer/Pos_embed/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Positional Embedding位置编码
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Classical_Algorithms/DL/NLP/transformer/attention/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Attention注意力
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Classical_Algorithms/DL/NLP/transformer/attention2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Attention(2)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Classical_Algorithms/DL/NLP/transformer/FFN_activation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    FFN和激活函数
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Classical_Algorithms/DL/NLP/transformer/Mask/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Mask掩码
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Classical_Algorithms/DL/NLP/transformer/Normalization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Normalization
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Classical_Algorithms/DL/NLP/transformer/Enco_Deco/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Encoder and Decoder
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_2_2" id="__nav_1_1_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    RL
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_1_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            RL
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Classical_Algorithms/RL/PPO/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PPO
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_3" id="__nav_1_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    LLM
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            LLM
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_3_1" id="__nav_1_1_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    LLM Architecture
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_1_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            LLM Architecture
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_3_1_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_3_1_1" id="__nav_1_1_3_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Encoder-only
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_1_1_3_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_3_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            Encoder-only
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../LLM/LLM_Architecture/Encoder_only/%E9%A2%84%E8%AE%AD%E7%BB%83%E4%BB%BB%E5%8A%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Encoder-only预训练任务
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../LLM/LLM_Architecture/Encoder_only/BERT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    BERT
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../LLM/LLM_Architecture/Encoder_only/Sentence_BERT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Sentence-BERT
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_3_2" id="__nav_1_1_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Pre-training
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_1_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            Pre-training
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../LLM/Pre-training/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E9%A2%84%E8%AE%AD%E7%BB%83%E5%85%A8%E8%A7%A3%E6%9E%90%EF%BC%9A%E5%AE%9A%E4%B9%89%E3%80%81%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E3%80%81%E6%B5%81%E7%A8%8B%E5%8F%8A%E5%A4%9A%E9%98%B6%E6%AE%B5%E8%AE%AD%E7%BB%83%E9%80%BB%E8%BE%91/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    大模型预训练概述
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../LLM/Pre-training/%E9%A2%84%E8%AE%AD%E7%BB%83%E6%95%B0%E6%8D%AE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    预训练数据
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../LLM/Pre-training/%E6%89%A9%E5%85%85%E8%AF%8D%E8%A1%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    基于SentencePiece扩充LLaMa中文词表
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_1_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_4" id="__nav_1_1_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    paper解读
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_1_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_1_4">
+            <span class="md-nav__icon md-icon"></span>
+            paper解读
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_4_1" id="__nav_1_1_4_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    tech_report
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_1_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            tech_report
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_4_1_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_4_1_1" id="__nav_1_1_4_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Deepseek
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_1_1_4_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_4_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            Deepseek
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tech_report/Deepseek/%E6%95%B4%E4%BD%93%E8%A7%A3%E8%AF%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deepseek：基座模型发展
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tech_report/Deepseek/%E6%95%B4%E4%BD%93%E8%A7%A3%E8%AF%BB2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deepseek：reasoning
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tech_report/Deepseek/DeepSeek_v3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deepseek v3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tech_report/Deepseek/Deepseek_r1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deepseek r1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_1_4_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_4_2" id="__nav_1_1_4_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    EmbodiedAI
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_1_4_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_1_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            EmbodiedAI
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../VLA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    机器人基座模型与VLA概述
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ALOHA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ALOHA机器人平台：低成本、高精度双臂操作及其进展深度解析
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Gato%E5%92%8CRT-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    通用智能体与机器人Transformer：Gato和RT-1技术解析及与LLM Transformer的异同
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Octo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Octo——机器人操控的通用框架
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Cross-former
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Cross-former
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 引言
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-crossformer" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. CrossFormer：技术原理与架构
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. CrossFormer：技术原理与架构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1. 整体架构
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2. 训练数据
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-observation-tokenization" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3. 观察标记化 (Observation Tokenization)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-action-prediction" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.4. 动作预测 (Action Prediction)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.5. 实现细节
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#26" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.6. 训练过程
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 评估与性能
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 评估与性能">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1. 评估设置
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2. 基线模型
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3. 主要性能结果
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-crossformer" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. 局限性与未来方向 (源自CrossFormer论文)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 局限性与未来方向 (源自CrossFormer论文)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1. 局限性
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2. 未来研究方向 (作者建议)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. 进一步的研究与发展
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 进一步的研究与发展">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-shadow-leveraging-segmentation-masks-for-cross-embodiment-policy-transfer" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1. Shadow: Leveraging Segmentation Masks for Cross-Embodiment Policy Transfer
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-universal-actions-for-enhanced-embodied-foundation-models-uniact" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2. Universal Actions for Enhanced Embodied Foundation Models (UniAct)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3. 更广阔的背景与启示
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. 结论
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GR-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    GR-1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GR-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    GR-2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_4_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_4_3" id="__nav_1_1_4_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    RM
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_1_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            RM
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../RM/TTRL/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TTRL
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../RM/LCPO/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LCPO
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    其他有用技术
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            其他有用技术
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    git和github
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            git和github
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Others/git/git%E7%90%86%E8%A7%A3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    git理解
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    cpp
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            cpp
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_1" id="__nav_2_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    C++基础语法
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            C++基础语法
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Others/cpp/cpp%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    cpp基础语法
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Projects
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Projects
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    AI infra
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            AI infra
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1_1" id="__nav_3_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    c和cpp基础
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            c和cpp基础
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../project/AI%20infra/c%E5%92%8Ccpp%E5%9F%BA%E7%A1%80/compile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    conpile and link
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1_2" id="__nav_3_1_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    大模型推理框架
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            大模型推理框架
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../project/AI%20infra/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8E%A8%E7%90%86%E6%A1%86%E6%9E%B6/%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    项目结构
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Publications
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Publications
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../publications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Conferences
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    CV
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            CV
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../cv.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    个人简历
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../contact/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Contact me
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Tags
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Tags
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    个人标签
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 引言
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-crossformer" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. CrossFormer：技术原理与架构
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. CrossFormer：技术原理与架构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1. 整体架构
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2. 训练数据
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-observation-tokenization" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3. 观察标记化 (Observation Tokenization)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-action-prediction" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.4. 动作预测 (Action Prediction)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.5. 实现细节
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#26" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.6. 训练过程
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 评估与性能
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 评估与性能">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1. 评估设置
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2. 基线模型
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3. 主要性能结果
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-crossformer" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. 局限性与未来方向 (源自CrossFormer论文)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 局限性与未来方向 (源自CrossFormer论文)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1. 局限性
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2. 未来研究方向 (作者建议)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. 进一步的研究与发展
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 进一步的研究与发展">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-shadow-leveraging-segmentation-masks-for-cross-embodiment-policy-transfer" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1. Shadow: Leveraging Segmentation Masks for Cross-Embodiment Policy Transfer
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-universal-actions-for-enhanced-embodied-foundation-models-uniact" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2. Universal Actions for Enhanced Embodied Foundation Models (UniAct)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3. 更广阔的背景与启示
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. 结论
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/algebra-MCX/Academic-Profile/edit/main/docs/Work/paper/read/EmbodiedAI/Crossformer.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/algebra-MCX/Academic-Profile/raw/main/docs/Work/paper/read/EmbodiedAI/Crossformer.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+<div><h1 id="crossformer">CrossFormer 技术报告：原理、实现与未来展望<a class="headerlink" href="#crossformer" title="Permanent link">¶</a></h1>
+<p><strong>摘要：</strong> 现代机器学习系统依赖大规模数据集来实现广泛的泛化能力，这在机器人学习领域通常是一个挑战，因为每个机器人平台和任务可能只有小规模数据集。通过在多种不同类型的机器人上训练单一策略，机器人学习方法可以利用更广泛、更多样化的数据集，从而提升泛化性和鲁棒性。然而，在多机器人数据上训练单一策略具有挑战性，因为机器人可能拥有差异巨大的传感器、执行器和控制频率。CrossFormer 是一种可扩展且灵活的基于 Transformer 的策略，旨在解决这一挑战，能够处理来自任何机器人本体的数据。该模型在迄今为止最大、最多样化的数据集上进行了训练，包含来自20种不同机器人本体的90万条轨迹。实验证明，相同的网络权重可以控制截然不同的机器人，包括单臂和双臂操作、轮式机器人、四旋翼飞行器和四足机器人。与先前工作不同，CrossFormer 不需要手动对齐观察或动作空间。大量的真实世界实验表明，该方法能够匹敌为每个机器人本体定制的专家策略的性能，并显著优于先前最先进的跨本体学习方法。</p>
+<h2 id="1">1. 引言<a class="headerlink" href="#1" title="Permanent link">¶</a></h2>
+<p>机器人学习领域的一个核心挑战是如何开发出能够泛化到不同任务、环境和机器人硬件的策略。传统方法通常为每个特定的机器人或任务训练单独的策略，这限制了数据的复用，并使得在新机器人或任务上部署时需要大量重新训练。随着大规模预训练模型在自然语言处理和计算机视觉等领域取得巨大成功，研究者们开始探索如何将类似的思想应用于机器人学，旨在构建能够从多样化经验中学习的“机器人基础模型”。</p>
+<p>然而，机器人领域的数据具有高度异构性。不同的机器人拥有不同的传感器套件（例如，不同数量和类型的摄像头、有无本体感受传感器）、不同的动作空间（例如，关节控制、末端执行器姿态控制、速度指令），以及不同的控制频率。这种异构性使得训练一个统一的策略来控制多种机器人变得非常困难。</p>
+<p>CrossFormer (<a href="https://arxiv.org/abs/2408.11812">Doshi et al., 2024</a>) 提出了一种解决方案，旨在创建一个单一的、可扩展的、灵活的基于 Transformer 的策略，该策略能够有效地利用来自不同机器人本体的大规模多样化数据集，而无需手动对齐观察或动作空间。其核心目标是实现一个“通用”机器人控制器，能够操作包括机械臂、导航机器人、四足机器人和飞行器在内的多种机器人平台。</p>
+<h2 id="2-crossformer">2. CrossFormer：技术原理与架构<a class="headerlink" href="#2-crossformer" title="Permanent link">¶</a></h2>
+<p>CrossFormer 的核心是一种基于 Transformer 的策略，它将机器人学习问题建模为一个序列到序列的转换任务。该模型能够处理来自不同机器人本体的、具有可变维度和模态的观察数据，并为它们生成合适的动作指令。</p>
+<h3 id="21">2.1. 整体架构<a class="headerlink" href="#21" title="Permanent link">¶</a></h3>
+<p>CrossFormer 采用了一个共享的、因果的（causal）、仅解码器（decoder-only）的 Transformer 主干网络。其设计关键在于如何灵活地处理不同机器人本体的输入和输出。</p>
+<ul>
+<li><strong>Transformer 主干网络：</strong> 这是模型的核心，负责处理序列化的输入数据并生成用于动作预测的表示。所有机器人本体共享相同的 Transformer 权重，从而促进知识迁移。</li>
+<li><strong>处理多样化观察和动作：</strong> CrossFormer 的一个关键创新在于它不需要手动对齐不同机器人的观察空间或动作空间。它通过将所有输入（观察、任务指令）标记化并组织成一个扁平的序列来实现对可变输入的处理。对于动作，它通过在输入序列中插入“动作读出标记”（action readout tokens），并将相应的输出嵌入传递到特定于动作空间的头部，以生成正确维度的动作向量。</li>
+<li><strong>模态特定标记器（Modality-Specific Tokenizers）：</strong> 原始的观察数据（如图像、本体感受信息）和任务规范（如语言指令、目标图像）首先由特定于其模态的标记器处理，转换成 Transformer 能够理解的标记（tokens）。</li>
+<li><strong>输入序列组装：</strong> 经过标记化的观察和任务规范被组装成一个单一的、扁平的输入标记序列。这种序列化对于处理来自不同机器人的可变数量的摄像头视图或本体感受传感器至关重要。</li>
+<li><strong>动作头（Action Heads）：</strong> Transformer 的输出嵌入被送入独立的动作头。每个动作头特定于某一类机器人本体，并负责为该机器人生成正确维度和类型的动作。</li>
+</ul>
+<p><strong>图1：CrossFormer 策略架构 (改编自 [Doshi et al., 2024, Figure 2])</strong>
+</p><div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span>
+<span class="normal"><a href="#__codelineno-0-15">15</a></span>
+<span class="normal"><a href="#__codelineno-0-16">16</a></span>
+<span class="normal"><a href="#__codelineno-0-17">17</a></span>
+<span class="normal"><a href="#__codelineno-0-18">18</a></span>
+<span class="normal"><a href="#__codelineno-0-19">19</a></span>
+<span class="normal"><a href="#__codelineno-0-20">20</a></span>
+<span class="normal"><a href="#__codelineno-0-21">21</a></span>
+<span class="normal"><a href="#__codelineno-0-22">22</a></span>
+<span class="normal"><a href="#__codelineno-0-23">23</a></span>
+<span class="normal"><a href="#__codelineno-0-24">24</a></span>
+<span class="normal"><a href="#__codelineno-0-25">25</a></span>
+<span class="normal"><a href="#__codelineno-0-26">26</a></span>
+<span class="normal"><a href="#__codelineno-0-27">27</a></span>
+<span class="normal"><a href="#__codelineno-0-28">28</a></span>
+<span class="normal"><a href="#__codelineno-0-29">29</a></span>
+<span class="normal"><a href="#__codelineno-0-30">30</a></span>
+<span class="normal"><a href="#__codelineno-0-31">31</a></span>
+<span class="normal"><a href="#__codelineno-0-32">32</a></span>
+<span class="normal"><a href="#__codelineno-0-33">33</a></span>
+<span class="normal"><a href="#__codelineno-0-34">34</a></span>
+<span class="normal"><a href="#__codelineno-0-35">35</a></span>
+<span class="normal"><a href="#__codelineno-0-36">36</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>+-------------------------+      +-------------------------+      +-------------------------+
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>|   Observation Source 1  |      |   Observation Source 2  | ...  |   Observation Source N  |
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>| (e.g., Workspace Image) |      | (e.g., Proprioception)  |      | (e.g., Language Goal)   |
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>+-------------------------+      +-------------------------+      +-------------------------+
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a>            |                              |                                |
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a>            v                              v                                v
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a>+-------------------------+      +-------------------------+      +-------------------------+
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a>| Modality-Specific Tokenizer 1 | | Modality-Specific Tokenizer 2 | | Modality-Specific Tokenizer N |
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a>+-------------------------+      +-------------------------+      +-------------------------+
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a>            |                              |                                |
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a>            +------------------------------+--------------------------------+
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a>                                           |
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a>                                           v
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a>+-----------------------------------------------------------------------------------+
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a>|                     Input Token Sequence (Flattened and Assembled)                  |
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a>| [Obs_t_src1, Obs_t_src2, ..., Task_t, Readout_t, Obs_t+1_src1, ..., Readout_t+1, ...] |
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a>+-----------------------------------------------------------------------------------+
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a>                                           |
+<a id="__codelineno-0-19" name="__codelineno-0-19"></a>                                           v
+<a id="__codelineno-0-20" name="__codelineno-0-20"></a>+-----------------------------------------------------------------------------------+
+<a id="__codelineno-0-21" name="__codelineno-0-21"></a>|                               Transformer Backbone                                  |
+<a id="__codelineno-0-22" name="__codelineno-0-22"></a>|                      (Causal, Decoder-Only, Shared Weights)                       |
+<a id="__codelineno-0-23" name="__codelineno-0-23"></a>+-----------------------------------------------------------------------------------+
+<a id="__codelineno-0-24" name="__codelineno-0-24"></a>                                           |
+<a id="__codelineno-0-25" name="__codelineno-0-25"></a>                                           v (Embeddings for Readout Tokens)
+<a id="__codelineno-0-26" name="__codelineno-0-26"></a>+-----------------------------------------------------------------------------------+
+<a id="__codelineno-0-27" name="__codelineno-0-27"></a>|                Action-Space Specific Heads (Per Embodiment Class)                 |
+<a id="__codelineno-0-28" name="__codelineno-0-28"></a>| +-----------------+   +-----------------+   +-----------------+   +-----------------+ |
+<a id="__codelineno-0-29" name="__codelineno-0-29"></a>| | Head 1 (e.g.,   |   | Head 2 (e.g.,   |   | Head 3 (e.g.,   |   | Head 4 (e.g.,   | |
+<a id="__codelineno-0-30" name="__codelineno-0-30"></a>| | Single Arm)     |   | Navigation)     |   | Bimanual)       |   | Quadruped)      | |
+<a id="__codelineno-0-31" name="__codelineno-0-31"></a>| +-----------------+   +-----------------+   +-----------------+   +-----------------+ |
+<a id="__codelineno-0-32" name="__codelineno-0-32"></a>+-----------------------------------------------------------------------------------+
+<a id="__codelineno-0-33" name="__codelineno-0-33"></a>        |                      |                      |                      |
+<a id="__codelineno-0-34" name="__codelineno-0-34"></a>        v                      v                      v                      v
+<a id="__codelineno-0-35" name="__codelineno-0-35"></a>  Action Output 1      Action Output 2      Action Output 3      Action Output 4
+<a id="__codelineno-0-36" name="__codelineno-0-36"></a> (Correct Dimension)  (Correct Dimension)  (Correct Dimension)  (Correct Dimension)
+</code></pre></div></td></tr></table></div>
+<h3 id="22">2.2. 训练数据<a class="headerlink" href="#22" title="Permanent link">¶</a></h3>
+<p>CrossFormer 在一个大规模且高度多样化的数据集上进行训练，这是其实现广泛泛化能力的关键。</p>
+<ul>
+<li><strong>数据集规模与多样性：</strong> 训练数据包含 <strong>90万条轨迹</strong>，横跨 <strong>20种不同的机器人本体</strong>。这些机器人包括单臂和双臂操作平台、轮式导航机器人、四旋翼飞行器和四足机器人。</li>
+<li><strong>关键数据集：</strong> 数据集的核心部分源自 Open Cross-Embodiment dataset (OXE) 的单臂操作子集。此外，还包括：<ul>
+<li>DROID Franka 操作数据集</li>
+<li>ALOHA-multi-task：包含7000条ALOHA双臂操作轨迹</li>
+<li>GNM 数据集：包含60小时的导航数据</li>
+<li>Go1-walk：包含Unitree Go1四足机器人25分钟的行走数据</li>
+<li>Franka-tabletop：作者实验室收集的200条额外Franka单臂操作轨迹</li>
+</ul>
+</li>
+<li><strong>数据组成与采样权重：</strong> 为了平衡不同类型机器人的数据，训练批次中的数据按特定比例采样。平均而言，每个训练批次的数据构成为：单臂操作 (58%)，双臂操作 (17%)，导航 (17%)，四足 (8%)。特定的“目标数据集”（如BridgeData之于WidowX评估）在训练时会被上采样以优化在特定评估设置上的性能。详细的各数据集采样权重见原论文附录A。</li>
+</ul>
+<h3 id="23-observation-tokenization">2.3. 观察标记化 (Observation Tokenization)<a class="headerlink" href="#23-observation-tokenization" title="Permanent link">¶</a></h3>
+<p>CrossFormer 能够处理多种类型的观察输入，并将它们转换为 Transformer 主干网络可以处理的统一标记序列。</p>
+<ul>
+<li><strong>支持的观察类型：</strong><ul>
+<li><strong>工作区图像 (Workspace Image)：</strong> 通常用于操作任务的第三方视角摄像头图像。</li>
+<li><strong>导航图像 (Navigation Image)：</strong> 用于导航任务的机器人自我中心视角图像。</li>
+<li><strong>腕部图像 (Wrist Image)：</strong> 安装在机械臂腕部的摄像头图像，也用于操作任务。</li>
+<li><strong>四足本体感受 (Quadruped Proprioception)：</strong> 四足机器人的关节位置和速度估计。</li>
+<li><strong>双臂本体感受 (Bimanual Proprioception)：</strong> 双臂操作平台的关节位置。</li>
+</ul>
+</li>
+<li><strong>图像标记化：</strong><ul>
+<li>图像首先通过一个 <strong>ResNet-26 编码器</strong> 进行处理，生成特征图。</li>
+<li>该特征图在空间维度上被展平。</li>
+<li>然后通过线性投影将其转换为 Transformer 的标记嵌入大小。</li>
+</ul>
+</li>
+<li><strong>本体感受标记化：</strong><ul>
+<li>本体感受观察（如关节位置、速度估计）被直接线性投影到标记嵌入大小。</li>
+</ul>
+</li>
+<li><strong>任务规范 (Task Specification)：</strong> 策略可以接受两种形式的任务规范：<ul>
+<li><strong>语言指令：</strong> 语言指令与图像观察一起使用 <strong>FiLM (Feature-wise Linear Modulation)</strong> 进行处理。</li>
+<li><strong>目标图像：</strong> 目标图像在输入图像编码器之前，在通道维度上与当前图像堆叠。</li>
+</ul>
+</li>
+<li><strong>图像编码器权重共享：</strong> 为了最大化跨不同机器人本体的知识迁移，相同类型的摄像头视图共享图像编码器权重。例如，单臂和双臂操作设置中的工作区图像都由同一个ResNet图像编码器处理。总共使用了四个图像编码器：一个用于工作区视图，一个用于自我中心导航视图，两个用于腕部摄像头。</li>
+<li><strong>处理缺失观察：</strong> 对于特定机器人本体缺失的观察类型，在实际操作中会被掩码（masked），以确保每个训练批次包含所有观察类型和读出标记组，它们在上下文窗口中占据固定位置。</li>
+</ul>
+<p>输入序列由长度为 <code>k</code> 的观察历史构成，每个时间步的观察被标记化后组装成如 <span class="arithmatex">\([I_{t}^{1:L}, P_{t}^{1:M}, ..., I_{t+k}^{1:L}, P_{t+k}^{1:M}]\)</span> 的形式，其中 <span class="arithmatex">\(I\)</span> 代表图像标记，<span class="arithmatex">\(P\)</span> 代表本体感受标记，<span class="arithmatex">\(L\)</span> 和 <span class="arithmatex">\(M\)</span> 分别是它们的标记数量。</p>
+<h3 id="24-action-prediction">2.4. 动作预测 (Action Prediction)<a class="headerlink" href="#24-action-prediction" title="Permanent link">¶</a></h3>
+<p>CrossFormer 能够为不同机器人本体预测可变长度和维度的动作。</p>
+<ul>
+<li><strong>动作读出标记 (Action Readout Tokens, R)：</strong> 在每个时间步的观察标记之后，特殊的“读出标记”被插入到输入标记序列中。这些读出标记被设计为仅关注（attend to）先前的观察标记，并作为预测动作的便捷表示。输入序列的结构变为 <span class="arithmatex">\([I_{t}^{1:L}, P_{t}^{1:M}, R_{t}^{1:N}, ..., I_{t+k}^{1:L}, P_{t+k}^{1:M}, R_{t+k}^{1:N}]\)</span>，其中 <span class="arithmatex">\(N\)</span> 是读出标记的数量。</li>
+<li><strong>动作空间特定的头部 (Action-Space Specific Heads)：</strong> 输入标记序列通过 Transformer 后，对应于读出标记的输出嵌入被送入特定于该机器人动作空间的动作头，以生成最终的动作。这些头部通常是简单的线性投影层。</li>
+<li><strong>可变长度动作预测与动作分块 (Action Chunking)：</strong> CrossFormer 可以预测可变大小的动作“块”（chunks of actions）。这种技术对于高控制频率的机器人（如精细操作任务）尤其重要，因为它能提高动作的时间一致性并减少累积误差。每个机器人本体的读出标记数量与其对应的动作块大小相匹配。</li>
+<li><strong>支持的动作类型与特性：</strong> CrossFormer 包含四个不同的动作头，为不同类型的机器人生成分块动作：<ul>
+<li><strong>单臂笛卡尔位置：</strong> 7维动作（末端执行器相对笛卡尔位置变化和夹爪驱动）。预测4个动作块，执行频率5-15Hz。</li>
+<li><strong>导航路标点：</strong> 2维动作（相对于机器人当前位置的路标点）。预测4个动作块，执行频率4Hz。</li>
+<li><strong>双臂关节位置：</strong> 14维动作（双臂的关节位置）。预测100个动作块，执行频率20Hz。</li>
+<li><strong>四足关节位置：</strong> 12维动作（腿部关节位置）。不进行分块（预测1个动作），执行频率20Hz。</li>
+</ul>
+</li>
+<li><strong>损失函数：</strong> 策略预测连续动作，并使用 L1 损失函数进行训练，这在先前的高频双臂操作研究中被证明是有效的。</li>
+</ul>
+<h3 id="25">2.5. 实现细节<a class="headerlink" href="#25" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>模型参数：</strong> 包括ResNet-26图像编码器和动作头在内，整个模型拥有 <strong>1.3亿 (130M)</strong> 参数。<ul>
+<li>Transformer 层数：12层</li>
+<li>注意力头数：8个</li>
+<li>标记嵌入大小 (Token Embedding Size)：512</li>
+<li>MLP 维度 (MLP Dimension)：2048</li>
+</ul>
+</li>
+<li><strong>上下文长度 (Context Length)：</strong> 上下文窗口大小为 <strong>2135个标记</strong>，这允许在所有观察和读出标记组都存在的情况下，容纳5个时间步的上下文。</li>
+</ul>
+<h3 id="26">2.6. 训练过程<a class="headerlink" href="#26" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>优化器：</strong> 使用 AdamW 优化器。</li>
+<li><strong>学习率：</strong> 初始学习率为 <span class="arithmatex">\(3 \times 10^{-4}\)</span>。</li>
+<li><strong>学习率调度器：</strong> 采用反平方根学习率调度策略，包含2000个预热步骤 (warmup steps)。</li>
+<li><strong>权重衰减 (Weight Decay)：</strong> 0.1。</li>
+<li><strong>梯度裁剪 (Gradient Clipping)：</strong> 阈值为1.0。</li>
+<li><strong>批次大小 (Batch Size)：</strong> 512。</li>
+<li><strong>总训练步数：</strong> 30万次梯度步。</li>
+<li><strong>训练时间与硬件：</strong> 在TPU V5e-256 Pod上训练耗时约47小时 (原论文正文) 或80小时 (原论文附录B)。</li>
+<li><strong>初始化：</strong> ResNet-26 编码器使用 ImageNet 预训练权重进行初始化。</li>
+<li><strong>数据增强：</strong> 训练期间应用了标准的图像增强方法，特别是颜色抖动 (color jitter) 和随机调整大小/裁剪 (random resizing/cropping)。</li>
+<li><strong>事后目标重标签 (Hindsight Goal Relabeling)：</strong> 使用了事后目标重标签技术，并从未来观察中均匀随机采样作为目标。</li>
+<li><strong>任务规范掩码：</strong> 如果轨迹有可用的语言指令，则随机掩盖语言指令或目标图像。这使得策略在测试时可以根据任一任务规范进行条件化。</li>
+<li><strong>检查点选择：</strong> 根据验证均方误差选择模型和基线的检查点，因为发现这与机器人性能大致相关。</li>
+</ul>
+<h2 id="3">3. 评估与性能<a class="headerlink" href="#3" title="Permanent link">¶</a></h2>
+<p>CrossFormer 在多种真实机器人和任务上进行了广泛评估，以验证其有效性。</p>
+<h3 id="31">3.1. 评估设置<a class="headerlink" href="#31" title="Permanent link">¶</a></h3>
+<p>评估旨在回答以下关键问题：
+1.  CrossFormer 能否匹敌仅在目标机器人数据上训练的策略的性能？
+2.  CrossFormer 能否匹敌每个机器人设置中先前最佳模仿学习方法的性能？
+3.  与先前对齐观察和动作空间的跨本体策略相比，CrossFormer 表现如何？</p>
+<p>评估在以下机器人本体和任务上进行：
+* <strong>WidowX 操作：</strong>
+    * 设置：使用 Bridge 设置。
+    * 视图：过肩摄像头视图。
+    * 任务：语言条件（“将勺子放在布上”，“将胡萝卜放在盘子上”）和目标条件（“将蘑菇放入锅中”，“将布放在碟子上”）。
+* <strong>Franka 操作：</strong>
+    * 设置：使用 DROID 设置。
+    * 视图：过肩摄像头视图。
+    * 任务：语言条件（“用海绵将松果扫入簸箕”，“将锅翻正”）。
+* <strong>ALOHA 双臂操作：</strong>
+    * 设置：使用 ALOHA 设置。
+    * 视图：三个摄像头视图（一个头顶，两个腕部）。
+    * 任务：语言条件（“取下笔帽”，“拿起刀切寿司”）。
+* <strong>LoCoBot 导航：</strong>
+    * 设置：使用 LoCoBot 设置。
+    * 视图：一个摄像头视图。
+    * 技能：路径跟随、避障、急转弯。
+* <strong>Go1 四足机器人：</strong>
+    * 设置：Unitree Go1。
+    * 观察：本体感受。
+    * 任务：向前行走（直接控制关节）。
+* <strong>Tello 四旋翼飞行器：</strong>
+    * 设置：Tello。
+    * 动作：使用导航头输出2D相对路标点，保持固定高度。
+    * 泛化：零样本泛化到新本体（训练数据中无四旋翼数据）。
+    * 任务：转弯。</p>
+<h3 id="32">3.2. 基线模型<a class="headerlink" href="#32" title="Permanent link">¶</a></h3>
+<p>CrossFormer 与以下基线进行了比较：
+* <strong>单一机器人数据集基线 (Single-Robot Dataset Baseline)：</strong> 使用 CrossFormer 的架构，但仅在目标机器人本体的数据上进行训练。为避免在小数据集上过拟合，使用了较小版本的架构 (5M-95M 参数)。
+* <strong>先前最佳方法 (Best Prior Method)：</strong> 针对每种机器人调整的最佳现有模仿学习方法：
+    * WidowX: Octo
+    * Franka: OpenVLA
+    * ALOHA: ACT
+    * LoCoBot 和 Tello: VINT
+    * Go1: 无合适的先前模仿学习方法。
+* <strong>Yang et al. (2023) 策略：</strong> 一种对齐导航和操作任务的观察和动作空间的策略。</p>
+<h3 id="33">3.3. 主要性能结果<a class="headerlink" href="#33" title="Permanent link">¶</a></h3>
+<ul>
+<li>
+<p><strong>与单一机器人数据集基线比较：</strong></p>
+<ul>
+<li>CrossFormer 在所有评估中表现与仅在目标数据集上训练的策略相当，表明从差异巨大的机器人本体吸收数据并未导致负迁移。</li>
+<li>在所有机器人本体上的平均成功率为：CrossFormer <strong>73%</strong> vs. 单一机器人基线 <strong>67%</strong>。</li>
+</ul>
+</li>
+<li>
+<p><strong>与先前最佳方法比较：</strong></p>
+<ul>
+<li>CrossFormer 在每个评估设置中表现与先前最佳模仿学习方法相似，展示了其匹敌为单个机器人专门开发和调整的SOTA方法的能力。</li>
+<li>在所有机器人本体上的平均成功率为：CrossFormer <strong>73%</strong> vs. 先前最佳方法 <strong>51%</strong> (Go1被排除在此平均值之外，因无合适的先前方法)。</li>
+</ul>
+</li>
+<li>
+<p><strong>与 Yang et al. 比较：</strong></p>
+<ul>
+<li>CrossFormer 的整体性能显著优于 Yang et al. (约3倍)。</li>
+<li>在LoCoBot导航任务中，CrossFormer 在所有场景均大幅优于 Yang et al.，表现出更平滑的导航。</li>
+<li>在WidowX操作任务中，Yang et al. 成功率为零，而CrossFormer表现良好。作者推测这可能是因为 Yang et al. 一次只输入一个摄像头视图，可能导致对第三方视角控制的欠拟合。CrossFormer的灵活架构允许同时接受多个摄像头视图。</li>
+<li>这些结果表明，手动对齐观察和动作空间对于良好性能并非必需，CrossFormer的灵活架构使其能更好地适应异构的跨本体数据。</li>
+</ul>
+</li>
+</ul>
+<p><strong>详细评估结果摘要 (改编自 [Doshi et al., 2024, Table 3])</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">任务类别 (代表性任务)</th>
+<th style="text-align: left;">单一机器人数据集</th>
+<th style="text-align: left;">先前最佳方法</th>
+<th style="text-align: left;">CrossFormer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>WidowX 操作</strong> (平均成功率)</td>
+<td style="text-align: left;">0.42</td>
+<td style="text-align: left;">0.34</td>
+<td style="text-align: left;">0.40</td>
+</tr>
+<tr>
+<td style="text-align: left;"><em>放勺子到布上</em></td>
+<td style="text-align: left;">0.25</td>
+<td style="text-align: left;">0.25 (Octo)</td>
+<td style="text-align: left;">0.25</td>
+</tr>
+<tr>
+<td style="text-align: left;"><em>放蘑菇到锅里</em></td>
+<td style="text-align: left;">0.00</td>
+<td style="text-align: left;">0.17 (Octo)</td>
+<td style="text-align: left;">0.25</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Franka 操作</strong> (平均成功率)</td>
+<td style="text-align: left;">0.55</td>
+<td style="text-align: left;">0.57</td>
+<td style="text-align: left;">0.55</td>
+</tr>
+<tr>
+<td style="text-align: left;"><em>用海绵扫松果</em></td>
+<td style="text-align: left;">0.41</td>
+<td style="text-align: left;">0.52 (OpenVLA)</td>
+<td style="text-align: left;">0.41</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ALOHA 双臂</strong> (平均成功率)</td>
+<td style="text-align: left;">0.50</td>
+<td style="text-align: left;">0.50</td>
+<td style="text-align: left;">0.70</td>
+</tr>
+<tr>
+<td style="text-align: left;"><em>取下笔帽</em></td>
+<td style="text-align: left;">0.60</td>
+<td style="text-align: left;">0.70 (ACT)</td>
+<td style="text-align: left;">0.80</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>LoCoBot 导航</strong> (平均到达子目标比例)</td>
+<td style="text-align: left;">0.92</td>
+<td style="text-align: left;">0.48</td>
+<td style="text-align: left;">0.93</td>
+</tr>
+<tr>
+<td style="text-align: left;"><em>避障</em></td>
+<td style="text-align: left;">0.95</td>
+<td style="text-align: left;">0.30 (VINT)</td>
+<td style="text-align: left;">0.95</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Tello 四旋翼</strong> (平均到达子目标比例)</td>
+<td style="text-align: left;">0.68</td>
+<td style="text-align: left;">0.68 (VINT)</td>
+<td style="text-align: left;">0.82</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Go1 四足</strong> (标准化奖励)</td>
+<td style="text-align: left;">1.00</td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;">1.00</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>总体平均 (不含 Go1 先前方法)</strong></td>
+<td style="text-align: left;"><strong>0.68</strong></td>
+<td style="text-align: left;"><strong>0.51</strong></td>
+<td style="text-align: left;"><strong>0.73</strong></td>
+</tr>
+</tbody>
+</table>
+<p><em>(注：上表为简化摘要，具体任务和试验次数请参考原论文)</em></p>
+<h2 id="4-crossformer">4. 局限性与未来方向 (源自CrossFormer论文)<a class="headerlink" href="#4-crossformer" title="Permanent link">¶</a></h2>
+<p>尽管 CrossFormer 取得了显著进展，但作者也指出了其存在的一些局限性，并提出了未来的研究方向。</p>
+<h3 id="41">4.1. 局限性<a class="headerlink" href="#41" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>对未见过的机器人本体的泛化：</strong> 虽然 CrossFormer 能处理训练中见过的多种机器人，但其对全新、形态迥异的机器人本体的零样本泛化能力仍有待探索。</li>
+<li><strong>对新动作/观察空间的数据需求：</strong> 当引入具有全新动作或观察空间的机器人时，模型可能仍需要一些领域内数据进行微调或适应。</li>
+<li><strong>样本效率：</strong> 虽然利用了大规模数据集，但进一步提高样本效率，特别是对于新本体或新任务的适应，仍然是一个挑战。</li>
+<li><strong>可解释性：</strong> 与许多基于 Transformer 的大规模模型类似，CrossFormer 内部决策过程的可解释性有待提高。</li>
+<li><strong>静态世界假设：</strong> 当前的评估主要在相对可控的环境中进行，对动态、非结构化环境的鲁棒性需要进一步研究。</li>
+<li><strong>单个本体内的多任务学习：</strong> 虽然模型是跨本体的，但在单个机器人本体上执行大量语义不同任务的能力可以进一步增强。</li>
+</ul>
+<h3 id="42">4.2. 未来研究方向 (作者建议)<a class="headerlink" href="#42" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>提升对全新机器人的泛化能力：</strong> 研究如何使模型能更好地零样本或少样本泛化到训练中未曾见过的机器人本体，可能通过更抽象的机器人表示或元学习方法。</li>
+<li><strong>减少对新本体的数据需求：</strong> 开发更高效的迁移学习和领域自适应技术，以最小化引入新机器人时所需的数据量。</li>
+<li><strong>与语言模型集成以实现复杂推理/规划：</strong> 将 CrossFormer 与大规模语言模型 (LLMs) 结合，以实现更高级的指令理解、任务规划和场景推理能力。</li>
+<li><strong>整合触觉感知：</strong> 将触觉等其他重要感知模态融入模型，以增强操作任务的灵巧性和鲁棒性。</li>
+<li><strong>与强化学习结合：</strong> 探索将模仿学习与强化学习相结合的范式，利用模仿学习进行初始化，再通过强化学习进行微调和探索，以学习更复杂或数据稀疏的任务。</li>
+</ul>
+<h2 id="5">5. 进一步的研究与发展<a class="headerlink" href="#5" title="Permanent link">¶</a></h2>
+<p>CrossFormer 的提出正值机器人基础模型研究兴起之时。自其发布以来（arXiv预印本2024年8月），相关领域持续活跃，研究者们从不同角度探索如何构建更通用、更强大的机器人智能体。</p>
+<h3 id="51-shadow-leveraging-segmentation-masks-for-cross-embodiment-policy-transfer">5.1. Shadow: Leveraging Segmentation Masks for Cross-Embodiment Policy Transfer<a class="headerlink" href="#51-shadow-leveraging-segmentation-masks-for-cross-embodiment-policy-transfer" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>作者与会议：</strong> Lepert, Doshi, Bohg, CoRL 2024. (Ria Doshi 是 CrossFormer 的共同作者)</li>
+<li><strong>核心思想：</strong> "Shadow" 提出了一种数据编辑方案，利用分割掩码来实现机器人操作策略到未见过的机器人手臂的零样本视觉迁移。其关键在于通过分割出与任务相关的物体（如工具、目标物体），使得策略能够专注于这些关键元素，而忽略机器人手臂本身的视觉外观差异。这使得在仅有源机器人数据的情况下，策略也能应用于目标机器人，只要分割掩码能够可靠地提取。</li>
+<li><strong>与CrossFormer的关系：</strong> "Shadow" 的研究方向与 CrossFormer 具有互补性。CrossFormer 旨在构建一个能够处理多种传感器和动作空间的统一架构，并在大规模多样化数据上训练。而 "Shadow" 则专注于解决特定场景下的视觉跨本体迁移问题，特别是针对机械臂操作，通过显式地利用分割信息来提升零样本迁移性能。这种方法可以被视为一种增强跨本体泛化能力的特定技术，有可能与 CrossFormer 这样的通用架构相结合。</li>
+</ul>
+<h3 id="52-universal-actions-for-enhanced-embodied-foundation-models-uniact">5.2. Universal Actions for Enhanced Embodied Foundation Models (UniAct)<a class="headerlink" href="#52-universal-actions-for-enhanced-embodied-foundation-models-uniact" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>作者与会议：</strong> Zheng et al., CVPR 2025 (arXiv:2501.10105).</li>
+<li><strong>核心思想：</strong> 该研究针对机器人基础模型中动作空间异构性带来的挑战，提出了一个名为 <code>UniAct</code> 的新框架。<code>UniAct</code> 的核心是在一个“通用动作空间”（Universal Action Space）中操作。它通过利用不同机器人动作之间的共享结构特征，学习能够捕获跨多种机器人普适原子行为的“通用动作”。这些通用动作随后可以被翻译回特定机器人可执行的异构指令，从而实现对新机器人的快速适应。</li>
+<li><strong>与CrossFormer的关系：</strong> <code>UniAct</code> 与 CrossFormer 同样致力于解决跨机器人本体学习中的动作异构性问题。然而，它们采取了不同的策略。CrossFormer 通过为每类机器人本体配备特定的动作头，并在训练中让模型自行学习如何从共享表示映射到特定动作空间，从而避免了对动作空间的显式对齐。相比之下，<code>UniAct</code> 试图定义并学习一个中间的、通用的动作表示。这两种方法代表了处理动作异构性的不同思路：CrossFormer 强调架构的灵活性和隐式学习，而 <code>UniAct</code> 则探索显式的通用动作抽象。</li>
+</ul>
+<h3 id="53">5.3. 更广阔的背景与启示<a class="headerlink" href="#53" title="Permanent link">¶</a></h3>
+<p>CrossFormer 的工作，连同 "Shadow" 和 "UniAct" 等相关研究，共同描绘了机器人学习领域向更通用、更大数据驱动模型发展的趋势。这些研究表明，通过精心设计的架构、大规模多样化的数据以及创新的表征学习方法，有可能克服机器人硬件和任务的异构性，构建出能够适应多种场景的机器人智能体。未来的研究可能会继续探索如何更有效地融合来自不同来源的数据，如何实现更鲁棒的零样本/少样本泛化，以及如何将这些模型与高级认知能力（如长期规划、复杂推理）相结合。</p>
+<h2 id="6">6. 结论<a class="headerlink" href="#6" title="Permanent link">¶</a></h2>
+<p>CrossFormer 作为一种可扩展且灵活的跨本体机器人策略，在推动机器人学习向通用化方向发展方面迈出了重要一步。其核心贡献在于提出了一种无需手动对齐观察和动作空间的 Transformer 架构，能够有效利用来自多种机器人（包括操作、导航、移动和飞行平台）的大规模数据集进行训练，并在真实世界的多种任务中展现出与专家策略相当的性能。</p>
+<p>通过巧妙的标记化方案、动作读出机制和特定于本体的动作头，CrossFormer 成功地用一套共享网络权重控制了形态和功能迥异的机器人。这不仅验证了构建通用机器人控制器的可行性，也为未来机器人基础模型的研究奠定了坚实基础。尽管存在一些局限性，如对全新本体的泛化能力和样本效率等，但 CrossFormer 及其揭示的未来研究方向，无疑将持续激励该领域向着更强大、更普适的机器人智能不断迈进。</p></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../Octo/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Octo——机器人操控的通用框架">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Octo——机器人操控的通用框架
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../GR-1/" class="md-footer__link md-footer__link--next" aria-label="Next: GR-1">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                GR-1
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../../../..", "features": ["announce.dismiss", "navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "search.share", "navigation.expand", "navigation.indexes", "content.tabs.link", "content.tooltips", "content.code.copy", "content.code.select", "content.action.edit", "content.action.view", "content.code.annotate"], "search": "../../../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": {"\u003ctag\u003e": "\u003cidentifier\u003e"}, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+        <script src="https://kit.fontawesome.com/2b1d8a9758.js"></script>
+      
+        <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"></script>
+      
+        <script src="../../../../../javascripts/extra.js"></script>
+      
+        <script src="../../../../../javascripts/bannerSlider.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/gh/Wcowin/Wcowin.github.io@main/docs/javascripts/extra.js"></script>
+      
+        <script src="../../../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://github.com/Wcowin/Wcowin.github.io/blob/main/docs/javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/gh/Wcowin/Wcowin.github.io@main/docs/javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+      
+        <script src="../../../../../javascripts/backbound1.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mermaid@10.0.2/dist/add-html-label-6e56ed67.min.js"></script>
+      
+        <script src="https://res.zvo.cn/translate/translate.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/gh/Wcowin/Wcowin.github.io@main/docs/javascripts/view.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax @3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

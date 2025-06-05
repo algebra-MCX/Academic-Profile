@@ -1,0 +1,4473 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://algebra-mcx.github.io/Academic-Profile/Work/paper/read/EmbodiedAI/Gato%E5%92%8CRT-1/">
+      
+      
+        <link rel="prev" href="../ALOHA/">
+      
+      
+        <link rel="next" href="../Octo/">
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>通用智能体与机器人Transformer：Gato和RT-1技术解析及与LLM Transformer的异同 - Chenxi Ma</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Wcowin/Wcowin.github.io@main/docs/stylesheets/link.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Wcowin/Wcowin.github.io@main/docs/stylesheets/card2.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Wcowin/Wcowin.github.io@main/docs/stylesheets/customize.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Wcowin/Wcowin.github.io@main/docs/stylesheets/ziti.css">
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#transformergatort-1llm-transformer" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../../.." title="Chenxi Ma" class="md-header__button md-logo" aria-label="Chenxi Ma" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Chenxi Ma
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              通用智能体与机器人Transformer：Gato和RT-1技术解析及与LLM Transformer的异同
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 2c-1.05 0-2.05.16-3 .46 4.06 1.27 7 5.04 7 9.54s-2.94 8.27-7 9.54c.95.3 1.95.46 3 .46a10 10 0 0 0 10-10A10 10 0 0 0 9 2"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/algebra-MCX/Academic-Profile" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Academic-Profile
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../../method/blogs/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  AI
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../Others/git/git%E7%90%86%E8%A7%A3/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  其他有用技术
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../project/AI%20infra/c%E5%92%8Ccpp%E5%9F%BA%E7%A1%80/compile/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Projects
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../publications/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Publications
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../cv.md" class="md-tabs__link">
+          
+  
+  
+    
+  
+  CV
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../contact/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contact me
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../tags/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Tags
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Chenxi Ma" class="md-nav__button md-logo" aria-label="Chenxi Ma" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Chenxi Ma
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/algebra-MCX/Academic-Profile" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Academic-Profile
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    AI
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            AI
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1_1" id="__nav_1_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Blogs
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            Blogs
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_1" id="__nav_1_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    论文写作
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            论文写作
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../method/blogs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    如何找idea
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../method/blogs_write/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    论文写作
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_2" id="__nav_1_1_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Classical Algorithms
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            Classical Algorithms
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_2_1" id="__nav_1_1_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    DL
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_1_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            DL
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_2_1_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_2_1_1" id="__nav_1_1_2_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    NLP
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_1_1_2_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_2_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            NLP
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_2_1_1_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_2_1_1_1" id="__nav_1_1_2_1_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    transformer
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="6" aria-labelledby="__nav_1_1_2_1_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_2_1_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            transformer
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Classical_Algorithms/DL/NLP/transformer/transformer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Transformer
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Classical_Algorithms/DL/NLP/transformer/tokenization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Tokenization分词器
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Classical_Algorithms/DL/NLP/transformer/BPE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Tokenization补充
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Classical_Algorithms/DL/NLP/transformer/word_embedding/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Word Embedding词嵌入
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Classical_Algorithms/DL/NLP/transformer/Pos_embed/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Positional Embedding位置编码
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Classical_Algorithms/DL/NLP/transformer/attention/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Attention注意力
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Classical_Algorithms/DL/NLP/transformer/attention2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Attention(2)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Classical_Algorithms/DL/NLP/transformer/FFN_activation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    FFN和激活函数
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Classical_Algorithms/DL/NLP/transformer/Mask/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Mask掩码
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Classical_Algorithms/DL/NLP/transformer/Normalization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Normalization
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Classical_Algorithms/DL/NLP/transformer/Enco_Deco/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Encoder and Decoder
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_2_2" id="__nav_1_1_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    RL
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_1_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            RL
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Classical_Algorithms/RL/PPO/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PPO
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_3" id="__nav_1_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    LLM
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            LLM
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_3_1" id="__nav_1_1_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    LLM Architecture
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_1_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            LLM Architecture
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_3_1_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_3_1_1" id="__nav_1_1_3_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Encoder-only
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_1_1_3_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_3_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            Encoder-only
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../LLM/LLM_Architecture/Encoder_only/%E9%A2%84%E8%AE%AD%E7%BB%83%E4%BB%BB%E5%8A%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Encoder-only预训练任务
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../LLM/LLM_Architecture/Encoder_only/BERT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    BERT
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../LLM/LLM_Architecture/Encoder_only/Sentence_BERT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Sentence-BERT
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_3_2" id="__nav_1_1_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Pre-training
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_1_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            Pre-training
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../LLM/Pre-training/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E9%A2%84%E8%AE%AD%E7%BB%83%E5%85%A8%E8%A7%A3%E6%9E%90%EF%BC%9A%E5%AE%9A%E4%B9%89%E3%80%81%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E3%80%81%E6%B5%81%E7%A8%8B%E5%8F%8A%E5%A4%9A%E9%98%B6%E6%AE%B5%E8%AE%AD%E7%BB%83%E9%80%BB%E8%BE%91/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    大模型预训练概述
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../LLM/Pre-training/%E9%A2%84%E8%AE%AD%E7%BB%83%E6%95%B0%E6%8D%AE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    预训练数据
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../LLM/Pre-training/%E6%89%A9%E5%85%85%E8%AF%8D%E8%A1%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    基于SentencePiece扩充LLaMa中文词表
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_1_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_4" id="__nav_1_1_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    paper解读
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_1_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_1_4">
+            <span class="md-nav__icon md-icon"></span>
+            paper解读
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_4_1" id="__nav_1_1_4_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    tech_report
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_1_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            tech_report
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_4_1_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_4_1_1" id="__nav_1_1_4_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Deepseek
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_1_1_4_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_4_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            Deepseek
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tech_report/Deepseek/%E6%95%B4%E4%BD%93%E8%A7%A3%E8%AF%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deepseek：基座模型发展
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tech_report/Deepseek/%E6%95%B4%E4%BD%93%E8%A7%A3%E8%AF%BB2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deepseek：reasoning
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tech_report/Deepseek/DeepSeek_v3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deepseek v3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tech_report/Deepseek/Deepseek_r1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deepseek r1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_1_4_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_4_2" id="__nav_1_1_4_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    EmbodiedAI
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_1_4_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_1_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            EmbodiedAI
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../VLA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    机器人基座模型与VLA概述
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ALOHA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ALOHA机器人平台：低成本、高精度双臂操作及其进展深度解析
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    通用智能体与机器人Transformer：Gato和RT-1技术解析及与LLM Transformer的异同
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    通用智能体与机器人Transformer：Gato和RT-1技术解析及与LLM Transformer的异同
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 引言：通用人工智能与机器人的追求
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 引言：通用人工智能与机器人的追求">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1. 基础模型与通用智能体范式转变
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-gatort-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2. Gato和RT-1在通用智能体愿景中的定位
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-gato" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Gato
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Gato">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1. 动机与愿景：迈向多模态通用智能体
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2. 技术原理与架构
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3. 实现细节与训练范式
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-googledeepmindrt-1-robotics-transformer-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Google/DeepMind的“RT-1 (Robotics Transformer 1)”
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Google/DeepMind的“RT-1 (Robotics Transformer 1)”">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1. 动机与愿景：扩展机器人泛化能力
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2. 技术架构与输入/输出处理
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3. 数据收集策略与泛化能力
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4. 性能与鲁棒性
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-transformertransformer" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. 区别：机器人Transformer与大型语言模型Transformer
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 区别：机器人Transformer与大型语言模型Transformer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1. 架构相似性与基本原理
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2. 目的与应用领域的差异
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3. 输入/输出模态与处理的差异
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4. 训练数据特性与规模
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. 结论与未来展望
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 结论与未来展望">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1. 贡献总结
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2. 根本区别与共同原理的重申
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Octo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Octo——机器人操控的通用框架
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Crossformer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Cross-former
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GR-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    GR-1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../GR-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    GR-2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_4_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_4_3" id="__nav_1_1_4_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    RM
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_1_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            RM
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../RM/TTRL/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TTRL
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../RM/LCPO/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LCPO
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    其他有用技术
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            其他有用技术
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    git和github
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            git和github
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Others/git/git%E7%90%86%E8%A7%A3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    git理解
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    cpp
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            cpp
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_1" id="__nav_2_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    C++基础语法
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            C++基础语法
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Others/cpp/cpp%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    cpp基础语法
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Projects
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Projects
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    AI infra
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            AI infra
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1_1" id="__nav_3_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    c和cpp基础
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            c和cpp基础
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../project/AI%20infra/c%E5%92%8Ccpp%E5%9F%BA%E7%A1%80/compile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    conpile and link
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1_2" id="__nav_3_1_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    大模型推理框架
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            大模型推理框架
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../project/AI%20infra/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8E%A8%E7%90%86%E6%A1%86%E6%9E%B6/%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    项目结构
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Publications
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Publications
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../publications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Conferences
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    CV
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            CV
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../cv.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    个人简历
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../contact/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Contact me
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Tags
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Tags
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    个人标签
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 引言：通用人工智能与机器人的追求
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 引言：通用人工智能与机器人的追求">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1. 基础模型与通用智能体范式转变
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-gatort-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2. Gato和RT-1在通用智能体愿景中的定位
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-gato" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Gato
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Gato">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1. 动机与愿景：迈向多模态通用智能体
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2. 技术原理与架构
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3. 实现细节与训练范式
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-googledeepmindrt-1-robotics-transformer-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Google/DeepMind的“RT-1 (Robotics Transformer 1)”
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Google/DeepMind的“RT-1 (Robotics Transformer 1)”">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1. 动机与愿景：扩展机器人泛化能力
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2. 技术架构与输入/输出处理
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3. 数据收集策略与泛化能力
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4. 性能与鲁棒性
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-transformertransformer" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. 区别：机器人Transformer与大型语言模型Transformer
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 区别：机器人Transformer与大型语言模型Transformer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1. 架构相似性与基本原理
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2. 目的与应用领域的差异
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3. 输入/输出模态与处理的差异
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4. 训练数据特性与规模
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. 结论与未来展望
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 结论与未来展望">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1. 贡献总结
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2. 根本区别与共同原理的重申
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/algebra-MCX/Academic-Profile/edit/main/docs/Work/paper/read/EmbodiedAI/Gato和RT-1.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/algebra-MCX/Academic-Profile/raw/main/docs/Work/paper/read/EmbodiedAI/Gato和RT-1.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+<div><h1 id="transformergatort-1llm-transformer">通用智能体与机器人Transformer：Gato和RT-1技术解析及与LLM Transformer的异同<a class="headerlink" href="#transformergatort-1llm-transformer" title="Permanent link">¶</a></h1>
+<p>本文分析DeepMind和Google两项具有里程碑意义的工作：“通用智能体”（Gato）和“RT-1（机器人Transformer 1）”。这两项研究均代表着通用人工智能的重大进展，尤其体现在它们将Transformer架构应用于多模态和机器人领域。</p>
+<p>我会阐明它们的核心动机、技术原理和具体的实现细节。最后，报告将进行全面比较，阐述机器人Transformer与大型语言模型Transformer之间的根本区别，重点关注它们的架构异同、输入/输出模态、训练数据特性以及各自领域面临的独特挑战。</p>
+<h2 id="1">1. 引言：通用人工智能与机器人的追求<a class="headerlink" href="#1" title="Permanent link">¶</a></h2>
+<h3 id="11">1.1. 基础模型与通用智能体范式转变<a class="headerlink" href="#11" title="Permanent link">¶</a></h3>
+<p>近年来，人工智能领域经历了深刻的变革，其主要驱动力源于大型语言模型（<strong>LLMs</strong>）如GPT系列所取得的显著进展。这些模型的出现从根本上重塑了人工智能研究的重心，使其从开发特定任务模型转向构建多功能“<strong>基础模型</strong>”和“<strong>通用智能体</strong>”。这种转变凸显了对“<strong>单一大脑</strong>”式智能体的偏好，即能够无缝整合多种复杂服务的系统，这一概念与神经科学的见解不谋而合。</p>
+<p>在数据量、模型参数和计算资源规模的共同作用下，结合<strong>Transformer</strong>架构，能够催生出传统任务特定模型无法比拟的<strong>涌现能力和泛化性能</strong>。这种因果关系促使研究人员将LLMs的成功经验应用于多模态感知和机器人控制等复杂领域，将它们视为广义的“<strong>序列建模</strong>”问题。</p>
+<h3 id="12-gatort-1">1.2. Gato和RT-1在通用智能体愿景中的定位<a class="headerlink" href="#12-gatort-1" title="Permanent link">¶</a></h3>
+<p>通用智能体被期望具备管理多样化任务的<strong>泛化能力</strong>，并在现实世界的挑战中展现出强大的<strong>交互性和适应性</strong>。然而，创建此类智能体面临着严峻挑战，包括灾难性遗忘、可扩展性问题和样本效率低下等。</p>
+<p>DeepMind的<strong>Gato</strong>和Google/DeepMind的<strong>RT-1</strong>直接应对了这些挑战，它们分别将基础模型范式扩展到多模态和机器人控制领域。这两个项目都致力于吸收海量且多样化的数据集，以学习通用模式，从而减少对昂贵且任务特定数据收集的需求。</p>
+<hr>
+<h2 id="2-gato">2. Gato<a class="headerlink" href="#2-gato" title="Permanent link">¶</a></h2>
+<p><a href="https://arxiv.org/pdf/2205.06175">Gato</a></p>
+<h3 id="21">2.1. 动机与愿景：迈向多模态通用智能体<a class="headerlink" href="#21" title="Permanent link">¶</a></h3>
+<p>Gato的核心动机是受大规模语言模型进展的启发，旨在构建一个<strong>超越纯文本输出的单一通用智能体</strong>。其愿景是创建一个“<strong>单一大脑</strong>”的智能体，能够无缝整合各种服务，就像用户倾向于向ChatGPT寻求多种任务协助一样。</p>
+<p>从这个角度看，一个理想的通用智能体应具备管理多样化任务的泛化能力，并在现实世界的挑战中展现出强大的交互性和适应性。</p>
+<p>“单一大脑”通用智能体的概念不仅仅是一个雄心壮志，更是Gato设计的核心假设。这表明，一个单一的、统一的认知架构，而非一系列专门化的模块，能够有效地处理跨越不同模态和具身化形式的广泛任务。这种推论是，如果一个单一模型能够使用“<strong>相同的网络和相同的权重</strong>”来表示和处理来自不同来源的信息（文本、图像、机器人状态）并生成多样化的输出（语言、电机指令），那么这暗示了智能在这些领域中表现出的根本共性。这种更广泛的意义在于，它标志着人工智能从模块化方法向更整体、统一方法的转变，其中通用智能可能从对单一强大架构进行足够规模和多样化的预训练中涌现。</p>
+<h3 id="22">2.2. 技术原理与架构<a class="headerlink" href="#22" title="Permanent link">¶</a></h3>
+<p><img alt="f" src="../../../../images/paper_img/e4.png"></p>
+<ul>
+<li><strong>多模态、多任务、多具身策略</strong>： Gato被设计为一个单一的神经网络，使用相同的权重，能够与不同具身形式在广泛环境中进行交互。它在604个不同的任务上进行了训练，这些任务涵盖了各种模态、观测和动作规范。</li>
+<li><strong>多样化数据序列化为扁平化Token序列</strong>： 实现这种多模态能力的一个基本技术原理是将所有多样化数据（来自不同任务和模态）<strong>序列化为扁平化的Token序列</strong>。这包括图像、文本、本体感受、关节扭矩和按钮按压等信息。这种统一的Token表示方式使得Gato能够像标准的大型语言模型处理文本一样，对整个异构数据集进行训练和采样。</li>
+</ul>
+<p>将“所有数据序列化为扁平化的Token序列”是Gato核心技术创新，它将所有形式的信息（视觉、语言、本体感受、动作指令）视为Transformer可以处理的统一“语言”。这种因果关系在于，通过将不同类型的数据转换为一致的Token格式，Transformer（其本质设计用于序列处理和理解序列内关系）可以学习一种超越特定模态的通用策略。这使得单一模型能够根据混合输入流生成与上下文相关的输出（文本、关节扭矩、按钮按压）。这种更广泛的意义是，最初的“语言模型”范式正在演变为更通用的“序列模型”范式，其中“语言”是一个通用的Token流，代表了智能体环境中任何可观测或可操作的信息，从而为真正的多模态通用智能体铺平了道路。</p>
+<ul>
+<li><strong>Transformer网络作为核心架构</strong>： Gato采用了一个<strong>Transformer神经网络</strong>，具体是一个<strong>1.2B参数的decoder-only transformer模型</strong>。该架构包含24层，嵌入大小为2048，以及一个后注意力前馈隐藏层大小为8196。</li>
+</ul>
+<h3 id="23">2.3. 实现细节与训练范式<a class="headerlink" href="#23" title="Permanent link">¶</a></h3>
+<p>A. <strong>多模态Token化方案</strong>： 尽管将原始数据转换为Token的方法理论上是无限的，但Gato采用了一种经过经验验证的特定Token化方案，该方案在其当前规模和硬件条件下表现最佳。例如，图像Token和智能体观测当前并未被Gato预测，它们对损失的贡献被屏蔽。这表明模型专注于预测动作和文本，而不是重建观测。</p>
+<p>1、 模态特定的 Tokenizer (Modality-Specific Tokenizers)</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>尽管最终都是离散 Token 序列，但不同的模态在转换成 Token 时会使用不同的 Tokenizer：
+</code></pre></div></td></tr></table></div>
+<p>（1）文本 (Text)**：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>    文本通常使用标准的子词 Tokenizer，例如 `WordPiece` 或 `SentencePiece`。这些 Tokenizer 将文本分解成常见的单词或子词单元，并为每个单元分配一个唯一的 ID。
+</code></pre></div></td></tr></table></div>
+<p>（2）图像 (Images)：</p>
+<p>图像处理通常采用 <strong>ViT-based VQ-VAE</strong> 的方式。</p>
+<p>ViT (Vision Transformer)：图像首先被分割成一系列非重叠的图像块 (patches)。</p>
+<p>VQ-VAE (Vector Quantized Variational AutoEncoder)：每个图像块通过 VQ-VAE 编码器被压缩成一个离散的代码（即 Token）。VQ-VAE 的作用是将连续的图像数据映射到有限的离散码本中的一个索引。这使得图像可以被表示为一系列离散的图像 Token，就像文本的单词 Token 一样。这些图像 Token 通常按光栅顺序（raster order，即从左到右，从上到下）排列。</p>
+<p>（3）连续值 (Continuous Values)：</p>
+<p>对于像关节扭矩、机器人姿态、传感器读数等连续值，Gato 采用一种称为 <strong>μ-law 编码 (mu-law encoding)</strong> 的技术将其离散化。</p>
+<p>μ-law 编码是一种非线性量化方法，它在小值范围提供更高的分辨率，在大值范围提供较低的分辨率，更符合感知特性。</p>
+<p>经过 μ-law 编码后，连续值被映射到一个预设范围内的整数值，然后这些整数被视为离散 Token。</p>
+<p>例如，原始论文提到使用 1024 个 bin（桶）来离散化连续值，并对结果整数进行偏移，以避免与文本 Token 的 ID 发生冲突。</p>
+<p>（4）离散值 (Discrete Values)：</p>
+<p>例如按钮按下、离散的状态变量等，这些本身就是离散的，可以直接映射到唯一的 Token ID。通常会按照某种规范的顺序（如行主序 row-major order）进行序列化。</p>
+<p>3、  <strong>序列构建与上下文 (Sequence Construction and Context)</strong></p>
+<ul>
+<li>所有这些 Token（来自不同模态）被拼接成一个单一的扁平序列。</li>
+<li>对于决策任务（如玩游戏或机器人控制），整个“回合”（episode）的数据，包括历史观测、动作和奖励，都会被序列化为一个长 Token 序列。</li>
+<li>Gato 模型（一个 Transformer）会看到这个完整的序列作为上下文，并预测序列中的下一个 Token。这种自回归 (autoregressive) 的预测方式与大型语言模型（如 GPT-3）预测下一个词的方式非常相似。</li>
+<li>Gato 模型通常会维持一个固定大小的上下文窗口（例如 1024 个 Token），只关注最近的历史。</li>
+</ul>
+<p>4、  <strong>损失函数与屏蔽 (Loss Function and Masking)</strong></p>
+<p><img alt="f" src="../../../../images/paper_img/e6.png"></p>
+<ul>
+<li><strong>自回归预测 (Autoregressive Prediction)</strong>：Gato 的训练目标是预测序列中的下一个 Token。这意味着对于序列中的每个 Token，模型都会尝试预测它。</li>
+<li><strong>损失屏蔽 (Loss Masking)</strong>：尽管所有数据都被 Token 化并输入到模型中，但并不是所有 Token 都参与损失的计算。<ul>
+<li><strong>预测目标 (Prediction Targets)</strong>：Gato 主要关注预测<strong>动作 Token (action tokens)</strong> 和<strong>文本 Token (text tokens)</strong>。这意味着在计算模型的损失时，只有这些 Token 的预测误差会计入总损失。</li>
+<li><strong>被屏蔽的 Token (Masked Tokens)</strong>：正如您所提到的，<strong>图像 Token (image tokens)</strong> 和<strong>智能体观测中非动作/非文本部分 (non-action/non-text agent observations)</strong> 对损失的贡献被<strong>屏蔽 (masked out)</strong>。这意味着：<ul>
+<li>模型仍然会处理这些观测 Token，它们会作为上下文信息帮助模型理解当前状态。</li>
+<li>但是，模型<strong>不会被强制去精确重建或预测这些图像 Token 或非动作观测 Token</strong>。它们的预测误差不会影响模型的权重更新。</li>
+<li><strong>技术实现</strong>：这通常通过在损失计算时，将这些非目标 Token 对应的损失项乘以 0 来实现。或者，将这些非目标 Token 的目标标签设置为一个特殊值，并在损失函数中忽略这个特殊值。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>目的 (Purpose)</strong>：<ul>
+<li><strong>聚焦核心任务</strong>：这种损失屏蔽方案使得模型能够集中其学习资源来预测对决策或交互最关键的元素——即智能体的动作和生成文本。</li>
+<li><strong>避免冗余学习</strong>：重建图像或详细的非动作观测可能是一个非常复杂且计算成本高昂的任务，而对于许多决策任务来说，精确地重建像素信息可能并不是最重要的。通过屏蔽这些损失，Gato 可以避免在不必要的重建任务上浪费模型容量和训练时间，从而更有效地学习与行为和语言相关的模式。</li>
+<li><strong>提高效率和性能</strong>：在当前规模和硬件条件下，这种聚焦策略有助于提高模型的训练效率和在核心任务上的表现。它允许模型在保持多模态能力的同时，优化其在代理控制和语言生成方面的性能。</li>
+</ul>
+</li>
+</ul>
+<p>B. <strong>离线监督训练： Gato以纯粹的</strong>监督方式进行离线训练**。然而，论文指出，原则上，Gato也可以通过离线或在线强化学习进行训练。</p>
+<ol>
+<li>离线监督学习 (Offline Supervised Learning)</li>
+</ol>
+<p>这是 Gato <strong>当前主要采用</strong>的训练方式。</p>
+<ul>
+<li><strong>定义</strong>：模型在预先收集好的、固定的数据集上进行训练，这个数据集包含了大量的各种任务的输入-输出对。训练过程是“离线”的，意味着模型在训练期间不会与环境进行实时交互，也不会收集新的数据。</li>
+<li><strong>数据来源</strong>：<ul>
+<li><strong>人类示范数据 (Human Demonstrations)</strong>：例如，人类玩家玩游戏的录像、人类控制机器人的轨迹数据、人工标注的图像-文本对、人类对话记录等。</li>
+<li><strong>已有的数据集</strong>：大规模的图像数据集（如 ImageNet）、文本数据集（如 Common Crawl）、以及各种任务的公开数据集。</li>
+<li><strong>Gato 的具体实践</strong>：Gato 汇集了 DeepMind 内部大量的多任务数据</li>
+</ul>
+</li>
+</ul>
+<p>所有这些数据都被统一 Token 化为序列，作为监督学习的输入-输出对。</p>
+<ul>
+<li><strong>训练目标</strong>：模型被训练来预测给定输入序列的下一个 Token。这本质上是一个<strong>自回归 (autoregressive) 预测</strong>任务，类似于大型语言模型 (LLM) 预测下一个词。通过最小化预测 Token 和真实 Token 之间的交叉熵损失来更新模型参数。</li>
+<li><strong>优点</strong>：<ul>
+<li><strong>训练稳定性好</strong>：由于数据是固定的，训练过程通常更稳定，更容易收敛。</li>
+<li><strong>安全性高</strong>：不需要在真实环境中进行试错，避免了潜在的危险或高成本的交互。</li>
+<li><strong>可扩展性强</strong>：可以轻松利用大规模计算资源对大规模数据集进行训练。</li>
+</ul>
+</li>
+<li>
+<p><strong>缺点</strong>：模型只能模仿训练数据中的行为模式，无法自主探索或发现比训练数据更好的策略。</p>
+</li>
+<li>
+<p>离线强化学习 (Offline Reinforcement Learning, Offline RL)</p>
+</li>
+<li>
+<p><strong>定义</strong>：与监督学习一样，模型也是在预先收集的、固定的数据集上进行训练。但这个数据集包含了智能体与环境交互的<strong>经验轨迹</strong>（状态、动作、奖励），并且训练目标不再是简单的模仿，而是从这些经验中学习一个能最大化未来累积奖励的策略。</p>
+</li>
+<li><strong>数据来源</strong>：<ul>
+<li><strong>日志数据 (Logged Data)</strong>：通常是过去（由人类、其他 RL agent或随机策略）与环境交互时记录下来的轨迹数据。这些数据可能包含次优的、多样化的行为。</li>
+</ul>
+</li>
+<li><strong>训练目标</strong>：<ul>
+<li><strong>模仿学习 (Imitation Learning)</strong>：在某些形式的离线 RL 中，会结合模仿学习的思想，即通过自回归预测序列中的动作来学习。</li>
+</ul>
+</li>
+</ul>
+<p>模仿学习旨在让智能体通过观察“专家”（通常是人类）的示范行为来学习完成特定任务的策略。</p>
+<p><strong>核心思想：</strong>不同于强化学习需要通过试错并根据奖励信号来学习，模仿学习的核心在于直接从专家的行为数据中提取信息，然后尝试复制或泛化这些行为。简单来说，就是“照葫芦画瓢”。</p>
+<p><strong>为什么需要模仿学习？</strong></p>
+<p>在许多实际场景中，设计一个合适的奖励函数来指导强化学习过程是非常困难甚至不可能的。例如，在机器人操作复杂物体、自动驾驶、或执行精细动作等任务中，很难用简单的数值奖励来精确定义“好”与“坏”的行为。而人类往往可以直接演示这些任务，模仿学习就能利用这些人类专家的宝贵经验。</p>
+<p>模仿学习通常可以分为两大类：</p>
+<ol>
+<li>
+<p><strong>行为克隆 (Behavior Cloning, BC)</strong></p>
+<ul>
+<li><strong>原理：</strong> 这是最直接、最基础的模仿学习方法。它将模仿学习问题转化为一个<strong>监督学习</strong>问题。</li>
+<li>
+<p><strong>过程：</strong></p>
+<ul>
+<li><strong>数据收集：</strong> 专家（例如人类）在执行任务时，记录一系列的“state-action pair”数据。例如，对于自动驾驶，记录车辆在某个路况（状态）下，司机采取的转向、油门、刹车（动作）。</li>
+<li><strong>模型训练：</strong> 训练一个神经网络，以状态为输入，以专家在对应状态下采取的动作为输出标签。模型学习一个从状态到动作的映射函数，即策略 <span class="arithmatex">\(\pi(s) \rightarrow a\)</span>。</li>
+<li><strong>部署：</strong> 训练好的模型在新的环境中接收到状态观测时，会输出它预测的动作。</li>
+</ul>
+</li>
+<li>
+<p><strong>优点：</strong> 可以利用成熟的监督学习技术。</p>
+</li>
+<li>
+<p><strong>缺点（复合误差问题 - Compounding Errors / Distribution Shift）：</strong></p>
+<ul>
+<li>行为克隆假设训练数据能够覆盖智能体在执行任务时可能遇到的所有状态。</li>
+<li>然而，一旦学习到的策略与专家策略略有偏差，智能体就可能进入训练数据中从未出现过的“新状态”。在这种新状态下，模型可能会做出错误的动作，导致下一个状态进一步偏离专家轨迹，从而错误累积，最终导致任务失败。</li>
+<li>这就像学开车，你只看了专家在平直路段的驾驶录像，一旦遇到弯道，你可能就会犯错，然后越错越远。</li>
+</ul>
+</li>
+<li><strong>改进方法 (DAgger - Dataset Aggregation)：</strong> 为了缓解复合误差问题，DAgger 算法在训练过程中引入了迭代式的专家反馈。在每一轮中，智能体使用当前策略在环境中执行，如果遇到训练数据中没有的状态，就请求专家提供正确的动作，然后将这些新的“状态-动作对”添加到训练集中，并重新训练模型。</li>
+</ul>
+</li>
+<li>
+<p><strong>逆强化学习 (Inverse Reinforcement Learning, IRL)</strong></p>
+<ul>
+<li><strong>原理：</strong> 与行为克隆直接模仿动作不同，IRL 不直接学习策略，而是尝试<strong>推断专家行为背后的奖励函数</strong>。它假设专家是“最优”的，即专家采取的行动是为了最大化某个（未知的）奖励函数。</li>
+<li><strong>过程：</strong><ul>
+<li><strong>观察专家行为：</strong> 智能体观察专家的状态-动作轨迹。</li>
+<li><strong>推断奖励函数：</strong> IRL 算法的目标是找到一个奖励函数 <span class="arithmatex">\(R(s, a)\)</span>，使得专家观察到的行为在该奖励函数下是（近似）最优的。这是一个比直接学习策略更困难的问题，因为一个行为可能由多个奖励函数导致。</li>
+<li><strong>学习策略：</strong> 一旦推断出奖励函数，就可以使用标准的强化学习算法（例如 Q-learning 或策略梯度）在该奖励函数下训练一个智能体，使其学会最大化这个奖励函数从而执行任务。</li>
+</ul>
+</li>
+<li><strong>优点：</strong><ul>
+<li><strong>泛化能力强：</strong> 如果能正确推断出奖励函数，智能体可以在与示范环境略有不同的环境中，或面对新情况时，依然能做出合理的决策，因为它理解了专家的“意图”或“目标”。</li>
+<li><strong>克服复合误差：</strong> 由于学习的是奖励函数而非直接的行为映射，即使智能体偏离了专家轨迹，它也可以根据奖励函数重新找到最优路径。</li>
+</ul>
+</li>
+<li><strong>缺点：</strong> 相比行为克隆，IRL 算法通常更复杂，计算成本更高，且推断奖励函数本身就是一个难题。</li>
+<li><strong>典型算法：</strong> 最大熵逆强化学习 (Maximum Entropy IRL)、生成对抗模仿学习 (Generative Adversarial Imitation Learning, GAIL)。GAIL 结合了生成对抗网络 (GAN) 的思想，通过一个判别器来区分智能体轨迹和专家轨迹，从而学习一个能够匹配专家行为分布的策略，这在某种程度上可以看作是学习奖励函数的一种隐式方式。</li>
+</ul>
+</li>
+</ol>
+<p>Gato 在其<strong>离线监督学习</strong>的训练范式中，其核心就是<strong>行为克隆</strong>的一种高级形式。它将所有多模态数据都 Token 化为序列，然后训练一个 Transformer 模型来预测下一个 Token，这包括预测下一个动作 Token。通过这种方式，Gato 从海量的多任务专家示范数据中学习，模仿了各种任务的专家行为。</p>
+<p>尽管 Gato 当前主要采用行为克隆，但其序列建模的架构使其具备了结合其他模仿学习（如基于序列的 IRL 或 GAIL）以及更广义的强化学习的潜力。例如，在 IRL 框架下，Gato 可以被训练来预测能够带来高奖励的未来序列，而不仅仅是专家执行过的动作。这体现了其设计上的通用性和灵活性。</p>
+<ol>
+<li>
+<p>在线强化学习 (Online Reinforcement Learning, Online RL)</p>
+</li>
+<li>
+<p><strong>定义</strong>：模型在与环境进行实时交互的过程中进行学习。智能体执行动作，观察环境的响应（新的状态、奖励），然后根据这些新的经验更新其策略。这个过程是循环往复的。</p>
+</li>
+<li><strong>数据来源</strong>：智能体通过自身的<strong>实时交互</strong>生成数据。</li>
+<li><strong>训练目标</strong>：最大化长期累积奖励。智能体通过<strong>试错 (trial-and-error)</strong> 的方式探索环境，发现最优的行动策略。</li>
+<li><strong>Gato 的序列建模视角</strong>：<ul>
+<li>Gato 可以被视为一个策略网络 (policy network)。在在线 RL 设置下，模型会接收当前的观测序列（Token），并预测下一个动作 Token。</li>
+<li>根据预测的动作，智能体在环境中执行，获得奖励和新的观测。</li>
+<li>然后，利用这些新的经验（状态-动作-奖励序列），通过强化学习算法（如 Q-learning, Policy Gradients, Actor-Critic 等）来更新 Gato 模型的参数。</li>
+<li>更新可能涉及对整个序列进行处理，并根据序列的奖励进行反向传播。</li>
+</ul>
+</li>
+</ol>
+<p>C. <strong>上下文窗口机制与自回归采样</strong>： 在部署过程中，Gato通过Token化提示（例如，演示）来形成初始序列。当环境提供新的观测时，它们也被Token化并附加到该序列中。
+Gato随后以<strong>自回归方式逐个Token采样动作向量</strong>，直到完整的动作向量形成并发送到环境中。模型维护一个<strong>1024个Token的固定上下文窗口</strong>，确保它始终能够访问该窗口内的所有先前观测和动作。这种自回归性质与LLMs生成文本的方式直接并行。</p>
+<hr>
+<h2 id="3-googledeepmindrt-1-robotics-transformer-1">3. Google/DeepMind的“RT-1 (Robotics Transformer 1)”<a class="headerlink" href="#3-googledeepmindrt-1-robotics-transformer-1" title="Permanent link">¶</a></h2>
+<p><a href="https://arxiv.org/pdf/2212.06817">RT-1</a></p>
+<h3 id="31">3.1. 动机与愿景：扩展机器人泛化能力<a class="headerlink" href="#31" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>机器人领域的挑战</strong>： 与计算机视觉或自然语言处理不同，机器人领域在收集真实世界数据方面面临独特挑战，这使得模型的泛化能力尤为关键。传统的端到端机器人学习通常涉及收集狭隘、任务特定的数据。</li>
+<li><strong>借鉴基础模型的成功经验</strong>： RT-1的动机是借鉴现代机器学习模型（它们利用大规模、多样化、任务无关的数据集实现零样本或少样本性能）的成功经验，将其转移到机器人领域。</li>
+<li><strong>成功的关键</strong>： 作者认为，成功的关键在于<strong>开放式、任务无关的训练</strong>，结合能够吸收多样化机器人数据的高容量架构。这使得模型能够“吸收”经验并学习适用于单个任务的通用模式，从而提高效率。</li>
+</ul>
+<h3 id="32">3.2. 技术架构与输入/输出处理<a class="headerlink" href="#32" title="Permanent link">¶</a></h3>
+<p><img alt="f" src="../../../../images/paper_img/e4.png"></p>
+<ol>
+<li><strong>基于Transformer的机器人控制模型</strong>： <strong>RT-1（机器人Transformer 1）</strong>是一种基于Transformer的新型架构，专门为大规模真实世界机器人控制而设计。它接收一系列图像和自然语言任务描述作为输入，并输出机器人每一步需要执行的动作。该模型通过将高维输入（摄像机图像、指令）和输出（电机指令）编码为紧凑的Token表示供Transformer使用，从而实现高效的运行时推理，以进行实时控制。</li>
+</ol>
+<p><strong>动作Token化：离散化处理</strong></p>
+<p>机器人的动作被分解为多个维度，以实现精细控制。这包括：</p>
+<p>手臂运动： 7个变量，涵盖了三维位置 (x, y, z)、三维姿态 (roll, pitch, yaw) 以及夹持器的开合状态 。   </p>
+<p>底座运动： 3个变量，包括二维位置 (x, y) 和一个偏航角 (yaw) 。   </p>
+<p>模式切换： 一个额外的离散变量，用于在三种模式之间切换：控制手臂、控制底座或终止任务 。  </p>
+<p>每个动作维度都被离散化为256个bin 。目标值被映射到这些均匀分布的bin中的一个 。这种每维度离散化的动作表示允许模型捕获复杂的多模态分布，这比标准连续高斯分布只能捕获单一模式有显著改进，从而提升了动作的精确性和多样性 。   </p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span>
+<span class="normal"><a href="#__codelineno-0-15">15</a></span>
+<span class="normal"><a href="#__codelineno-0-16">16</a></span>
+<span class="normal"><a href="#__codelineno-0-17">17</a></span>
+<span class="normal"><a href="#__codelineno-0-18">18</a></span>
+<span class="normal"><a href="#__codelineno-0-19">19</a></span>
+<span class="normal"><a href="#__codelineno-0-20">20</a></span>
+<span class="normal"><a href="#__codelineno-0-21">21</a></span>
+<span class="normal"><a href="#__codelineno-0-22">22</a></span>
+<span class="normal"><a href="#__codelineno-0-23">23</a></span>
+<span class="normal"><a href="#__codelineno-0-24">24</a></span>
+<span class="normal"><a href="#__codelineno-0-25">25</a></span>
+<span class="normal"><a href="#__codelineno-0-26">26</a></span>
+<span class="normal"><a href="#__codelineno-0-27">27</a></span>
+<span class="normal"><a href="#__codelineno-0-28">28</a></span>
+<span class="normal"><a href="#__codelineno-0-29">29</a></span>
+<span class="normal"><a href="#__codelineno-0-30">30</a></span>
+<span class="normal"><a href="#__codelineno-0-31">31</a></span>
+<span class="normal"><a href="#__codelineno-0-32">32</a></span>
+<span class="normal"><a href="#__codelineno-0-33">33</a></span>
+<span class="normal"><a href="#__codelineno-0-34">34</a></span>
+<span class="normal"><a href="#__codelineno-0-35">35</a></span>
+<span class="normal"><a href="#__codelineno-0-36">36</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a>1. 连续动作 vs. 离散化动作
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>连续动作（Continuous Actions）：在传统的机器人控制中，机器人的关节角度、末端执行器位置（x, y, z）、姿态（roll, pitch, yaw）等都是连续的数值。
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>例如，一个关节可能在 0 到 360 度之间连续变化，夹持器开合度可以在 0 到 0.1 米之间连续变化。大多数强化学习算法在处理这些连续动作时，通常会假设动作服从高斯分布，并直接输出均值和方差，让机器人从这个分布中采样一个动作。
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a>离散化动作（Discretized Actions）：RT-1 没有直接输出连续值，而是将每个连续的动作维度（如手臂的 x 坐标、y 坐标、roll 等）都切分成固定数量的“小区间”或“桶”（bins）。就像把一条很长的线段均匀地切成 256 小段一样。
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a>2. 256个Bin的含义
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a>
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a> “每个动作维度都被离散化为256个bin”意味着，对于像手臂的 x 坐标这样的一个连续维度，它不再是一个无限可能的小数，而是被强制映射到 256 个预定义的整数索引中的一个。
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a> 例如，如果手臂的 x 坐标范围是 -1 到 1 米：
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a>     Bin 0 可能对应 -1.0 到 -0.992 米
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a>     Bin 1 可能对应 -0.992 到 -0.984 米
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a>     ...
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a>     Bin 255 可能对应 0.992 到 1.0 米
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a> 这样，模型要预测的不再是一个浮点数，而是一个介于 0 到 255 之间的离散整数。这使得动作预测变成了一个分类问题：模型需要从 256 个可能的 Bin 中选择一个。
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a>
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a>3. 为什么这样做（捕获复杂多模态分布）
+<a id="__codelineno-0-19" name="__codelineno-0-19"></a>
+<a id="__codelineno-0-20" name="__codelineno-0-20"></a>这是这种离散化方法的关键优势，也是它比标准高斯分布有显著改进的地方：
+<a id="__codelineno-0-21" name="__codelineno-0-21"></a>
+<a id="__codelineno-0-22" name="__codelineno-0-22"></a>标准连续高斯分布捕获单一模式的局限性：
+<a id="__codelineno-0-23" name="__codelineno-0-23"></a>    如果你用一个**高斯分布**来预测动作，它会输出一个均值和一个方差。这意味着它倾向于认为只有一个“最佳”的动作，而且这个最佳动作周围的动作也比较可能。这种方法只能很好地表达**单一的、集中在某个点上的行为模式。
+<a id="__codelineno-0-24" name="__codelineno-0-24"></a>    然而，在复杂的机器人任务中，通常可能存在多种同样有效或合理的操作方式来完成一个子任务。例如，机器人可以从左边或右边抓取一个物体；或者在某个状态下，既可以抬高手臂也可以降低手臂，这取决于下一步的策略。
+<a id="__codelineno-0-25" name="__codelineno-0-25"></a>    高斯分布很难同时表示这些多样的、分散的“最佳”动作。它可能会把所有这些“最佳”动作平均掉，导致预测一个位于它们中间的、实际上可能并不好的动作。
+<a id="__codelineno-0-26" name="__codelineno-0-26"></a>
+<a id="__codelineno-0-27" name="__codelineno-0-27"></a>离散化动作的优势：捕获复杂的多模态分布：
+<a id="__codelineno-0-28" name="__codelineno-0-28"></a>    通过将动作离散化为多个 Bin，模型可以为每个 Bin 学习一个概率分布（就像分类任务一样）。
+<a id="__codelineno-0-29" name="__codelineno-0-29"></a>    如果存在多种合理的动作方式，模型可以同时为这些不同动作对应的 Bin 分配较高的概率。
+<a id="__codelineno-0-30" name="__codelineno-0-30"></a>    例如，如果从左边抓取物体对应的 x 坐标在 Bin 50，从右边抓取在 Bin 200，模型可以同时预测 Bin 50 和 Bin 200 都有高概率，而不是只预测一个介于 50 和 200 之间（可能导致撞到物体）的 Bin。
+<a id="__codelineno-0-31" name="__codelineno-0-31"></a>    这种能力使得模型能够理解和预测动作空间中存在的多个“高峰”（modes），这些高峰代表了不同的可行行为。这被称为捕获多模态分布（multimodal distributions）。
+<a id="__codelineno-0-32" name="__codelineno-0-32"></a>
+<a id="__codelineno-0-33" name="__codelineno-0-33"></a>4. 提升动作的精确性和多样性
+<a id="__codelineno-0-34" name="__codelineno-0-34"></a>
+<a id="__codelineno-0-35" name="__codelineno-0-35"></a>精确性（Precision）：通过细致地切分 256 个 Bin，模型可以在预测时达到相当高的精度，因为它仍然是在一个连续的范围内进行选择，只是选择的粒度是 1/256。同时，由于能捕获多模态，模型可以更精确地选择最适合当前状态的某个动作模式。
+<a id="__codelineno-0-36" name="__codelineno-0-36"></a>多样性（Diversity）：这是最大的优点。当有多种合法且有效的行为时，模型不会被限制在单一预测上。它能够识别并学习到这些不同的有效策略，从而使得机器人的行为更加灵活和多样化，更能够适应复杂和不确定的真实世界环境。
+</code></pre></div></td></tr></table></div>
+<p>表1: RT-1 动作空间离散化详情</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">动作类型</th>
+<th style="text-align: left;">维度数量</th>
+<th style="text-align: left;">具体维度</th>
+<th style="text-align: left;">离散化Bins数量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>手臂运动</strong></td>
+<td style="text-align: left;">7</td>
+<td style="text-align: left;">x, y, z, roll, pitch, yaw, 夹持器开合</td>
+<td style="text-align: left;">256</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>底座运动</strong></td>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">x, y, yaw</td>
+<td style="text-align: left;">256</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>模式切换</strong></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">控制手臂, 控制底座, 终止任务</td>
+<td style="text-align: left;">3 (离散变量)</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>
+<p><strong>输入处理流程</strong>：</p>
+<p>(1) <strong>视觉特征</strong>： 图像首先通过<strong>ImageNet预训练的卷积神经网络（EfficientNet）</strong>进行处理。该EfficientNet通过<strong>FiLM（Feature-wise Linear Modulation）层</strong>，根据预训练的自然语言指令嵌入进行条件化，以提取与任务相关的视觉特征。EfficientNet 的输出是一系列高维的特征图（feature maps），这些特征图包含了图像的丰富语义和空间信息，但通常具有较高的维度和冗余性。例如，一个 <span class="arithmatex">\(H \times W \times C\)</span> 的特征图，如果直接展平，会产生大量的特征向量。</p>
+</li>
+</ol>
+<p>FiLM (Feature-wise Linear Modulation) 是一种非常强大且通用的神经网络条件化方法，它允许一个神经网络的计算过程<strong>根据另一个输入（条件信息）进行动态调整</strong>。这在多模态任务中特别有用，比如在 RT-1 中，它能让图像特征的提取过程被自然语言指令所“引导”。</p>
+<p>FiLM 的核心思想是，它通过一个简单的<strong>特征维度上的仿射变换（affine transformation）</strong>来调制（modulate）神经网络中间层的激活值。这个仿射变换的参数（缩放因子 <span class="arithmatex">\(\gamma\)</span> 和偏移量 <span class="arithmatex">\(\beta\)</span>）是由<strong>另一个独立的网络（称为 FiLM 生成器，FiLM Generator）根据条件信息动态生成的</strong>。</p>
+<p>用数学公式表示，如果 <span class="arithmatex">\(H\)</span> 是某个神经网络层（例如卷积层或全连接层）的输出激活值，那么经过 FiLM 层调制后的输出 <span class="arithmatex">\(H'\)</span> 为：</p>
+<div class="arithmatex">\[H' = \gamma \odot H + \beta\]</div>
+<p>其中：</p>
+<ul>
+<li><span class="arithmatex">\(H\)</span> 是输入到 FiLM 层的特征图或激活值。</li>
+<li><span class="arithmatex">\(\odot\)</span> 表示<strong>逐元素乘法 (element-wise multiplication)</strong>，也称为 Hadamard 乘积。</li>
+<li><span class="arithmatex">\(\gamma\)</span>（gamma）是<strong>缩放因子 (scaling factor)</strong>。</li>
+<li><span class="arithmatex">\(\beta\)</span>（beta）是<strong>偏移量 (bias / shifting factor)</strong>。</li>
+</ul>
+<p>关键在于：</p>
+<ul>
+<li><span class="arithmatex">\(\gamma\)</span> 和 <span class="arithmatex">\(\beta\)</span> <strong>不是可学习的固定参数</strong>（像传统神经网络层中的权重那样），它们是<strong>由 FiLM 生成器根据条件信息动态计算出来的</strong>。</li>
+<li><span class="arithmatex">\(\gamma\)</span> 和 <span class="arithmatex">\(\beta\)</span> 的维度与 <span class="arithmatex">\(H\)</span> 的特征维度（即通道数）匹配，并且<strong>对每个特征通道独立应用</strong>。这就是“Feature-wise”的含义。</li>
+</ul>
+<p>FiLM 生成器 (FiLM Generator)</p>
+<p>FiLM 的另一个关键部分是<strong>FiLM 生成器</strong>。这是一个独立的神经网络，它接收条件信息作为输入，然后输出对应每个特征通道的 <span class="arithmatex">\(\gamma\)</span> 和 <span class="arithmatex">\(\beta\)</span> 值。</p>
+<p>例如，在 RT-1 中：</p>
+<ul>
+<li><strong>条件信息：</strong> 自然语言指令（例如，经过编码器处理后的语言嵌入向量）。</li>
+<li><strong>FiLM 生成器：</strong> 一个小型神经网络（通常是几层全连接层），它将语言嵌入向量作为输入。</li>
+<li><strong>输出：</strong> 生成器输出两个向量，一个用于 <span class="arithmatex">\(\gamma\)</span>，一个用于 <span class="arithmatex">\(\beta\)</span>。这两个向量的维度与被调制的目标网络层的特征通道数相同。</li>
+</ul>
+<p>FiLM 如何影响神经网络计算</p>
+<p>FiLM 通过动态地缩放和偏移特征激活值，赋予模型强大的条件化能力：</p>
+<ol>
+<li>
+<p><strong>动态调整特征表示：</strong> 语言指令（或任何其他条件信息）可以通过 <span class="arithmatex">\(\gamma\)</span> 和 <span class="arithmatex">\(\beta\)</span> 来<strong>动态地调整图像特征的表示</strong>。</p>
+</li>
+<li>
+<p>例如，如果指令是“抓取红色方块”，FiLM 层可能会学习到提高与“红色”特征相关的通道的激活值（通过大的 <span class="arithmatex">\(\gamma\)</span>），并抑制与背景或不相关颜色相关的通道的激活值（通过小的 <span class="arithmatex">\(\gamma\)</span> 甚至负的 <span class="arithmatex">\(\gamma\)</span>，如果后面跟着 ReLU 激活，这能有效地“关闭”某些通道）。</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\beta\)</span> 则可以用来调整特征的基线或激活阈值。</p>
+</li>
+<li>
+<p><strong>实现跨模态交互：</strong> FiLM 使得视觉骨干网络（例如 EfficientNet）的计算能够被文本指令所“引导”。这意味着图像特征的提取不再是静态的，而是<strong>根据当前任务和指令进行自适应的调整</strong>。</p>
+</li>
+<li>
+<p><strong>细粒度控制：</strong> 由于 <span class="arithmatex">\(\gamma\)</span> 和 <span class="arithmatex">\(\beta\)</span> 是<strong>逐特征（逐通道）</strong>计算的，FiLM 提供了对神经网络内部特征表示的<strong>细粒度控制</strong>。这比简单地将条件信息拼接（concatenation）到输入特征中更强大，因为它可以直接修改特征的语义含义。</p>
+</li>
+<li>
+<p><strong>提高泛化能力：</strong> 通过条件化，模型可以更好地泛化到新的任务或场景。例如，如果模型学习了如何根据颜色指令处理图像，它就可以在看到新颜色物体时，通过调整 <span class="arithmatex">\(\gamma\)</span> 和 <span class="arithmatex">\(\beta\)</span> 来适应。</p>
+</li>
+</ol>
+<p>FiLM 层的原理是：<strong>通过一个辅助网络（FiLM 生成器）根据外部条件信息动态生成缩放因子 <span class="arithmatex">\(\gamma\)</span> 和偏移量 <span class="arithmatex">\(\beta\)</span>，然后将这些参数逐特征地应用到目标神经网络层的激活值上，从而实现对目标网络计算过程的动态调制。</strong> 这使得模型能够根据条件信息自适应地处理和理解数据，极大地增强了神经网络在多模态和条件生成任务中的灵活性和性能。</p>
+<ul>
+<li><strong>Token学习器模块</strong>： 在图像和文本处理之后，RT-1架构的一个关键组件是<strong>Token学习器模块</strong>。该模块负责从处理过的视觉特征中计算出一组<strong>紧凑的Token</strong>，然后将其输入到Transformer中。这一步骤对于效率至关重要，因为Transformer网络（尽管容量大）需要保持相对较小（仅接收48个Token作为输入），以确保快速推理和对人类用户的响应能力。这表明它专注于为Transformer提供高度压缩的相关信息。</li>
+</ul>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-1-10">10</a></span>
+<span class="normal"><a href="#__codelineno-1-11">11</a></span>
+<span class="normal"><a href="#__codelineno-1-12">12</a></span>
+<span class="normal"><a href="#__codelineno-1-13">13</a></span>
+<span class="normal"><a href="#__codelineno-1-14">14</a></span>
+<span class="normal"><a href="#__codelineno-1-15">15</a></span>
+<span class="normal"><a href="#__codelineno-1-16">16</a></span>
+<span class="normal"><a href="#__codelineno-1-17">17</a></span>
+<span class="normal"><a href="#__codelineno-1-18">18</a></span>
+<span class="normal"><a href="#__codelineno-1-19">19</a></span>
+<span class="normal"><a href="#__codelineno-1-20">20</a></span>
+<span class="normal"><a href="#__codelineno-1-21">21</a></span>
+<span class="normal"><a href="#__codelineno-1-22">22</a></span>
+<span class="normal"><a href="#__codelineno-1-23">23</a></span>
+<span class="normal"><a href="#__codelineno-1-24">24</a></span>
+<span class="normal"><a href="#__codelineno-1-25">25</a></span>
+<span class="normal"><a href="#__codelineno-1-26">26</a></span>
+<span class="normal"><a href="#__codelineno-1-27">27</a></span>
+<span class="normal"><a href="#__codelineno-1-28">28</a></span>
+<span class="normal"><a href="#__codelineno-1-29">29</a></span>
+<span class="normal"><a href="#__codelineno-1-30">30</a></span>
+<span class="normal"><a href="#__codelineno-1-31">31</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a>RT-1 的Token 学习器模块 (Token Learner module) 是其架构中一个非常重要的组件，它的主要作用是**将从图像中提取的丰富但冗余的视觉特征，压缩成一组紧凑、有代表性的 Token 序列，以便高效地输入到 Transformer 模型中进行处理**。
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a>目的：Token 学习器模块的任务就是将 EfficientNet 输出的这些高维、冗余的视觉特征图，转化成一个**固定数量且高度压缩的 Token 序列**。为什么要这样做？因为 Transformer 的注意力机制计算成本与输入序列长度的平方成正比。
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a>    直接使用原始的图像特征（例如，将每个像素或每个小块的特征都视为一个 Token）会导致序列过长，使得 Transformer 的计算量过大，难以在实时机器人控制中应用。Token 学习器通过“学习”的方式来选择和组合最重要的视觉信息，从而有效地减少了序列长度，同时保留了关键的视觉信息。
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a>
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a>计算原理： Token 学习器模块本质上是一个**注意力机制或基于卷积的模块**，它通过学习的方式从输入特征图中“提炼”出少数几个代表性的 Token。具体的计算过程可以概括为：
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a>    Query Generation：Token 学习器内部会生成一组可学习的“查询向量”（或称“原型向量”）。这些查询向量的数量就是最终希望得到的 Token 数量（例如，RT-1 使用 8 或 16 个 Token）。
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a>
+<a id="__codelineno-1-10" name="__codelineno-1-10"></a>    注：查询向量作用类似于卷积核，它是通过一次次训练学习到的，代表了不同的“关注点”，当一个图像的视觉特征图（Keys 和 Values）输入时，每个查询向量会计算它与特征图中所有“键”向量的相似度。Token 学习器的输出不是动作，而是一组固定数量的、压缩了图像核心信息的视觉 Token 序列
+<a id="__codelineno-1-11" name="__codelineno-1-11"></a>
+<a id="__codelineno-1-12" name="__codelineno-1-12"></a>
+<a id="__codelineno-1-13" name="__codelineno-1-13"></a>    注意力加权 (Attention Weighting)**：这些查询向量会与 EfficientNet 提取的视觉特征图进行交互。这种交互通常通过一个**注意力机制**来实现。
+<a id="__codelineno-1-14" name="__codelineno-1-14"></a>    具体来说，每个查询向量会与特征图中的所有位置（或特征向量）计算相似度得分。
+<a id="__codelineno-1-15" name="__codelineno-1-15"></a>    这些相似度得分被归一化（例如通过 Softmax）得到注意力权重。
+<a id="__codelineno-1-16" name="__codelineno-1-16"></a>    这些权重表示了特征图中每个部分对当前查询向量的“重要性”或“相关性”。
+<a id="__codelineno-1-17" name="__codelineno-1-17"></a>
+<a id="__codelineno-1-18" name="__codelineno-1-18"></a>    加权求和 (Weighted Summation)**：将计算出的注意力权重应用于原始的视觉特征图。每个查询向量会对应一个“加权求和”后的特征向量，这个向量就是最终输出的一个 Token。这意味着，每个 Token 实际上是原始特征图中多个位置特征的**软组合**，其中权重由注意力机制学习。
+<a id="__codelineno-1-19" name="__codelineno-1-19"></a>    输出 Token 序列：** 最终，Token 学习器输出一个固定数量的 Token 序列，例如 `[token_1, token_2, ..., token_N]`，其中每个 Token 都代表了图像中经过选择和压缩的关键视觉信息。
+<a id="__codelineno-1-20" name="__codelineno-1-20"></a>
+<a id="__codelineno-1-21" name="__codelineno-1-21"></a>类比理解：
+<a id="__codelineno-1-22" name="__codelineno-1-22"></a>    Token 学习器可以想象成一个“信息筛选器”或“摘要器”。它不是简单地对图像进行固定分割，而是学习哪些图像区域或特征组合对于理解当前任务和预测动作是最重要的，并把这些重要信息压缩到少量 Token 中。
+<a id="__codelineno-1-23" name="__codelineno-1-23"></a>    例如，在抓取任务中，Token 学习器可能会学习将注意力集中在物体及其周围区域的特征，而忽略背景中不相关的细节。
+<a id="__codelineno-1-24" name="__codelineno-1-24"></a>
+<a id="__codelineno-1-25" name="__codelineno-1-25"></a>
+<a id="__codelineno-1-26" name="__codelineno-1-26"></a>总结 Token 学习器计算的关键点：
+<a id="__codelineno-1-27" name="__codelineno-1-27"></a>
+<a id="__codelineno-1-28" name="__codelineno-1-28"></a>输入： 经过 CNN（EfficientNet + FiLM）处理的高维、丰富的视觉特征图。
+<a id="__codelineno-1-29" name="__codelineno-1-29"></a>输出：一组数量固定且紧凑的视觉 Token 序列。
+<a id="__codelineno-1-30" name="__codelineno-1-30"></a>核心机制： 通常是基于注意力机制的加权求和，通过学习查询向量与输入特征图的交互，动态地选择和组合最重要的视觉信息。
+<a id="__codelineno-1-31" name="__codelineno-1-31"></a>目的： 压缩视觉信息，减少序列长度，从而提高 Transformer 的计算效率和实时推理能力，同时保留对任务决策至关重要的视觉特征。
+</code></pre></div></td></tr></table></div>
+<ul>
+<li><strong>Transformer核心</strong>： RT-1的核心是一个<strong>仅解码器Transformer网络</strong>。该Transformer对Token学习器生成的紧凑Token集进行注意力处理，以生成<strong>离散的动作Token</strong>。动作是高度细粒度的，包括：<ul>
+<li><strong>七个用于手臂运动的维度</strong>（x、y、z、滚转、俯仰、偏航、夹持器开合）。</li>
+<li><strong>三个用于底座运动的维度</strong>（x、y、偏航）。</li>
+<li>一个<strong>额外的离散维度</strong>，用于在三种操作模式之间切换：控制手臂、控制底座或终止回合。</li>
+</ul>
+</li>
+<li>
+<p><strong>闭环控制机制</strong>： RT-1以<strong>闭环控制方式</strong>运行，以<strong>3赫兹的频率</strong>发出动作指令，直到发出“终止”动作或达到预设的时间步数。尽管其拥有3500万参数，但由于其高效的架构，实现了这种实时控制。</p>
+<p>RT-1架构的一个关键特点是，与Gato更统一的Token化方法不同，它在主Transformer之前使用了专门的预处理模块，如带有FiLM层的ImageNet预训练EfficientNet和Token学习器。这表明，对于机器人技术而言，原始像素数据可能维度过高或噪声过大，以至于纯Transformer难以高效处理，
+尤其是在实时约束下。这种因果关系在于，这些专门模块充当智能特征提取器和降维器，将最显著的视觉和语言信息提炼成紧凑的Token表示（48个Token），然后由随后的Transformer进行有效推理以生成动作。这更广泛的意义是，对于真实世界的机器人技术，从原始像素到动作的纯“端到端”Transformer可能尚未达到最佳或可行状态；
+采用混合架构，利用特定领域的感知组件，可以显著提高效率和性能，弥合高层推理和低层控制之间的鸿沟。</p>
+</li>
+</ul>
+<h3 id="33">3.3. 数据收集策略与泛化能力<a class="headerlink" href="#33" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">特征</th>
+<th style="text-align: left;">描述</th>
+<th style="text-align: left;">来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>机器人数量</strong></td>
+<td style="text-align: left;">13台 Everyday Robots (EDR) 移动机械臂车队</td>
+<td style="text-align: left;">Everyday Robots (EDR)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>数据收集时长</strong></td>
+<td style="text-align: left;">17个月</td>
+<td style="text-align: left;">EDR 机器人课堂 (办公室厨房环境)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Episode数量</strong></td>
+<td style="text-align: left;">约13万个</td>
+<td style="text-align: left;">人类远程遥操作演示</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>任务数量</strong></td>
+<td style="text-align: left;">超过700个，涵盖多种高层技能和对象，如抓取、放置、开关抽屉等</td>
+<td style="text-align: left;">-</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>数据来源多样性</strong></td>
+<td style="text-align: left;">混合了EDR真实世界数据和Kuka机械臂的抓取数据 (1:2比例)；可吸收模拟数据</td>
+<td style="text-align: left;">EDR, Kuka (QT-Opt项目), 模拟环境</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>数据标注</strong></td>
+<td style="text-align: left;">每个Episode均有文本指令描述</td>
+<td style="text-align: left;">-</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>真实世界机器人数据集的规模与多样性</strong>： RT-1成功的基石是其大规模的真实世界机器人数据集。该数据集是在17个月内使用<strong>13台机器人</strong>收集的，包含约<strong>13万个回合</strong>，涵盖<strong>700多个不同的任务</strong>。</li>
+<li><strong>数据多样性对泛化的重要性</strong>： 指令列表和技能（例如，抓取、放置、开关抽屉、取物品、操作细长物体和打开罐子）的设计旨在测试对新指令的泛化能力以及执行多种技能的能力。数据集的广度和规模对于泛化至关重要，使模型能够发现结构相似任务之间的模式，并通过组合这些模式来执行新任务。<strong>增加数据规模和多样性可以提高模型的泛化能力</strong>。</li>
+<li><strong>可扩展性</strong>： 该系统易于扩展，允许持续提供更多样化的数据以提高其能力，因为在添加新指令时没有对特定技能做出任何假设。</li>
+<li>
+<p><strong>异构数据源的整合</strong>： RT-1展现了从不同领域（如模拟或甚至不同类型的机器人，例如Kuka机器人用于垃圾分类，而RT-1主要使用Everyday Robots）有效吸收数据的卓越灵活性。至关重要的是，这种整合在保持原有任务性能的同时，提高了对新场景的泛化能力。</p>
+<p>虽然RT-1的13万个回合数据集在机器人领域已经相当庞大，但研究材料中反复强调的“<strong>多样性</strong>”与规模并重，这是一个关键的发现。其潜在趋势是，对于物理世界交互而言，仅仅积累更多数据点（数量）的效果不如确保这些数据点涵盖广泛的任务、物体、环境乃至机器人形态（多样性）。这种因果关系在于，多样化的数据迫使模型学习更抽象、可迁移的表示和技能，而非仅仅记忆特定的轨迹或任务实例。RT-1能够泛化到未见任务、干扰物和背景，并整合来自不同机器人或模拟的数据而性能不下降，正是这一点的例证。这更广泛的意义在于，机器人数据收集策略必须优先考虑广度和可变性，积极寻找新颖的场景和条件，以在复杂、连续的物理世界中实现鲁棒的泛化，这与互联网规模文本数据相对更容易的可扩展性形成对比。</p>
+</li>
+</ul>
+<h3 id="34">3.4. 性能与鲁棒性<a class="headerlink" href="#34" title="Permanent link">¶</a></h3>
+<hr>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">评估类别</th>
+<th style="text-align: left;">RT-1成功率</th>
+<th style="text-align: left;">Gato成功率</th>
+<th style="text-align: left;">BC-Z成功率</th>
+<th style="text-align: left;">BC-Z XL成功率</th>
+<th style="text-align: left;">RT-1相对优势</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>已知任务</strong></td>
+<td style="text-align: left;">97%</td>
+<td style="text-align: left;">65%</td>
+<td style="text-align: left;">72%</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">显著领先</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>未见任务</strong></td>
+<td style="text-align: left;">76%</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">比次优基线高24%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>干扰物鲁棒性</strong></td>
+<td style="text-align: left;">83%</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">比次优基线高36%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>背景鲁棒性</strong></td>
+<td style="text-align: left;">59%</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">比次优基线高18%</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>长时程任务 (Kitchen1)</strong></td>
+<td style="text-align: left;">67%</td>
+<td style="text-align: left;">33%</td>
+<td style="text-align: left;">53%</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">显著领先</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>长时程任务 (Kitchen2)</strong></td>
+<td style="text-align: left;">67%</td>
+<td style="text-align: left;">0%</td>
+<td style="text-align: left;">13%</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">显著领先</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Kuka数据融合 (垃圾桶拣选)</strong></td>
+<td style="text-align: left;">39% (EDR+Kuka)</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">22% (仅EDR)</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">接近翻倍</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<ul>
+<li><strong>对已知任务的高性能</strong>： RT-1在700多个训练指令上实现了<strong>97%的成功率</strong>。</li>
+<li><strong>对未知任务的显著泛化</strong>： RT-1展现了强大的泛化能力，在从未见过的指令上执行成功率为<strong>76%</strong>，比次优基线高出24%。这表明它能够推断并应用学习到的模式到新场景中。</li>
+<li><strong>对环境变化的鲁棒性</strong>： 该模型对环境变化也表现出显著的鲁棒性。在涉及干扰物的任务中成功率为<strong>83%</strong>，比次优基线高出36%；在新的背景下任务成功率为<strong>59%</strong>，比次优基线高出18%。这包括在其他模型失败的全新厨房环境中保持性能。</li>
+<li><strong>长时序任务</strong>： RT-1的性能使其能够在SayCan等框架内执行非常长的时序任务，最多可达50个阶段。</li>
+<li>
+<p><strong>与基线的比较</strong>： 与Gato、BC-Z和BC-Z XL（BC-Z的更大版本）等模仿学习基线相比，RT-1在各项测试中均显示出明显的改进。虽然Gato是一个通用智能体，但RT-1在机器人领域显得更加专业和高效。</p>
+<p>尽管RT-1在未见任务上取得了76%的成功率，并在干扰物和背景鲁棒性方面有显著提升，但从已知任务97%的成功率下降到未见任务的76%成功率，揭示了“<strong>具身泛化鸿沟</strong>”。其潜在趋势是，在物理世界中实现真正的零样本泛化仍然极具挑战，因为物理世界具有连续状态、动态交互和不可预测的元素，这与语言领域相对离散和结构化的特性形成对比。这种因果关系在于，即使有多样化、大规模的真实世界数据和强大的Transformer模型，物理环境的巨大复杂性和无限变异性也使得模型难以完美地外推到全新场景。RT-1的贡献在于显著“缩小”了这一鸿沟，证明了基于Transformer的数据驱动方法是有效的。然而，更广泛的意义在于，完全弥合这一鸿沟可能需要数据收集（例如，更高效的模拟到真实迁移、主动数据获取）、架构改进（例如，更好的物理归纳偏置）或更深层次地整合符号推理或规划能力，以鲁棒地处理真正的全新情况和长时序任务。</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">方面</th>
+<th style="text-align: left;">Gato</th>
+<th style="text-align: left;">RT-1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>模型名称</strong></td>
+<td style="text-align: left;">“通用智能体”</td>
+<td style="text-align: left;">“机器人Transformer 1”</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>主要目标</strong></td>
+<td style="text-align: left;">多模态、多任务、多具身通用策略</td>
+<td style="text-align: left;">真实世界机器人中的可扩展泛化模型</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>模型参数（约）</strong></td>
+<td style="text-align: left;">12亿</td>
+<td style="text-align: left;">约3500万</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>处理的关键模态</strong></td>
+<td style="text-align: left;">图像、文本、本体感受、关节扭矩、按钮按压</td>
+<td style="text-align: left;">图像、自然语言指令、机器人手臂/底座动作</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>核心架构</strong></td>
+<td style="text-align: left;">仅解码器Transformer</td>
+<td style="text-align: left;">EfficientNet + FiLM + Token学习器 + Transformer</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>训练范式</strong></td>
+<td style="text-align: left;">离线监督学习</td>
+<td style="text-align: left;">真实世界数据上的模仿学习</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>训练数据规模（机器人相关）</strong></td>
+<td style="text-align: left;">大量数据集（模拟、真实世界、自然语言、图像）</td>
+<td style="text-align: left;">13万个回合，700+任务，13台机器人，17个月</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>泛化焦点</strong></td>
+<td style="text-align: left;">跨模态/任务的最广泛通用性</td>
+<td style="text-align: left;">机器人领域中对未见任务/环境的鲁棒性和泛化能力</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="4-transformertransformer">4. 区别：机器人Transformer与大型语言模型Transformer<a class="headerlink" href="#4-transformertransformer" title="Permanent link">¶</a></h2>
+<h3 id="41">4.1. 架构相似性与基本原理<a class="headerlink" href="#41" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>共享Transformer骨干</strong>： 机器人Transformer（如RT-1和Gato）和大型语言模型都从根本上依赖于<strong>Transformer架构</strong>。这种架构的特点是其<strong>自注意力机制</strong>和<strong>并行处理能力</strong>，这使得它能够高效处理序列数据并理解长距离依赖关系。</li>
+<li><strong>Token化概念</strong>： 一个共同的基本原理是将多样化输入转换为离散的Token序列。正如LLMs将文本Token化一样，Gato将多模态数据Token化，而RT-1将图像、语言指令和动作Token化。这种统一的表示使得Transformer能够跨不同数据类型进行操作。</li>
+<li><strong>随数据和参数的可扩展性</strong>： 两种范式都表明，性能和泛化能力随着数据、计算和模型规模的增加而提升。这种“<strong>缩放定律</strong>”是一个核心的共同发现。</li>
+<li><strong>自学习/无监督训练潜力</strong>： Transformer及其衍生的LLMs都能够进行自学习或无监督训练，使它们能够学习语法、语言和知识。虽然Gato是监督训练的，但其具备强化学习的潜力被提及。</li>
+</ul>
+<h3 id="42">4.2. 目的与应用领域的差异<a class="headerlink" href="#42" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>LLMs：自然语言理解与生成</strong>： LLMs的主要目的是生成和理解人类自然语言。它们的应用程序涵盖文本生成、摘要、翻译和对话式AI。</li>
+<li>
+<p><strong>机器人Transformer：真实世界物理交互与控制</strong>： 相比之下，机器人Transformer（以RT-1和Gato的机器人能力为例）旨在实现<strong>具身AI</strong>——在真实世界环境中与物理系统进行交互和控制。它们的目标是使机器人能够执行物理任务、导航和操纵物体。</p>
+<p>尽管LLMs和机器人Transformer都利用了相同的Transformer架构，但它们的最终目的和应用领域存在根本性差异。LLMs在符号、语言领域运行，主要操作抽象概念并生成文本。然而，机器人Transformer则弥合了与物理世界之间的鸿沟，其“行动”具有切实的、现实世界的影响。其潜在趋势是将人工智能能力从纯粹的认知任务扩展到具身智能。这种因果关系在于，这种转变引入了一系列新的复杂性和挑战，主要与物理交互的连续性、动态性和安全性关键性相关。这更广泛的意义是，虽然LLMs推动了人工智能在语言方面能够“理解”和“生成”的界限，但机器人Transformer正在推动人工智能在物理世界中能够“做”的界限，标志着迈向能够感知、推理并在我们现实中行动的真正智能体的关键一步。</p>
+</li>
+</ul>
+<h3 id="43">4.3. 输入/输出模态与处理的差异<a class="headerlink" href="#43" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>LLMs：主要为文本输入，文本输出</strong>： LLMs通常以文本作为输入，并生成文本作为输出。它们的主要模态是语言，通过词嵌入进行处理。</li>
+<li><strong>机器人Transformer：多模态感知输入，物理动作输出</strong>：<ul>
+<li><strong>输入</strong>： 机器人Transformer处理更丰富、更复杂的多模态感知输入，包括高维视觉数据（图像）、本体感受反馈（机器人关节状态）和自然语言指令。这些输入代表着不断变化的环境。</li>
+<li><strong>输出</strong>： 它们的输出是物理动作，例如关节扭矩、按钮按压、手臂运动和底座运动，通常为了控制目的而离散化。</li>
+</ul>
+</li>
+<li>
+<p><strong>实时控制与动态环境</strong>： 机器人技术要求<strong>实时响应和低延迟</strong>（例如，RT-1以3Hz运行，Performer-MPC的延迟为8毫秒）。这是一个LLMs通常不面临的关键约束。机器人技术面临多模态表示、不断变化的环境和有限计算的挑战。</p>
+<p>最根本的区别在于反馈循环的性质。LLMs主要在符号信息（文本）的“读写”循环中操作。然而，机器人Transformer则嵌入在与物理世界交互的连续“感知-行动”循环中。其潜在趋势是从处理静态或顺序呈现的数字数据，转向与动态、连续且通常嘈杂的物理环境进行交互。这种因果关系在于，这需要处理高维、多模态的感知输入（图像、本体感受）并生成精确的、实时的物理动作。对特定频率（例如，RT-1的3Hz）的闭环控制和低延迟的需求，使其与LLMs（其响应时间通常更灵活）根本不同。更广泛的意义在于，机器人Transformer必须应对具身化的固有复杂性：噪声、不确定性、物理约束以及行动在现实世界中的直接后果，而纯粹在数字领域中运行的LLMs则无需面对这些。这也解释了RT-1中专门的输入处理（EfficientNet、Token学习器）等架构选择，旨在为Transformer提炼相关信息，这在纯文本LLMs中并不那么突出。</p>
+</li>
+</ul>
+<h3 id="44">4.4. 训练数据特性与规模<a class="headerlink" href="#44" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>LLMs：互联网规模文本语料库</strong>： LLMs的特点是在真正<strong>大规模的互联网级文本数据集</strong>上进行训练，这些数据集通常包含数十亿网页、维基百科等。这些数据集在语言表达的数量和多样性上都非常庞大。</li>
+<li><strong>机器人Transformer：大规模、多样化的真实世界机器人交互数据</strong>： 尽管机器人数据集也很大，但其性质根本不同。它们由真实世界的机器人经验组成，通常通过遥操作或自主探索收集，包含多模态传感器读数和相应的动作。其规模（例如，RT-1的13万个回合）在机器人领域是显著的，但比互联网文本数据小几个数量级。重点在于物理领域内任务、物体和环境的“<strong>多样性</strong>”。</li>
+<li>
+<p><strong>数据获取挑战</strong>： 收集高质量、多样化的机器人数据比抓取互联网文本更具挑战性且成本更高。这一限制影响了机器人模型相对于LLMs可达到的规模。</p>
+<p>训练数据规模和获取难度的巨大差异是机器人Transformer面临的关键瓶颈。LLMs受益于互联网上几乎无限且易于获取的文本数据，而机器人数据收集本质上是资源密集型、耗时且昂贵的。其潜在趋势是，数据可用性的这种差异直接影响了可实现的模型规模。这种因果关系在于，由于真实世界机器人数据难以达到互联网规模，机器人模型（如RT-1的约3500万参数，或Gato的12亿参数）通常比最大的LLMs（数百亿参数）小几个数量级。更广泛的意义是，通用机器人技术的未来进展将严重依赖于数据合成（例如，高保真模拟）、更高效的真实世界数据收集方法（例如，自主数据工厂、众包遥操作），或开发更具样本效率且能从较少数据中学习的模型。这个瓶颈从根本上限制了机器人Transformer当前可达到的规模，并因此限制了其相对于语言模型的涌现泛化能力，尽管它们共享架构原理。</p>
+</li>
+</ul>
+<p>好的，这是机器人Transformer与大型语言模型Transformer的关键区别的 Markdown 格式表格：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">方面</th>
+<th style="text-align: left;">大型语言模型Transformer（LLM Transformer）</th>
+<th style="text-align: left;">机器人Transformer（Robotics Transformer）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>核心目的</strong></td>
+<td style="text-align: left;">自然语言理解与生成</td>
+<td style="text-align: left;">真实世界物理交互与控制</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>典型输入模态</strong></td>
+<td style="text-align: left;">文本</td>
+<td style="text-align: left;">多模态：图像、本体感受、自然语言</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>典型输出模态</strong></td>
+<td style="text-align: left;">文本</td>
+<td style="text-align: left;">物理动作（关节扭矩、按钮按压、手臂/底座运动）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>主要训练数据源</strong></td>
+<td style="text-align: left;">互联网规模文本语料库（例如，Common Crawl，维基百科）</td>
+<td style="text-align: left;">大规模、多样化的真实世界机器人交互数据</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>典型规模（参数）</strong></td>
+<td style="text-align: left;">数十亿到数百亿</td>
+<td style="text-align: left;">数百万到数十亿（例如，RT-1约35M，Gato 1.2B）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>主要挑战</strong></td>
+<td style="text-align: left;">事实准确性、幻觉、偏见、训练/推理计算成本。</td>
+<td style="text-align: left;">实时控制、对动态/嘈杂环境的鲁棒性、数据获取难度/成本、物理交互中的安全性、模拟到真实迁移</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="5">5. 结论与未来展望<a class="headerlink" href="#5" title="Permanent link">¶</a></h2>
+<h3 id="51">5.1. 贡献总结<a class="headerlink" href="#51" title="Permanent link">¶</a></h3>
+<p>DeepMind的<strong>Gato</strong>通过在单一Transformer策略下统一多种模态，推动了通用人工智能的界限，展示了“单一大脑”智能体的巨大潜力。它将不同类型的数据序列化为统一的Token流，使Transformer能够学习跨模态的通用策略，从而实现多任务、多具身的能力。</p>
+<p>Google/DeepMind的<strong>RT-1</strong>则通过大规模、多样化的数据收集和专门的Transformer架构，在真实世界机器人泛化方面做出了重大贡献。它展示了前所未有的鲁棒性和任务性能，特别是在处理未见任务和环境变化方面。RT-1的成功表明，将LLMs的缩放定律应用于机器人领域是可行的，尽管其架构中包含了为处理高维感知数据而设计的特定预处理模块。</p>
+<h3 id="52">5.2. 根本区别与共同原理的重申<a class="headerlink" href="#52" title="Permanent link">¶</a></h3>
+<p>尽管机器人Transformer和大型语言模型Transformer都利用了强大的Transformer架构及其缩放定律，但它们在领域特定应用上的差异导致了输入/输出模态、训练数据特性和固有挑战的根本性区别。<strong>LLMs主要在符号、语言领域运行，而机器人Transformer则专注于与物理世界的具身交互</strong>。这种从符号智能到具身智能的转变是两者核心分歧所在。</p>
+<p>机器人Transformer必须应对物理世界固有的复杂性，包括连续、动态、嘈杂的环境，以及对实时响应和精确物理动作的严格要求。这与LLMs主要处理离散、结构化文本数据的特点形成鲜明对比。</p></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../ALOHA/" class="md-footer__link md-footer__link--prev" aria-label="Previous: ALOHA机器人平台：低成本、高精度双臂操作及其进展深度解析">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                ALOHA机器人平台：低成本、高精度双臂操作及其进展深度解析
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../Octo/" class="md-footer__link md-footer__link--next" aria-label="Next: Octo——机器人操控的通用框架">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Octo——机器人操控的通用框架
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../../../..", "features": ["announce.dismiss", "navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "search.share", "navigation.expand", "navigation.indexes", "content.tabs.link", "content.tooltips", "content.code.copy", "content.code.select", "content.action.edit", "content.action.view", "content.code.annotate"], "search": "../../../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": {"\u003ctag\u003e": "\u003cidentifier\u003e"}, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+        <script src="https://kit.fontawesome.com/2b1d8a9758.js"></script>
+      
+        <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"></script>
+      
+        <script src="../../../../../javascripts/extra.js"></script>
+      
+        <script src="../../../../../javascripts/bannerSlider.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/gh/Wcowin/Wcowin.github.io@main/docs/javascripts/extra.js"></script>
+      
+        <script src="../../../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://github.com/Wcowin/Wcowin.github.io/blob/main/docs/javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/gh/Wcowin/Wcowin.github.io@main/docs/javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+      
+        <script src="../../../../../javascripts/backbound1.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mermaid@10.0.2/dist/add-html-label-6e56ed67.min.js"></script>
+      
+        <script src="https://res.zvo.cn/translate/translate.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/gh/Wcowin/Wcowin.github.io@main/docs/javascripts/view.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax @3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

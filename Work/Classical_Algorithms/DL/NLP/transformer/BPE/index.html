@@ -1,0 +1,4580 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://algebra-mcx.github.io/Academic-Profile/Work/Classical_Algorithms/DL/NLP/transformer/BPE/">
+      
+      
+        <link rel="prev" href="../tokenization/">
+      
+      
+        <link rel="next" href="../word_embedding/">
+      
+      
+      <link rel="icon" href="../../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>Tokenization补充 - Chenxi Ma</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../../stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Wcowin/Wcowin.github.io@main/docs/stylesheets/link.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Wcowin/Wcowin.github.io@main/docs/stylesheets/card2.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Wcowin/Wcowin.github.io@main/docs/stylesheets/customize.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Wcowin/Wcowin.github.io@main/docs/stylesheets/ziti.css">
+    
+    <script>__md_scope=new URL("../../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tokenization" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../../../.." title="Chenxi Ma" class="md-header__button md-logo" aria-label="Chenxi Ma" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Chenxi Ma
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Tokenization补充
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 2c-1.05 0-2.05.16-3 .46 4.06 1.27 7 5.04 7 9.54s-2.94 8.27-7 9.54c.95.3 1.95.46 3 .46a10 10 0 0 0 10-10A10 10 0 0 0 9 2"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/algebra-MCX/Academic-Profile" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Academic-Profile
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../../../../paper/method/blogs/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  AI
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../Others/git/git%E7%90%86%E8%A7%A3/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  其他有用技术
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../project/AI%20infra/c%E5%92%8Ccpp%E5%9F%BA%E7%A1%80/compile/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Projects
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../publications/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Publications
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../cv.md" class="md-tabs__link">
+          
+  
+  
+    
+  
+  CV
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../contact/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contact me
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../../tags/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Tags
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../../.." title="Chenxi Ma" class="md-nav__button md-logo" aria-label="Chenxi Ma" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Chenxi Ma
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/algebra-MCX/Academic-Profile" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Academic-Profile
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    AI
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            AI
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1_1" id="__nav_1_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Blogs
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            Blogs
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_1" id="__nav_1_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    论文写作
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            论文写作
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../paper/method/blogs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    如何找idea
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../paper/method/blogs_write/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    论文写作
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_1_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_2" id="__nav_1_1_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Classical Algorithms
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_1_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            Classical Algorithms
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_1_2_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_2_1" id="__nav_1_1_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    DL
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_1_2_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_1_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            DL
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_1_2_1_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_2_1_1" id="__nav_1_1_2_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    NLP
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_1_1_2_1_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_1_2_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            NLP
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_1_2_1_1_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_2_1_1_1" id="__nav_1_1_2_1_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    transformer
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="6" aria-labelledby="__nav_1_1_2_1_1_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_1_2_1_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            transformer
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../transformer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Transformer
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tokenization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Tokenization分词器
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Tokenization补充
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Tokenization补充
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      初始化阶段
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      第一次合并
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      第二次合并
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      循环直到达到预设的合并次数或词汇量上限
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bpe" class="md-nav__link">
+    <span class="md-ellipsis">
+      BPE算法加速
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="BPE算法加速">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bpe_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      传统 BPE 的痛点
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sentencepiece" class="md-nav__link">
+    <span class="md-ellipsis">
+      SentencePiece 的优化方案
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SentencePiece 的优化方案">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bigram" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bigram 分类（左上角）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bigram_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      示例 bigram 及频率（中间）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      句子示例（右下角）
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      优化效果
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bbpe" class="md-nav__link">
+    <span class="md-ellipsis">
+      BBPE
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wordpiece" class="md-nav__link">
+    <span class="md-ellipsis">
+      WordPiece
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="WordPiece">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pmi" class="md-nav__link">
+    <span class="md-ellipsis">
+      PMI
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      算法过程
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wordpiece_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      WordPiece如何分词
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unigram" class="md-nav__link">
+    <span class="md-ellipsis">
+      unigram
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="unigram">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      最优指标
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      算法步骤
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      例子
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bpe_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      BPE 的分词器在应用中是使用正向最大匹配进行分词吗？
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bpe-wordpiece" class="md-nav__link">
+    <span class="md-ellipsis">
+      BPE 与 WordPiece 有什么区别？
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../word_embedding/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Word Embedding词嵌入
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Pos_embed/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Positional Embedding位置编码
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../attention/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Attention注意力
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../attention2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Attention(2)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FFN_activation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    FFN和激活函数
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Mask/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Mask掩码
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Normalization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Normalization
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Enco_Deco/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Encoder and Decoder
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_2_2" id="__nav_1_1_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    RL
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_1_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            RL
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../RL/PPO/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PPO
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_3" id="__nav_1_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    LLM
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            LLM
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_3_1" id="__nav_1_1_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    LLM Architecture
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_1_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            LLM Architecture
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_3_1_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_3_1_1" id="__nav_1_1_3_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Encoder-only
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_1_1_3_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_3_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            Encoder-only
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../LLM/LLM_Architecture/Encoder_only/%E9%A2%84%E8%AE%AD%E7%BB%83%E4%BB%BB%E5%8A%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Encoder-only预训练任务
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../LLM/LLM_Architecture/Encoder_only/BERT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    BERT
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../LLM/LLM_Architecture/Encoder_only/Sentence_BERT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Sentence-BERT
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_3_2" id="__nav_1_1_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Pre-training
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_1_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            Pre-training
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../LLM/Pre-training/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E9%A2%84%E8%AE%AD%E7%BB%83%E5%85%A8%E8%A7%A3%E6%9E%90%EF%BC%9A%E5%AE%9A%E4%B9%89%E3%80%81%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E3%80%81%E6%B5%81%E7%A8%8B%E5%8F%8A%E5%A4%9A%E9%98%B6%E6%AE%B5%E8%AE%AD%E7%BB%83%E9%80%BB%E8%BE%91/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    大模型预训练概述
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../LLM/Pre-training/%E9%A2%84%E8%AE%AD%E7%BB%83%E6%95%B0%E6%8D%AE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    预训练数据
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../LLM/Pre-training/%E6%89%A9%E5%85%85%E8%AF%8D%E8%A1%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    基于SentencePiece扩充LLaMa中文词表
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_4" id="__nav_1_1_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    paper解读
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_1_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_4">
+            <span class="md-nav__icon md-icon"></span>
+            paper解读
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_4_1" id="__nav_1_1_4_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    tech_report
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_1_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            tech_report
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_4_1_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_4_1_1" id="__nav_1_1_4_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Deepseek
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_1_1_4_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_4_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            Deepseek
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../paper/read/tech_report/Deepseek/%E6%95%B4%E4%BD%93%E8%A7%A3%E8%AF%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deepseek：基座模型发展
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../paper/read/tech_report/Deepseek/%E6%95%B4%E4%BD%93%E8%A7%A3%E8%AF%BB2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deepseek：reasoning
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../paper/read/tech_report/Deepseek/DeepSeek_v3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deepseek v3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../paper/read/tech_report/Deepseek/Deepseek_r1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deepseek r1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_4_2" id="__nav_1_1_4_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    EmbodiedAI
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_1_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            EmbodiedAI
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../paper/read/EmbodiedAI/VLA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    机器人基座模型与VLA概述
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../paper/read/EmbodiedAI/ALOHA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ALOHA机器人平台：低成本、高精度双臂操作及其进展深度解析
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../paper/read/EmbodiedAI/Gato%E5%92%8CRT-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    通用智能体与机器人Transformer：Gato和RT-1技术解析及与LLM Transformer的异同
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../paper/read/EmbodiedAI/Octo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Octo——机器人操控的通用框架
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../paper/read/EmbodiedAI/Crossformer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Cross-former
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../paper/read/EmbodiedAI/GR-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    GR-1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../paper/read/EmbodiedAI/GR-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    GR-2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_4_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_4_3" id="__nav_1_1_4_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    RM
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_1_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            RM
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../paper/read/RM/TTRL/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TTRL
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../paper/read/RM/LCPO/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LCPO
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    其他有用技术
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            其他有用技术
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    git和github
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            git和github
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Others/git/git%E7%90%86%E8%A7%A3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    git理解
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    cpp
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            cpp
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_1" id="__nav_2_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    C++基础语法
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            C++基础语法
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Others/cpp/cpp%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    cpp基础语法
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Projects
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Projects
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    AI infra
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            AI infra
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1_1" id="__nav_3_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    c和cpp基础
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            c和cpp基础
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../project/AI%20infra/c%E5%92%8Ccpp%E5%9F%BA%E7%A1%80/compile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    conpile and link
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1_2" id="__nav_3_1_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    大模型推理框架
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            大模型推理框架
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../project/AI%20infra/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8E%A8%E7%90%86%E6%A1%86%E6%9E%B6/%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    项目结构
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Publications
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Publications
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../publications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Conferences
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    CV
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            CV
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../cv.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    个人简历
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../contact/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Contact me
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Tags
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Tags
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    个人标签
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      初始化阶段
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      第一次合并
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      第二次合并
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      循环直到达到预设的合并次数或词汇量上限
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bpe" class="md-nav__link">
+    <span class="md-ellipsis">
+      BPE算法加速
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="BPE算法加速">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bpe_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      传统 BPE 的痛点
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sentencepiece" class="md-nav__link">
+    <span class="md-ellipsis">
+      SentencePiece 的优化方案
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="SentencePiece 的优化方案">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bigram" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bigram 分类（左上角）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bigram_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      示例 bigram 及频率（中间）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      句子示例（右下角）
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      优化效果
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bbpe" class="md-nav__link">
+    <span class="md-ellipsis">
+      BBPE
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wordpiece" class="md-nav__link">
+    <span class="md-ellipsis">
+      WordPiece
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="WordPiece">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pmi" class="md-nav__link">
+    <span class="md-ellipsis">
+      PMI
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      算法过程
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wordpiece_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      WordPiece如何分词
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unigram" class="md-nav__link">
+    <span class="md-ellipsis">
+      unigram
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="unigram">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      最优指标
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      算法步骤
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      例子
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bpe_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      BPE 的分词器在应用中是使用正向最大匹配进行分词吗？
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bpe-wordpiece" class="md-nav__link">
+    <span class="md-ellipsis">
+      BPE 与 WordPiece 有什么区别？
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/algebra-MCX/Academic-Profile/edit/main/docs/Work/Classical_Algorithms/DL/NLP/transformer/BPE.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/algebra-MCX/Academic-Profile/raw/main/docs/Work/Classical_Algorithms/DL/NLP/transformer/BPE.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+<div><h1 id="tokenization">Tokenization补充<a class="headerlink" href="#tokenization" title="Permanent link">¶</a></h1>
+<p><strong>BPE利用合并规则（merge_rule）进行分词，而不是词表</strong></p>
+<p><strong>BPE是遍历一遍merge_rule，在文本全局根据规则上同步修改，而不是将文本遍历一遍，挨个用规则</strong></p>
+<p>具体可参考下面gpt2的代码
+</p><div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span>
+<span class="normal"><a href="#__codelineno-0-15">15</a></span>
+<span class="normal"><a href="#__codelineno-0-16">16</a></span>
+<span class="normal"><a href="#__codelineno-0-17">17</a></span>
+<span class="normal"><a href="#__codelineno-0-18">18</a></span>
+<span class="normal"><a href="#__codelineno-0-19">19</a></span>
+<span class="normal"><a href="#__codelineno-0-20">20</a></span>
+<span class="normal"><a href="#__codelineno-0-21">21</a></span>
+<span class="normal"><a href="#__codelineno-0-22">22</a></span>
+<span class="normal"><a href="#__codelineno-0-23">23</a></span>
+<span class="normal"><a href="#__codelineno-0-24">24</a></span>
+<span class="normal"><a href="#__codelineno-0-25">25</a></span>
+<span class="normal"><a href="#__codelineno-0-26">26</a></span>
+<span class="normal"><a href="#__codelineno-0-27">27</a></span>
+<span class="normal"><a href="#__codelineno-0-28">28</a></span>
+<span class="normal"><a href="#__codelineno-0-29">29</a></span>
+<span class="normal"><a href="#__codelineno-0-30">30</a></span>
+<span class="normal"><a href="#__codelineno-0-31">31</a></span>
+<span class="normal"><a href="#__codelineno-0-32">32</a></span>
+<span class="normal"><a href="#__codelineno-0-33">33</a></span>
+<span class="normal"><a href="#__codelineno-0-34">34</a></span>
+<span class="normal"><a href="#__codelineno-0-35">35</a></span>
+<span class="normal"><a href="#__codelineno-0-36">36</a></span>
+<span class="normal"><a href="#__codelineno-0-37">37</a></span>
+<span class="normal"><a href="#__codelineno-0-38">38</a></span>
+<span class="normal"><a href="#__codelineno-0-39">39</a></span>
+<span class="normal"><a href="#__codelineno-0-40">40</a></span>
+<span class="normal"><a href="#__codelineno-0-41">41</a></span>
+<span class="normal"><a href="#__codelineno-0-42">42</a></span>
+<span class="normal"><a href="#__codelineno-0-43">43</a></span>
+<span class="normal"><a href="#__codelineno-0-44">44</a></span>
+<span class="normal"><a href="#__codelineno-0-45">45</a></span>
+<span class="normal"><a href="#__codelineno-0-46">46</a></span>
+<span class="normal"><a href="#__codelineno-0-47">47</a></span>
+<span class="normal"><a href="#__codelineno-0-48">48</a></span>
+<span class="normal"><a href="#__codelineno-0-49">49</a></span>
+<span class="normal"><a href="#__codelineno-0-50">50</a></span>
+<span class="normal"><a href="#__codelineno-0-51">51</a></span>
+<span class="normal"><a href="#__codelineno-0-52">52</a></span>
+<span class="normal"><a href="#__codelineno-0-53">53</a></span>
+<span class="normal"><a href="#__codelineno-0-54">54</a></span>
+<span class="normal"><a href="#__codelineno-0-55">55</a></span>
+<span class="normal"><a href="#__codelineno-0-56">56</a></span>
+<span class="normal"><a href="#__codelineno-0-57">57</a></span>
+<span class="normal"><a href="#__codelineno-0-58">58</a></span>
+<span class="normal"><a href="#__codelineno-0-59">59</a></span>
+<span class="normal"><a href="#__codelineno-0-60">60</a></span>
+<span class="normal"><a href="#__codelineno-0-61">61</a></span>
+<span class="normal"><a href="#__codelineno-0-62">62</a></span>
+<span class="normal"><a href="#__codelineno-0-63">63</a></span>
+<span class="normal"><a href="#__codelineno-0-64">64</a></span>
+<span class="normal"><a href="#__codelineno-0-65">65</a></span>
+<span class="normal"><a href="#__codelineno-0-66">66</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a> <span class="k">def</span><span class="w"> </span><span class="nf">bpe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a>        <span class="c1"># 如果 token 已经被处理过（存在于缓存 self.cache 中），则直接返回之前的结果，避免重复计算</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>        <span class="k">if</span> <span class="n">token</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">:</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">[</span><span class="n">token</span><span class="p">]</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a>        <span class="n">word</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>     <span class="c1"># 例如"hello" → ('h', 'e', 'l', 'l', 'o')</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6"></a>        <span class="n">pairs</span> <span class="o">=</span> <span class="n">get_pairs</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>     <span class="c1"># {('h','e'), ('e','l'), ('l','l'), ('l','o')}</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7"></a>
+<a id="__codelineno-0-8" name="__codelineno-0-8"></a>        <span class="c1"># 如果没有 bigram（即 token 长度为 1 或空），直接返回原始 token</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9"></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">pairs</span><span class="p">:</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10"></a>            <span class="k">return</span> <span class="n">token</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11"></a>
+<a id="__codelineno-0-12" name="__codelineno-0-12"></a>        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13"></a>            <span class="c1"># 找出当前所有 bigram 中在 self.bpe_ranks 中排名最小的（即最优先要合并的）</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14"></a>            <span class="c1"># self.bpe_ranks 是一个字典，保存了每个 bigram 对应的合并优先级（数值越小越优先）</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15"></a>            <span class="c1"># self.bpe_ranks = dict(zip(bpe_merges, range(len(bpe_merges))))</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16"></a>            <span class="c1"># 如果 bigram 不在 self.bpe_ranks 中，则赋予无穷大，不会优先选择它</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17"></a>
+<a id="__codelineno-0-18" name="__codelineno-0-18"></a>            <span class="n">bigram</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">pairs</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">pair</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">bpe_ranks</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pair</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="s2">"inf"</span><span class="p">)))</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19"></a>
+<a id="__codelineno-0-20" name="__codelineno-0-20"></a>            <span class="c1"># 如果当前 bigram 不在 BPE 合并规则中，说明无法再合并，退出循环</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21"></a>            <span class="k">if</span> <span class="n">bigram</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">bpe_ranks</span><span class="p">:</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22"></a>                <span class="k">break</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23"></a>
+<a id="__codelineno-0-24" name="__codelineno-0-24"></a>            <span class="c1"># 把 bigram 分成两个部分：first 和 second。</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25"></a>            <span class="c1"># 创建一个新列表 new_word 来存储合并后的新词。</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26"></a>            <span class="n">first</span><span class="p">,</span> <span class="n">second</span> <span class="o">=</span> <span class="n">bigram</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27"></a>            <span class="n">new_word</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28"></a>            <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29"></a>
+<a id="__codelineno-0-30" name="__codelineno-0-30"></a>            <span class="c1"># 在 word 中查找第一个出现的 first（从位置 i 开始）</span>
+<a id="__codelineno-0-31" name="__codelineno-0-31"></a>            <span class="c1"># 如果找不到，就把剩下的内容加入 new_word 并跳出循环</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32"></a>            <span class="c1"># 如果找到了，就将 i 到 j 的内容加入 new_word，并将 i 移动到 j</span>
+<a id="__codelineno-0-33" name="__codelineno-0-33"></a>            <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">word</span><span class="p">):</span>
+<a id="__codelineno-0-34" name="__codelineno-0-34"></a>                <span class="k">try</span><span class="p">:</span>
+<a id="__codelineno-0-35" name="__codelineno-0-35"></a>                    <span class="n">j</span> <span class="o">=</span> <span class="n">word</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+<a id="__codelineno-0-36" name="__codelineno-0-36"></a>                <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+<a id="__codelineno-0-37" name="__codelineno-0-37"></a>                    <span class="n">new_word</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">word</span><span class="p">[</span><span class="n">i</span><span class="p">:])</span>
+<a id="__codelineno-0-38" name="__codelineno-0-38"></a>                    <span class="k">break</span>
+<a id="__codelineno-0-39" name="__codelineno-0-39"></a>                <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-0-40" name="__codelineno-0-40"></a>                    <span class="n">new_word</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">word</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="p">])</span>
+<a id="__codelineno-0-41" name="__codelineno-0-41"></a>                    <span class="n">i</span> <span class="o">=</span> <span class="n">j</span>
+<a id="__codelineno-0-42" name="__codelineno-0-42"></a>
+<a id="__codelineno-0-43" name="__codelineno-0-43"></a>                <span class="c1"># 如果当前位置 i 是 first，且下一个字符是 second，那么合并这两个字符为 first+second，并跳过这两个字符</span>
+<a id="__codelineno-0-44" name="__codelineno-0-44"></a>                <span class="c1"># 否则，按原样添加当前字符，并移动指针</span>
+<a id="__codelineno-0-45" name="__codelineno-0-45"></a>                <span class="k">if</span> <span class="n">word</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">first</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">word</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">second</span><span class="p">:</span>
+<a id="__codelineno-0-46" name="__codelineno-0-46"></a>                    <span class="n">new_word</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">first</span> <span class="o">+</span> <span class="n">second</span><span class="p">)</span>
+<a id="__codelineno-0-47" name="__codelineno-0-47"></a>                    <span class="n">i</span> <span class="o">+=</span> <span class="mi">2</span>
+<a id="__codelineno-0-48" name="__codelineno-0-48"></a>                <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-0-49" name="__codelineno-0-49"></a>                    <span class="n">new_word</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+<a id="__codelineno-0-50" name="__codelineno-0-50"></a>                    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+<a id="__codelineno-0-51" name="__codelineno-0-51"></a>
+<a id="__codelineno-0-52" name="__codelineno-0-52"></a>            <span class="c1"># 把新的 new_word 转成元组赋给 word</span>
+<a id="__codelineno-0-53" name="__codelineno-0-53"></a>            <span class="c1"># 如果只剩一个元素（全部合并完成），终止循环</span>
+<a id="__codelineno-0-54" name="__codelineno-0-54"></a>            <span class="c1"># 否则，重新获取新的 bigram 列表继续下一轮合并</span>
+<a id="__codelineno-0-55" name="__codelineno-0-55"></a>            <span class="n">new_word</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">new_word</span><span class="p">)</span>
+<a id="__codelineno-0-56" name="__codelineno-0-56"></a>            <span class="n">word</span> <span class="o">=</span> <span class="n">new_word</span>
+<a id="__codelineno-0-57" name="__codelineno-0-57"></a>            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+<a id="__codelineno-0-58" name="__codelineno-0-58"></a>                <span class="k">break</span>
+<a id="__codelineno-0-59" name="__codelineno-0-59"></a>            <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-0-60" name="__codelineno-0-60"></a>                <span class="n">pairs</span> <span class="o">=</span> <span class="n">get_pairs</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+<a id="__codelineno-0-61" name="__codelineno-0-61"></a>
+<a id="__codelineno-0-62" name="__codelineno-0-62"></a>        <span class="c1"># 把最终结果用空格连接成字符串，如："h e ll o"</span>
+<a id="__codelineno-0-63" name="__codelineno-0-63"></a>        <span class="n">word</span> <span class="o">=</span> <span class="s2">" "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+<a id="__codelineno-0-64" name="__codelineno-0-64"></a>        <span class="c1"># 缓存这个结果以备下次使用</span>
+<a id="__codelineno-0-65" name="__codelineno-0-65"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">[</span><span class="n">token</span><span class="p">]</span> <span class="o">=</span> <span class="n">word</span>
+<a id="__codelineno-0-66" name="__codelineno-0-66"></a>        <span class="k">return</span> <span class="n">word</span>
+</code></pre></div></td></tr></table></div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-1-10">10</a></span>
+<span class="normal"><a href="#__codelineno-1-11">11</a></span>
+<span class="normal"><a href="#__codelineno-1-12">12</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="c1"># case</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="n">token</span> <span class="o">=</span> <span class="s2">"low"</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="bp">self</span><span class="o">.</span><span class="n">bpe_ranks</span> <span class="o">=</span> <span class="p">{(</span><span class="s1">'l'</span><span class="p">,</span> <span class="s1">'o'</span><span class="p">):</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="s1">'o'</span><span class="p">,</span> <span class="s1">'w'</span><span class="p">):</span> <span class="mi">2</span><span class="p">}</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="c1"># 执行 bpe("low") 过程如下：</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="c1"># word = ('l', 'o', 'w')</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="c1"># pairs = {('l', 'o'), ('o', 'w')}</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="c1"># 合并 'l'+'o' -&gt; 'lo'</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="c1"># 新词变为 ('lo', 'w')</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11"></a><span class="c1"># 再检查 bigram ('lo', 'w')，如果不在 ranks 中，停止合并</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12"></a><span class="c1"># 返回 "lo w"</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="_1">初始化阶段<a class="headerlink" href="#_1" title="Permanent link">¶</a></h3>
+<p>· 所有词都会被拆分成字符级别的 token（比如 "low" → ['l', 'o', 'w']）</p>
+<p>· 统计相邻 token 对的出现频率</p>
+<p>例如：
+</p><div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>low$ ← 分解为 ['l', 'o', 'w', '$']
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a>newer$ ← 分解为 ['n', 'e', 'w', 'e', 'r', '$']
+</code></pre></div></td></tr></table></div>
+<p>统计 token 对出现频率：</p>
+<table>
+<thead>
+<tr>
+<th>TOKEN PAIR</th>
+<th>频率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>('l', 'o')</td>
+<td>1</td>
+</tr>
+<tr>
+<td>('o', 'w')</td>
+<td>1</td>
+</tr>
+<tr>
+<td>('w', '$')</td>
+<td>1</td>
+</tr>
+<tr>
+<td>('n', 'e')</td>
+<td>1</td>
+</tr>
+<tr>
+<td>('e', 'w')</td>
+<td>1</td>
+</tr>
+<tr>
+<td>('w', 'e')</td>
+<td>1</td>
+</tr>
+<tr>
+<td>('e', 'r')</td>
+<td>1</td>
+</tr>
+<tr>
+<td>('r', '$')</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_2">第一次合并<a class="headerlink" href="#_2" title="Permanent link">¶</a></h3>
+<p>找出频率最高的 token 对，比如这里所有都是 1，随机选一个，比如 <code>('e', 'w')</code>。</p>
+<p>· 把它加入合并列表 <code>bpe_merges = [('e', 'w')]</code></p>
+<p>· 创建新 token：<code>ew</code></p>
+<p>· 替换语料中所有的 <code>'e' + 'w'</code>为 <code>'ew'</code></p>
+<h3 id="_3">第二次合并<a class="headerlink" href="#_3" title="Permanent link">¶</a></h3>
+<p>再次统计 token 对频率，此时 <code>'e' + 'w'</code>变成 <code>'ew'</code>，其他 pair 出现频率会变化。</p>
+<p>继续选频率最高的 pair，比如可能是 <code>('w', 'e')</code>或 <code>('ew', 'e')</code>，具体看语料。</p>
+<p>把这个 pair 加入 <code>bpe_merges</code>列表。</p>
+<h3 id="_4">循环直到达到预设的合并次数或词汇量上限<a class="headerlink" href="#_4" title="Permanent link">¶</a></h3>
+<p>最终你会得到一个有序的合并列表：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
+<span class="normal"><a href="#__codelineno-3-2">2</a></span>
+<span class="normal"><a href="#__codelineno-3-3">3</a></span>
+<span class="normal"><a href="#__codelineno-3-4">4</a></span>
+<span class="normal"><a href="#__codelineno-3-5">5</a></span>
+<span class="normal"><a href="#__codelineno-3-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="n">bpe_merges</span> <span class="o">=</span> <span class="p">[</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2"></a>    <span class="p">(</span><span class="s1">'e'</span><span class="p">,</span> <span class="s1">'w'</span><span class="p">),</span>   <span class="c1"># 第一次合并，频率最高</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3"></a>    <span class="p">(</span><span class="s1">'w'</span><span class="p">,</span> <span class="s1">'e'</span><span class="p">),</span>   <span class="c1"># 第二次合并</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4"></a>    <span class="p">(</span><span class="s1">'ew'</span><span class="p">,</span> <span class="s1">'e'</span><span class="p">),</span>  <span class="c1"># 第三次合并</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5"></a>    <span class="o">...</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="p">]</span>
+</code></pre></div></td></tr></table></div>
+<p><strong>所以为什么越靠前的合并对频率越高？</strong></p>
+<p>因为 BPE 是按照以下逻辑工作的：</p>
+<p>1.每次都选择当前频率最高的 token 对</p>
+<p>2.进行合并后更新语料</p>
+<p>3.再重新统计频率</p>
+<p>4.再选择下一个频率最高的 pair</p>
+<p>BPE最早学到的是最常用的token对（如 ('e','w')），用得最多</p>
+<p>后面学到的是稍微少见一点的组合，因为随着token对里字符数量增加，灵活度会降低，文本相对更少见；</p>
+<p>最后学到的可能是某些专有名词、拼写变体等低频组合。</p>
+<p>因此，在分词时优先使用这些高频的合并规则，能更高效地压缩文本。</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="bp">self</span><span class="o">.</span><span class="n">bpe_ranks</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">bpe_merges</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">bpe_merges</span><span class="p">))))</span>
+</code></pre></div></td></tr></table></div>
+<p>所以BPE拿<code>len(bpe_merges)</code>优先级排序</p>
+<h2 id="bpe">BPE算法加速<a class="headerlink" href="#bpe" title="Permanent link">¶</a></h2>
+<h3 id="bpe_1">传统 BPE 的痛点<a class="headerlink" href="#bpe_1" title="Permanent link">¶</a></h3>
+<p>每次合并操作都需要遍历所有单词的所有 bigram（二元组），时间复杂度为 O(|word| * V)（V 为词汇量）。
+当数据量大时，频繁统计 bigram 频率非常耗时。</p>
+<h3 id="sentencepiece"><a href="https://github.com/google/sentencepiece">SentencePiece</a> 的优化方案<a class="headerlink" href="#sentencepiece" title="Permanent link">¶</a></h3>
+<p>· 维护一个链表结构 ，记录每个 bigram 的出现位置和频率。</p>
+<p>· 在合并操作时，仅更新与当前最佳 bigram 相邻的 bigram，避免全局扫描。</p>
+<p><img alt="Figure" src="../../../../../images/algorithm_img/BPE.png"></p>
+<h4 id="bigram">Bigram 分类（左上角）<a class="headerlink" href="#bigram" title="Permanent link">¶</a></h4>
+<p>Best bigram （红色）：当前最优的合并候选（频率最高）。</p>
+<p>Active bigram （橙色）：可能参与后续合并的候选。</p>
+<p>Inactive bigram （灰色）：已被合并或不再活跃的 bigram。</p>
+<h4 id="bigram_1">示例 bigram 及频率（中间）<a class="headerlink" href="#bigram_1" title="Permanent link">¶</a></h4>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
+<span class="normal"><a href="#__codelineno-5-2">2</a></span>
+<span class="normal"><a href="#__codelineno-5-3">3</a></span>
+<span class="normal"><a href="#__codelineno-5-4">4</a></span>
+<span class="normal"><a href="#__codelineno-5-5">5</a></span>
+<span class="normal"><a href="#__codelineno-5-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="p">{</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2"></a>    <span class="s2">"我们"</span><span class="p">:</span> <span class="mi">500</span><span class="n">次</span><span class="p">,</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3"></a>    <span class="s2">"们在"</span><span class="p">:</span> <span class="mi">70</span><span class="n">次</span><span class="p">,</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4"></a>    <span class="s2">"的我"</span><span class="p">:</span> <span class="mi">40</span><span class="n">次</span><span class="p">,</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5"></a>    <span class="s2">"在他"</span><span class="p">:</span> <span class="mi">3</span><span class="n">次</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6"></a><span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<p>· 这些 bigram 是从语料中统计得到的，频率越高越可能被优先合并。</p>
+<h4 id="_5">句子示例（右下角）<a class="headerlink" href="#_5" title="Permanent link">¶</a></h4>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
+<span class="normal"><a href="#__codelineno-6-2">2</a></span>
+<span class="normal"><a href="#__codelineno-6-3">3</a></span>
+<span class="normal"><a href="#__codelineno-6-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1"></a>Sentence 1: ...最好的我们在...
+<a id="__codelineno-6-2" name="__codelineno-6-2"></a>Sentence 530: ...他们在...
+<a id="__codelineno-6-3" name="__codelineno-6-3"></a>...
+<a id="__codelineno-6-4" name="__codelineno-6-4"></a>Sentence 9828: ...高兴的我在... 我们在他家...
+</code></pre></div></td></tr></table></div>
+<p>· 展示了 bigram 在实际文本中的分布情况，例如 "我们在" 出现在多个句子中。</p>
+<p><strong>算法流程详解</strong></p>
+<ol>
+<li>
+<p>初始化 ：</p>
+<p>以字符（字母/字）作为初始词表。</p>
+</li>
+<li>
+<p>统计 bigram ：</p>
+<p>扫描所有句子，统计每个 bigram 的出现频率，并记录其位置（如第 530 句的某个位置）。</p>
+</li>
+<li>
+<p>维护 active_bigram 表 ：</p>
+<p>仅保留那些未被合并且可能成为最佳候选的 bigram（橙色框）。</p>
+</li>
+<li>
+<p>循环合并直到达到目标词表大小 ：</p>
+<p>Step a : 找到频率最高的 bigram（如 "我们"），合并成新 token（如 "我们" → "我们"），并从 active_bigram 中移除。</p>
+<p>Step b : 更新受影响的 bigram：</p>
+<p>删除与 "我们" 相邻的旧 bigram（如 "们的" → 无效）。</p>
+<p>新增由合并后的新 token 形成的 bigram（如 "我们的"）。</p>
+</li>
+</ol>
+<h3 id="_6">优化效果<a class="headerlink" href="#_6" title="Permanent link">¶</a></h3>
+<p>时间复杂度降低 ：无需每次合并都重新扫描全部 bigram，仅更新局部链表。将 BPE 的时间复杂度从 $O(|word| * V) $优化到接近线性时间，极大提升了训练效率</p>
+<p>空间换时间 ：通过维护 bigram 的位置信息，快速定位需要更新的部分。</p>
+<h2 id="bbpe">BBPE<a class="headerlink" href="#bbpe" title="Permanent link">¶</a></h2>
+<p><strong>BBPE和BPE区别是：BPE最小词汇是字符级别，BBPE是字节级别，通过UTF-8编码表示所有字符</strong></p>
+<p>分词器训练方式与BPE类似:</p>
+<p>1.<strong>构建初始词表</strong>：包含一个字节的所有表示（一个Byte的256个表示）</p>
+<p>2.<strong>构建频率统计</strong>：统计所有子词单元对（即两个连续的子词）在文本中的出现频率</p>
+<p>3.<strong>合并频率最高的子词对</strong>：合并出现频率最高的子词对，并更新词汇表和merge</p>
+<p>4.<strong>重复合并步骤</strong>：不断重复步骤2和3，直到不出现有意义的合并或事达到上界</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">  1</a></span>
+<span class="normal"><a href="#__codelineno-7-2">  2</a></span>
+<span class="normal"><a href="#__codelineno-7-3">  3</a></span>
+<span class="normal"><a href="#__codelineno-7-4">  4</a></span>
+<span class="normal"><a href="#__codelineno-7-5">  5</a></span>
+<span class="normal"><a href="#__codelineno-7-6">  6</a></span>
+<span class="normal"><a href="#__codelineno-7-7">  7</a></span>
+<span class="normal"><a href="#__codelineno-7-8">  8</a></span>
+<span class="normal"><a href="#__codelineno-7-9">  9</a></span>
+<span class="normal"><a href="#__codelineno-7-10"> 10</a></span>
+<span class="normal"><a href="#__codelineno-7-11"> 11</a></span>
+<span class="normal"><a href="#__codelineno-7-12"> 12</a></span>
+<span class="normal"><a href="#__codelineno-7-13"> 13</a></span>
+<span class="normal"><a href="#__codelineno-7-14"> 14</a></span>
+<span class="normal"><a href="#__codelineno-7-15"> 15</a></span>
+<span class="normal"><a href="#__codelineno-7-16"> 16</a></span>
+<span class="normal"><a href="#__codelineno-7-17"> 17</a></span>
+<span class="normal"><a href="#__codelineno-7-18"> 18</a></span>
+<span class="normal"><a href="#__codelineno-7-19"> 19</a></span>
+<span class="normal"><a href="#__codelineno-7-20"> 20</a></span>
+<span class="normal"><a href="#__codelineno-7-21"> 21</a></span>
+<span class="normal"><a href="#__codelineno-7-22"> 22</a></span>
+<span class="normal"><a href="#__codelineno-7-23"> 23</a></span>
+<span class="normal"><a href="#__codelineno-7-24"> 24</a></span>
+<span class="normal"><a href="#__codelineno-7-25"> 25</a></span>
+<span class="normal"><a href="#__codelineno-7-26"> 26</a></span>
+<span class="normal"><a href="#__codelineno-7-27"> 27</a></span>
+<span class="normal"><a href="#__codelineno-7-28"> 28</a></span>
+<span class="normal"><a href="#__codelineno-7-29"> 29</a></span>
+<span class="normal"><a href="#__codelineno-7-30"> 30</a></span>
+<span class="normal"><a href="#__codelineno-7-31"> 31</a></span>
+<span class="normal"><a href="#__codelineno-7-32"> 32</a></span>
+<span class="normal"><a href="#__codelineno-7-33"> 33</a></span>
+<span class="normal"><a href="#__codelineno-7-34"> 34</a></span>
+<span class="normal"><a href="#__codelineno-7-35"> 35</a></span>
+<span class="normal"><a href="#__codelineno-7-36"> 36</a></span>
+<span class="normal"><a href="#__codelineno-7-37"> 37</a></span>
+<span class="normal"><a href="#__codelineno-7-38"> 38</a></span>
+<span class="normal"><a href="#__codelineno-7-39"> 39</a></span>
+<span class="normal"><a href="#__codelineno-7-40"> 40</a></span>
+<span class="normal"><a href="#__codelineno-7-41"> 41</a></span>
+<span class="normal"><a href="#__codelineno-7-42"> 42</a></span>
+<span class="normal"><a href="#__codelineno-7-43"> 43</a></span>
+<span class="normal"><a href="#__codelineno-7-44"> 44</a></span>
+<span class="normal"><a href="#__codelineno-7-45"> 45</a></span>
+<span class="normal"><a href="#__codelineno-7-46"> 46</a></span>
+<span class="normal"><a href="#__codelineno-7-47"> 47</a></span>
+<span class="normal"><a href="#__codelineno-7-48"> 48</a></span>
+<span class="normal"><a href="#__codelineno-7-49"> 49</a></span>
+<span class="normal"><a href="#__codelineno-7-50"> 50</a></span>
+<span class="normal"><a href="#__codelineno-7-51"> 51</a></span>
+<span class="normal"><a href="#__codelineno-7-52"> 52</a></span>
+<span class="normal"><a href="#__codelineno-7-53"> 53</a></span>
+<span class="normal"><a href="#__codelineno-7-54"> 54</a></span>
+<span class="normal"><a href="#__codelineno-7-55"> 55</a></span>
+<span class="normal"><a href="#__codelineno-7-56"> 56</a></span>
+<span class="normal"><a href="#__codelineno-7-57"> 57</a></span>
+<span class="normal"><a href="#__codelineno-7-58"> 58</a></span>
+<span class="normal"><a href="#__codelineno-7-59"> 59</a></span>
+<span class="normal"><a href="#__codelineno-7-60"> 60</a></span>
+<span class="normal"><a href="#__codelineno-7-61"> 61</a></span>
+<span class="normal"><a href="#__codelineno-7-62"> 62</a></span>
+<span class="normal"><a href="#__codelineno-7-63"> 63</a></span>
+<span class="normal"><a href="#__codelineno-7-64"> 64</a></span>
+<span class="normal"><a href="#__codelineno-7-65"> 65</a></span>
+<span class="normal"><a href="#__codelineno-7-66"> 66</a></span>
+<span class="normal"><a href="#__codelineno-7-67"> 67</a></span>
+<span class="normal"><a href="#__codelineno-7-68"> 68</a></span>
+<span class="normal"><a href="#__codelineno-7-69"> 69</a></span>
+<span class="normal"><a href="#__codelineno-7-70"> 70</a></span>
+<span class="normal"><a href="#__codelineno-7-71"> 71</a></span>
+<span class="normal"><a href="#__codelineno-7-72"> 72</a></span>
+<span class="normal"><a href="#__codelineno-7-73"> 73</a></span>
+<span class="normal"><a href="#__codelineno-7-74"> 74</a></span>
+<span class="normal"><a href="#__codelineno-7-75"> 75</a></span>
+<span class="normal"><a href="#__codelineno-7-76"> 76</a></span>
+<span class="normal"><a href="#__codelineno-7-77"> 77</a></span>
+<span class="normal"><a href="#__codelineno-7-78"> 78</a></span>
+<span class="normal"><a href="#__codelineno-7-79"> 79</a></span>
+<span class="normal"><a href="#__codelineno-7-80"> 80</a></span>
+<span class="normal"><a href="#__codelineno-7-81"> 81</a></span>
+<span class="normal"><a href="#__codelineno-7-82"> 82</a></span>
+<span class="normal"><a href="#__codelineno-7-83"> 83</a></span>
+<span class="normal"><a href="#__codelineno-7-84"> 84</a></span>
+<span class="normal"><a href="#__codelineno-7-85"> 85</a></span>
+<span class="normal"><a href="#__codelineno-7-86"> 86</a></span>
+<span class="normal"><a href="#__codelineno-7-87"> 87</a></span>
+<span class="normal"><a href="#__codelineno-7-88"> 88</a></span>
+<span class="normal"><a href="#__codelineno-7-89"> 89</a></span>
+<span class="normal"><a href="#__codelineno-7-90"> 90</a></span>
+<span class="normal"><a href="#__codelineno-7-91"> 91</a></span>
+<span class="normal"><a href="#__codelineno-7-92"> 92</a></span>
+<span class="normal"><a href="#__codelineno-7-93"> 93</a></span>
+<span class="normal"><a href="#__codelineno-7-94"> 94</a></span>
+<span class="normal"><a href="#__codelineno-7-95"> 95</a></span>
+<span class="normal"><a href="#__codelineno-7-96"> 96</a></span>
+<span class="normal"><a href="#__codelineno-7-97"> 97</a></span>
+<span class="normal"><a href="#__codelineno-7-98"> 98</a></span>
+<span class="normal"><a href="#__codelineno-7-99"> 99</a></span>
+<span class="normal"><a href="#__codelineno-7-100">100</a></span>
+<span class="normal"><a href="#__codelineno-7-101">101</a></span>
+<span class="normal"><a href="#__codelineno-7-102">102</a></span>
+<span class="normal"><a href="#__codelineno-7-103">103</a></span>
+<span class="normal"><a href="#__codelineno-7-104">104</a></span>
+<span class="normal"><a href="#__codelineno-7-105">105</a></span>
+<span class="normal"><a href="#__codelineno-7-106">106</a></span>
+<span class="normal"><a href="#__codelineno-7-107">107</a></span>
+<span class="normal"><a href="#__codelineno-7-108">108</a></span>
+<span class="normal"><a href="#__codelineno-7-109">109</a></span>
+<span class="normal"><a href="#__codelineno-7-110">110</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="c1"># 使用 defaultdict 简化频率统计字典的构建，访问不存在的键时会自动初始化默认值（如 int 类型默认为 0）</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">defaultdict</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3"></a>
+<a id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="c1"># 示例语料</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="n">sentences</span> <span class="o">=</span> <span class="p">[</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6"></a>    <span class="s2">"我"</span><span class="p">,</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7"></a>    <span class="s2">"喜欢"</span><span class="p">,</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8"></a>    <span class="s2">"吃"</span><span class="p">,</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9"></a>    <span class="s2">"苹果"</span><span class="p">,</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10"></a>    <span class="s2">"他"</span><span class="p">,</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11"></a>    <span class="s2">"不"</span><span class="p">,</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12"></a>    <span class="s2">"喜欢"</span><span class="p">,</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13"></a>    <span class="s2">"吃"</span><span class="p">,</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14"></a>    <span class="s2">"苹果派"</span><span class="p">,</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15"></a>    <span class="s2">"I like to eat apples"</span><span class="p">,</span>
+<a id="__codelineno-7-16" name="__codelineno-7-16"></a>    <span class="s2">"She has a cute cat"</span><span class="p">,</span>
+<a id="__codelineno-7-17" name="__codelineno-7-17"></a>    <span class="s2">"you are very cute"</span><span class="p">,</span>
+<a id="__codelineno-7-18" name="__codelineno-7-18"></a>    <span class="s2">"give you a hug"</span><span class="p">,</span>
+<a id="__codelineno-7-19" name="__codelineno-7-19"></a><span class="p">]</span>
+<a id="__codelineno-7-20" name="__codelineno-7-20"></a>
+<a id="__codelineno-7-21" name="__codelineno-7-21"></a><span class="c1"># 初始词汇表包含所有 256 个字节值（0x00 到 0xFF），这是字节级 BPE 的基础</span>
+<a id="__codelineno-7-22" name="__codelineno-7-22"></a><span class="n">initial_vocab</span> <span class="o">=</span> <span class="p">[</span><span class="nb">bytes</span><span class="p">([</span><span class="n">byte</span><span class="p">])</span> <span class="k">for</span> <span class="n">byte</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">256</span><span class="p">)]</span>
+<a id="__codelineno-7-23" name="__codelineno-7-23"></a><span class="n">vocab</span> <span class="o">=</span> <span class="n">initial_vocab</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<a id="__codelineno-7-24" name="__codelineno-7-24"></a>
+<a id="__codelineno-7-25" name="__codelineno-7-25"></a><span class="c1"># 存储合并规则</span>
+<a id="__codelineno-7-26" name="__codelineno-7-26"></a><span class="n">merge_rules</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-7-27" name="__codelineno-7-27"></a>
+<a id="__codelineno-7-28" name="__codelineno-7-28"></a><span class="nb">print</span><span class="p">(</span><span class="s2">"初始词汇表:"</span><span class="p">,</span> <span class="n">initial_vocab</span><span class="p">)</span>
+<a id="__codelineno-7-29" name="__codelineno-7-29"></a>
+<a id="__codelineno-7-30" name="__codelineno-7-30"></a><span class="c1"># 将句子编码为 UTF-8 字节序列（如“我”编码为 b'\xce\xd2'），统计每个字节的频率 </span>
+<a id="__codelineno-7-31" name="__codelineno-7-31"></a><span class="k">def</span><span class="w"> </span><span class="nf">build_stats</span><span class="p">(</span><span class="n">sentences</span><span class="p">):</span>
+<a id="__codelineno-7-32" name="__codelineno-7-32"></a>    <span class="n">stats</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<a id="__codelineno-7-33" name="__codelineno-7-33"></a>    <span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">sentences</span><span class="p">:</span>
+<a id="__codelineno-7-34" name="__codelineno-7-34"></a>        <span class="c1"># 将句子编码为UTF-8字节</span>
+<a id="__codelineno-7-35" name="__codelineno-7-35"></a>        <span class="n">symbols</span> <span class="o">=</span> <span class="n">sentence</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">"utf-8"</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+<a id="__codelineno-7-36" name="__codelineno-7-36"></a>        <span class="k">for</span> <span class="n">symbol</span> <span class="ow">in</span> <span class="n">symbols</span><span class="p">:</span>
+<a id="__codelineno-7-37" name="__codelineno-7-37"></a>            <span class="n">stats</span><span class="p">[</span><span class="n">symbol</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+<a id="__codelineno-7-38" name="__codelineno-7-38"></a>    <span class="k">return</span> <span class="n">stats</span>
+<a id="__codelineno-7-39" name="__codelineno-7-39"></a>
+<a id="__codelineno-7-40" name="__codelineno-7-40"></a><span class="n">stats</span> <span class="o">=</span> <span class="n">build_stats</span><span class="p">(</span><span class="n">sentences</span><span class="p">)</span>
+<a id="__codelineno-7-41" name="__codelineno-7-41"></a>
+<a id="__codelineno-7-42" name="__codelineno-7-42"></a><span class="c1"># 每个单词的初始分割为单字节列表（如 b'apple' 分割为 [b'a', b'p', b'p', b'l', b'e']）</span>
+<a id="__codelineno-7-43" name="__codelineno-7-43"></a><span class="n">splits</span> <span class="o">=</span> <span class="p">{</span><span class="n">word</span><span class="p">:</span> <span class="p">[</span><span class="nb">bytes</span><span class="p">([</span><span class="n">byte</span><span class="p">])</span> <span class="k">for</span> <span class="n">byte</span> <span class="ow">in</span> <span class="n">word</span><span class="p">]</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">stats</span><span class="o">.</span><span class="n">keys</span><span class="p">()}</span>
+<a id="__codelineno-7-44" name="__codelineno-7-44"></a>
+<a id="__codelineno-7-45" name="__codelineno-7-45"></a><span class="c1"># 统计相邻字节对的出现频率（如 b'a' 和 b'p' 的频率），这是 BPE 合并高频对的基础</span>
+<a id="__codelineno-7-46" name="__codelineno-7-46"></a><span class="k">def</span><span class="w"> </span><span class="nf">compute_pair_freqs</span><span class="p">(</span><span class="n">splits</span><span class="p">):</span>
+<a id="__codelineno-7-47" name="__codelineno-7-47"></a>    <span class="n">pair_freqs</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<a id="__codelineno-7-48" name="__codelineno-7-48"></a>    <span class="k">for</span> <span class="n">word</span><span class="p">,</span> <span class="n">freq</span> <span class="ow">in</span> <span class="n">stats</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<a id="__codelineno-7-49" name="__codelineno-7-49"></a>        <span class="n">split</span> <span class="o">=</span> <span class="n">splits</span><span class="p">[</span><span class="n">word</span><span class="p">]</span>
+<a id="__codelineno-7-50" name="__codelineno-7-50"></a>        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">split</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+<a id="__codelineno-7-51" name="__codelineno-7-51"></a>            <span class="k">continue</span>
+<a id="__codelineno-7-52" name="__codelineno-7-52"></a>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">split</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+<a id="__codelineno-7-53" name="__codelineno-7-53"></a>            <span class="n">pair</span> <span class="o">=</span> <span class="p">(</span><span class="n">split</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">split</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
+<a id="__codelineno-7-54" name="__codelineno-7-54"></a>            <span class="n">pair_freqs</span><span class="p">[</span><span class="n">pair</span><span class="p">]</span> <span class="o">+=</span> <span class="n">freq</span>
+<a id="__codelineno-7-55" name="__codelineno-7-55"></a>    <span class="k">return</span> <span class="n">pair_freqs</span>
+<a id="__codelineno-7-56" name="__codelineno-7-56"></a>
+<a id="__codelineno-7-57" name="__codelineno-7-57"></a><span class="c1"># 遍历所有单词，将匹配的字节对替换为合并后的新字节</span>
+<a id="__codelineno-7-58" name="__codelineno-7-58"></a><span class="k">def</span><span class="w"> </span><span class="nf">merge_pair</span><span class="p">(</span><span class="n">pair</span><span class="p">,</span> <span class="n">splits</span><span class="p">):</span>
+<a id="__codelineno-7-59" name="__codelineno-7-59"></a>    <span class="n">merged_byte</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">''</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pair</span><span class="p">)</span>
+<a id="__codelineno-7-60" name="__codelineno-7-60"></a>    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">stats</span><span class="p">:</span>
+<a id="__codelineno-7-61" name="__codelineno-7-61"></a>        <span class="n">split</span> <span class="o">=</span> <span class="n">splits</span><span class="p">[</span><span class="n">word</span><span class="p">]</span>
+<a id="__codelineno-7-62" name="__codelineno-7-62"></a>        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">split</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+<a id="__codelineno-7-63" name="__codelineno-7-63"></a>            <span class="k">continue</span>
+<a id="__codelineno-7-64" name="__codelineno-7-64"></a>        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+<a id="__codelineno-7-65" name="__codelineno-7-65"></a>        <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">split</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+<a id="__codelineno-7-66" name="__codelineno-7-66"></a>            <span class="k">if</span> <span class="n">split</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="nb">list</span><span class="p">(</span><span class="n">pair</span><span class="p">):</span>
+<a id="__codelineno-7-67" name="__codelineno-7-67"></a>                <span class="n">split</span> <span class="o">=</span> <span class="n">split</span><span class="p">[:</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">merged_byte</span><span class="p">]</span> <span class="o">+</span> <span class="n">split</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">:]</span>
+<a id="__codelineno-7-68" name="__codelineno-7-68"></a>            <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-7-69" name="__codelineno-7-69"></a>                <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+<a id="__codelineno-7-70" name="__codelineno-7-70"></a>        <span class="n">splits</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="o">=</span> <span class="n">split</span>
+<a id="__codelineno-7-71" name="__codelineno-7-71"></a>    <span class="k">return</span> <span class="n">splits</span>
+<a id="__codelineno-7-72" name="__codelineno-7-72"></a>
+<a id="__codelineno-7-73" name="__codelineno-7-73"></a><span class="c1"># BPE主过程核心逻辑：重复合并最高频字节对，直到词汇表达到目标大小</span>
+<a id="__codelineno-7-74" name="__codelineno-7-74"></a><span class="k">def</span><span class="w"> </span><span class="nf">byte_level_bpe</span><span class="p">(</span><span class="n">sentences</span><span class="p">,</span> <span class="n">initial_vocab</span><span class="p">,</span> <span class="n">target_vocab_size</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
+<a id="__codelineno-7-75" name="__codelineno-7-75"></a>    <span class="n">vocab</span> <span class="o">=</span> <span class="n">initial_vocab</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<a id="__codelineno-7-76" name="__codelineno-7-76"></a>    <span class="n">merge_rules</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-7-77" name="__codelineno-7-77"></a>    <span class="n">stats</span> <span class="o">=</span> <span class="n">build_stats</span><span class="p">(</span><span class="n">sentences</span><span class="p">)</span>
+<a id="__codelineno-7-78" name="__codelineno-7-78"></a>    <span class="n">splits</span> <span class="o">=</span> <span class="p">{</span><span class="n">word</span><span class="p">:</span> <span class="p">[</span><span class="nb">bytes</span><span class="p">([</span><span class="n">byte</span><span class="p">])</span> <span class="k">for</span> <span class="n">byte</span> <span class="ow">in</span> <span class="n">word</span><span class="p">]</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">stats</span><span class="o">.</span><span class="n">keys</span><span class="p">()}</span>
+<a id="__codelineno-7-79" name="__codelineno-7-79"></a>
+<a id="__codelineno-7-80" name="__codelineno-7-80"></a>    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">vocab</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">target_vocab_size</span><span class="p">:</span>
+<a id="__codelineno-7-81" name="__codelineno-7-81"></a>        <span class="n">pair_freqs</span> <span class="o">=</span> <span class="n">compute_pair_freqs</span><span class="p">(</span><span class="n">splits</span><span class="p">)</span>
+<a id="__codelineno-7-82" name="__codelineno-7-82"></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">pair_freqs</span><span class="p">:</span>
+<a id="__codelineno-7-83" name="__codelineno-7-83"></a>            <span class="nb">print</span><span class="p">(</span><span class="s2">"没有更多的字节对可以合并。"</span><span class="p">)</span>
+<a id="__codelineno-7-84" name="__codelineno-7-84"></a>            <span class="k">break</span>
+<a id="__codelineno-7-85" name="__codelineno-7-85"></a>        <span class="c1"># 找到频率最高的字节对</span>
+<a id="__codelineno-7-86" name="__codelineno-7-86"></a>        <span class="n">best_pair</span><span class="p">,</span> <span class="n">max_freq</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">pair_freqs</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<a id="__codelineno-7-87" name="__codelineno-7-87"></a>        <span class="k">if</span> <span class="n">max_freq</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+<a id="__codelineno-7-88" name="__codelineno-7-88"></a>            <span class="nb">print</span><span class="p">(</span><span class="s2">"最高频率的字节对频率小于1，停止合并。"</span><span class="p">)</span>
+<a id="__codelineno-7-89" name="__codelineno-7-89"></a>            <span class="k">break</span>
+<a id="__codelineno-7-90" name="__codelineno-7-90"></a>        <span class="c1"># 合并字节对</span>
+<a id="__codelineno-7-91" name="__codelineno-7-91"></a>        <span class="n">splits</span> <span class="o">=</span> <span class="n">merge_pair</span><span class="p">(</span><span class="n">best_pair</span><span class="p">,</span> <span class="n">splits</span><span class="p">)</span>
+<a id="__codelineno-7-92" name="__codelineno-7-92"></a>        <span class="c1"># 创建新的子词单元</span>
+<a id="__codelineno-7-93" name="__codelineno-7-93"></a>        <span class="n">new_unigram</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">''</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">best_pair</span><span class="p">)</span>
+<a id="__codelineno-7-94" name="__codelineno-7-94"></a>        <span class="c1"># 添加合并规则</span>
+<a id="__codelineno-7-95" name="__codelineno-7-95"></a>        <span class="n">merge_rules</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">best_pair</span><span class="p">,</span> <span class="n">new_unigram</span><span class="p">))</span>
+<a id="__codelineno-7-96" name="__codelineno-7-96"></a>        <span class="c1"># 更新词汇表</span>
+<a id="__codelineno-7-97" name="__codelineno-7-97"></a>        <span class="n">vocab</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_unigram</span><span class="p">)</span>
+<a id="__codelineno-7-98" name="__codelineno-7-98"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"合并字节对: </span><span class="si">{</span><span class="n">best_pair</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">new_unigram</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-7-99" name="__codelineno-7-99"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"当前词汇表大小: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">vocab</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-7-100" name="__codelineno-7-100"></a>
+<a id="__codelineno-7-101" name="__codelineno-7-101"></a>    <span class="k">return</span> <span class="n">vocab</span><span class="p">,</span> <span class="n">merge_rules</span>
+<a id="__codelineno-7-102" name="__codelineno-7-102"></a>
+<a id="__codelineno-7-103" name="__codelineno-7-103"></a><span class="c1"># 输出最终词汇表和合并规则，用于后续的文本编码</span>
+<a id="__codelineno-7-104" name="__codelineno-7-104"></a><span class="n">vocab_size</span> <span class="o">=</span> <span class="mi">260</span>
+<a id="__codelineno-7-105" name="__codelineno-7-105"></a><span class="n">vocab</span><span class="p">,</span> <span class="n">merge_rules</span> <span class="o">=</span> <span class="n">byte_level_bpe</span><span class="p">(</span><span class="n">sentences</span><span class="p">,</span> <span class="n">initial_vocab</span><span class="p">,</span> <span class="n">target_vocab_size</span><span class="o">=</span><span class="n">vocab_size</span><span class="p">)</span>
+<a id="__codelineno-7-106" name="__codelineno-7-106"></a>
+<a id="__codelineno-7-107" name="__codelineno-7-107"></a><span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">最终词汇表:"</span><span class="p">,</span> <span class="n">vocab</span><span class="p">)</span>
+<a id="__codelineno-7-108" name="__codelineno-7-108"></a><span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">合并规则:"</span><span class="p">)</span>
+<a id="__codelineno-7-109" name="__codelineno-7-109"></a><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">rule</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">merge_rules</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+<a id="__codelineno-7-110" name="__codelineno-7-110"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">rule</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">rule</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="wordpiece">WordPiece<a class="headerlink" href="#wordpiece" title="Permanent link">¶</a></h2>
+<p>WordPiece的核心思想是将单词拆分为多个前缀符号（比如BERT中的##）最小单元，再通过子词合并规则将最小单元进行合并为子词级别。
+例如对于单词“word”，拆分如下：</p>
+<p></p><div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1"></a>w ##o ##r ##d
+</code></pre></div></td></tr></table></div>
+计算过程绝大部分与BPE一致，<strong>将挑选bigram的指标从频率换成了PMI</strong>（衡量两个事物之间的相关性，比如两个词）
+<h3 id="pmi">PMI<a class="headerlink" href="#pmi" title="Permanent link">¶</a></h3>
+<p><span class="arithmatex">\(PMI(a,b)=\frac{P(ab)}{P(a)P(b)}\)</span>，其中a和b为相邻的子词</p>
+<p>如果x跟y不相关，则<span class="arithmatex">\(p(xy)=p(x)p(y)\)</span>。二者相关性越大，则<span class="arithmatex">\(p(x,y)\)</span>相比于<span class="arithmatex">\(p(x)p(y)\)</span>越大。</p>
+<p><span class="arithmatex">\(\frac{p(x|y)}{p(x)}\)</span>表示x跟y的相关程度,因为条件概率越大，关联性就越高（指正相关）。</p>
+<p>原本的PMI公式如下：</p>
+<div class="arithmatex">\[PMI(a,b)=log\frac{P(ab)}{P(a)P(b)}=log\frac{P(a|b)}{P(a)}=log\frac{P(b|a)}{P(b)}\]</div>
+<p>这里的log来自于信息论的理论，当对p(x)取log之后就将一个概率转换为了信息量（要再乘以-1将其变为正数），以2为底时可以简单理解为用多少个bits可以表示这个变量。
+不过在分词方面，就不需要加log了，因为表示的不是信息量</p>
+<p>点互信息PMI其实就是从信息论里面的互信息这个概念里面衍生出来的。
+其衡量的是两个随机变量之间的相关性，即一个随机变量中包含的关于另一个随机变量的信息量。</p>
+<p>所谓的随机变量，即随机试验结果的量的表示，可以简单理解为按照一个概率分布进行取值的变量，比如随机抽查的一个人的身高就是一个随机变量。
+互信息其实就是对X和Y的所有可能的取值情况的点互信息PMI的加权和，而点互信息只是对其中两个点进行相关性判断。</p>
+<h3 id="_7">算法过程<a class="headerlink" href="#_7" title="Permanent link">¶</a></h3>
+<ol>
+<li>计算初始词表：通过训练语料获得或者最初的英文中26个字母加上各种符号以及常见中文字符，这些作为初始词表。</li>
+<li>计算合并分数（PMI）：对训练语料拆分的多个子词单元通过合拼规则计算合并分数。</li>
+<li>合并分数最高的子词对：选择分数最高的子词对，将它们合并成一个新的子词单元，并更新词表。</li>
+<li>重复合并步骤：不断重复步骤 2 和步骤 3，直到达到预定的词表大小、合并次数，或者直到不再有有意义的合并（即，进一步合并不会显著提高词表的效益）。</li>
+<li>分词：使用最终得到的词汇表对文本进行分词（注意是利用词汇表，对比BPE）。</li>
+</ol>
+<p>注意代码相比BPE，WordPiece只需要修改合并分数的计算即可：</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-9-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-9-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-9-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-9-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-9-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-9-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-9-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-9-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-9-10">10</a></span>
+<span class="normal"><a href="#__codelineno-9-11">11</a></span>
+<span class="normal"><a href="#__codelineno-9-12">12</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">vocab</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">target_vocab_size</span><span class="p">:</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2"></a>        <span class="c1"># 统计新词表导致的bigram频率</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3"></a>    <span class="n">bigram_score</span> <span class="o">=</span> <span class="n">get_pmi</span><span class="p">(</span><span class="n">word_freq</span><span class="p">)</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4"></a>        <span class="c1"># 找到分数最高的bigram</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5"></a>    <span class="n">best_bigram</span> <span class="o">=</span> <span class="n">argmax</span><span class="p">(</span><span class="n">bigram_score</span><span class="p">)</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6"></a>        <span class="c1"># 新词为分数最高的bigram连接</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7"></a>    <span class="n">new_unigram</span> <span class="o">=</span> <span class="s1">''</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">best_bigram</span><span class="p">)</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8"></a>        <span class="c1"># 对词频表中每个词应用best bigram的合并</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9"></a>    <span class="n">word_freq</span> <span class="o">=</span> <span class="n">merge_bigram</span><span class="p">(</span><span class="n">best_bigram</span><span class="p">,</span> <span class="n">new_unigram</span><span class="p">,</span> <span class="n">word_freq</span><span class="p">)</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10"></a>        <span class="c1"># 添加合并规则、添加新词</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11"></a>    <span class="n">merge_rule</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="n">best_bigram</span> <span class="o">-&gt;</span> <span class="n">new_unigram</span><span class="p">})</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12"></a>    <span class="n">vocab</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_unigram</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="wordpiece_1">WordPiece如何分词<a class="headerlink" href="#wordpiece_1" title="Permanent link">¶</a></h3>
+<p>相比于BPE是使用merge_rule进行合并，WordPiece使用的就是前向最大匹配法进行进行vocab匹配，参考bert的分词方法</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-10-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-10-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-10-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-10-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-10-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-10-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-10-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-10-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-10-10">10</a></span>
+<span class="normal"><a href="#__codelineno-10-11">11</a></span>
+<span class="normal"><a href="#__codelineno-10-12">12</a></span>
+<span class="normal"><a href="#__codelineno-10-13">13</a></span>
+<span class="normal"><a href="#__codelineno-10-14">14</a></span>
+<span class="normal"><a href="#__codelineno-10-15">15</a></span>
+<span class="normal"><a href="#__codelineno-10-16">16</a></span>
+<span class="normal"><a href="#__codelineno-10-17">17</a></span>
+<span class="normal"><a href="#__codelineno-10-18">18</a></span>
+<span class="normal"><a href="#__codelineno-10-19">19</a></span>
+<span class="normal"><a href="#__codelineno-10-20">20</a></span>
+<span class="normal"><a href="#__codelineno-10-21">21</a></span>
+<span class="normal"><a href="#__codelineno-10-22">22</a></span>
+<span class="normal"><a href="#__codelineno-10-23">23</a></span>
+<span class="normal"><a href="#__codelineno-10-24">24</a></span>
+<span class="normal"><a href="#__codelineno-10-25">25</a></span>
+<span class="normal"><a href="#__codelineno-10-26">26</a></span>
+<span class="normal"><a href="#__codelineno-10-27">27</a></span>
+<span class="normal"><a href="#__codelineno-10-28">28</a></span>
+<span class="normal"><a href="#__codelineno-10-29">29</a></span>
+<span class="normal"><a href="#__codelineno-10-30">30</a></span>
+<span class="normal"><a href="#__codelineno-10-31">31</a></span>
+<span class="normal"><a href="#__codelineno-10-32">32</a></span>
+<span class="normal"><a href="#__codelineno-10-33">33</a></span>
+<span class="normal"><a href="#__codelineno-10-34">34</a></span>
+<span class="normal"><a href="#__codelineno-10-35">35</a></span>
+<span class="normal"><a href="#__codelineno-10-36">36</a></span>
+<span class="normal"><a href="#__codelineno-10-37">37</a></span>
+<span class="normal"><a href="#__codelineno-10-38">38</a></span>
+<span class="normal"><a href="#__codelineno-10-39">39</a></span>
+<span class="normal"><a href="#__codelineno-10-40">40</a></span>
+<span class="normal"><a href="#__codelineno-10-41">41</a></span>
+<span class="normal"><a href="#__codelineno-10-42">42</a></span>
+<span class="normal"><a href="#__codelineno-10-43">43</a></span>
+<span class="normal"><a href="#__codelineno-10-44">44</a></span>
+<span class="normal"><a href="#__codelineno-10-45">45</a></span>
+<span class="normal"><a href="#__codelineno-10-46">46</a></span>
+<span class="normal"><a href="#__codelineno-10-47">47</a></span>
+<span class="normal"><a href="#__codelineno-10-48">48</a></span>
+<span class="normal"><a href="#__codelineno-10-49">49</a></span>
+<span class="normal"><a href="#__codelineno-10-50">50</a></span>
+<span class="normal"><a href="#__codelineno-10-51">51</a></span>
+<span class="normal"><a href="#__codelineno-10-52">52</a></span>
+<span class="normal"><a href="#__codelineno-10-53">53</a></span>
+<span class="normal"><a href="#__codelineno-10-54">54</a></span>
+<span class="normal"><a href="#__codelineno-10-55">55</a></span>
+<span class="normal"><a href="#__codelineno-10-56">56</a></span>
+<span class="normal"><a href="#__codelineno-10-57">57</a></span>
+<span class="normal"><a href="#__codelineno-10-58">58</a></span>
+<span class="normal"><a href="#__codelineno-10-59">59</a></span>
+<span class="normal"><a href="#__codelineno-10-60">60</a></span>
+<span class="normal"><a href="#__codelineno-10-61">61</a></span>
+<span class="normal"><a href="#__codelineno-10-62">62</a></span>
+<span class="normal"><a href="#__codelineno-10-63">63</a></span>
+<span class="normal"><a href="#__codelineno-10-64">64</a></span>
+<span class="normal"><a href="#__codelineno-10-65">65</a></span>
+<span class="normal"><a href="#__codelineno-10-66">66</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">WordpieceTokenizer</span><span class="p">:</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2"></a>
+<a id="__codelineno-10-3" name="__codelineno-10-3"></a>    <span class="c1"># vocab：词汇表（dict 或 set），包含所有合法的子词单元（如 "un"、"##aff" 等）</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4"></a>    <span class="c1"># unk_token：表示未知词的标记（如 "[UNK]"），当无法分割某词时返回此标记</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5"></a>    <span class="c1"># max_input_chars_per_word：单个词的最大字符数限制，默认为 100，防止过长字符串导致性能问题 </span>
+<a id="__codelineno-10-6" name="__codelineno-10-6"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocab</span><span class="p">,</span> <span class="n">unk_token</span><span class="p">,</span> <span class="n">max_input_chars_per_word</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">vocab</span> <span class="o">=</span> <span class="n">vocab</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">unk_token</span> <span class="o">=</span> <span class="n">unk_token</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">max_input_chars_per_word</span> <span class="o">=</span> <span class="n">max_input_chars_per_word</span>
+<a id="__codelineno-10-10" name="__codelineno-10-10"></a>
+<a id="__codelineno-10-11" name="__codelineno-10-11"></a>    <span class="c1"># 功能 ：将输入文本分词为 WordPiece 子词单元。</span>
+<a id="__codelineno-10-12" name="__codelineno-10-12"></a>    <span class="c1"># output_tokens：存储最终的子词列表</span>
+<a id="__codelineno-10-13" name="__codelineno-10-13"></a>    <span class="c1"># 对输入文本调用 whitespace_tokenize</span>
+<a id="__codelineno-10-14" name="__codelineno-10-14"></a>    <span class="err">```</span>
+<a id="__codelineno-10-15" name="__codelineno-10-15"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">whitespace_tokenize</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+<a id="__codelineno-10-16" name="__codelineno-10-16"></a><span class="w">    </span><span class="sd">"""Runs basic whitespace cleaning and splitting on a piece of text."""</span>
+<a id="__codelineno-10-17" name="__codelineno-10-17"></a>    <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>     <span class="c1"># 例如将 " Hello world! " 转换为 "Hello world!" ，移除文本开头和结尾的空白字符</span>
+<a id="__codelineno-10-18" name="__codelineno-10-18"></a><span class="err">。</span>
+<a id="__codelineno-10-19" name="__codelineno-10-19"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">text</span><span class="p">:</span>
+<a id="__codelineno-10-20" name="__codelineno-10-20"></a>        <span class="k">return</span> <span class="p">[]</span>   <span class="c1"># 如果清理后的文本为空字符串（如原始文本仅包含空白符），则直接返回空列表</span>
+<a id="__codelineno-10-21" name="__codelineno-10-21"></a>    <span class="n">tokens</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>   <span class="c1"># "The sunshine is nice" 会被分割为 ["The", "sunshine", "is", "nice"]。此方法会自动忽略连续的空白符</span>
+<a id="__codelineno-10-22" name="__codelineno-10-22"></a>    <span class="k">return</span> <span class="n">tokens</span>
+<a id="__codelineno-10-23" name="__codelineno-10-23"></a>    <span class="err">```</span>
+<a id="__codelineno-10-24" name="__codelineno-10-24"></a>    <span class="c1"># 将每个词元转换为字符列表 chars</span>
+<a id="__codelineno-10-25" name="__codelineno-10-25"></a>    <span class="c1"># 若字符数超过 max_input_chars_per_word，直接标记为未知词 unk_token 并跳过后续处理</span>
+<a id="__codelineno-10-26" name="__codelineno-10-26"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">tokenize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+<a id="__codelineno-10-27" name="__codelineno-10-27"></a>        <span class="n">output_tokens</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-10-28" name="__codelineno-10-28"></a>        <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">whitespace_tokenize</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+<a id="__codelineno-10-29" name="__codelineno-10-29"></a>            <span class="n">chars</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+<a id="__codelineno-10-30" name="__codelineno-10-30"></a>            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">chars</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_input_chars_per_word</span><span class="p">:</span>
+<a id="__codelineno-10-31" name="__codelineno-10-31"></a>                <span class="n">output_tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">unk_token</span><span class="p">)</span>
+<a id="__codelineno-10-32" name="__codelineno-10-32"></a>                <span class="k">continue</span>
+<a id="__codelineno-10-33" name="__codelineno-10-33"></a>
+<a id="__codelineno-10-34" name="__codelineno-10-34"></a>
+<a id="__codelineno-10-35" name="__codelineno-10-35"></a>            <span class="c1"># 核心逻辑 ：使用贪心最长匹配优先算法分割子词</span>
+<a id="__codelineno-10-36" name="__codelineno-10-36"></a>            <span class="c1"># 如果 start &gt; 0（非词首子词），则添加前缀 "##"（如 "##aff"）</span>
+<a id="__codelineno-10-37" name="__codelineno-10-37"></a>            <span class="c1"># 若找到匹配的子词（substr in self.vocab），记录并移动 start 到 end</span>
+<a id="__codelineno-10-38" name="__codelineno-10-38"></a>            <span class="c1"># 若找不到任何子词匹配，标记 is_bad=True 并终止循环</span>
+<a id="__codelineno-10-39" name="__codelineno-10-39"></a>            <span class="n">is_bad</span> <span class="o">=</span> <span class="kc">False</span>
+<a id="__codelineno-10-40" name="__codelineno-10-40"></a>            <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span>
+<a id="__codelineno-10-41" name="__codelineno-10-41"></a>            <span class="n">sub_tokens</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-10-42" name="__codelineno-10-42"></a>            <span class="k">while</span> <span class="n">start</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">chars</span><span class="p">):</span>
+<a id="__codelineno-10-43" name="__codelineno-10-43"></a>                <span class="n">end</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">chars</span><span class="p">)</span>
+<a id="__codelineno-10-44" name="__codelineno-10-44"></a>                <span class="n">cur_substr</span> <span class="o">=</span> <span class="kc">None</span>
+<a id="__codelineno-10-45" name="__codelineno-10-45"></a>                <span class="k">while</span> <span class="n">start</span> <span class="o">&lt;</span> <span class="n">end</span><span class="p">:</span>
+<a id="__codelineno-10-46" name="__codelineno-10-46"></a>                    <span class="n">substr</span> <span class="o">=</span> <span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">chars</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">])</span>
+<a id="__codelineno-10-47" name="__codelineno-10-47"></a>                    <span class="k">if</span> <span class="n">start</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+<a id="__codelineno-10-48" name="__codelineno-10-48"></a>                        <span class="n">substr</span> <span class="o">=</span> <span class="s2">"##"</span> <span class="o">+</span> <span class="n">substr</span>
+<a id="__codelineno-10-49" name="__codelineno-10-49"></a>                    <span class="k">if</span> <span class="n">substr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">vocab</span><span class="p">:</span>
+<a id="__codelineno-10-50" name="__codelineno-10-50"></a>                        <span class="n">cur_substr</span> <span class="o">=</span> <span class="n">substr</span>
+<a id="__codelineno-10-51" name="__codelineno-10-51"></a>                        <span class="k">break</span>
+<a id="__codelineno-10-52" name="__codelineno-10-52"></a>                    <span class="n">end</span> <span class="o">-=</span> <span class="mi">1</span>
+<a id="__codelineno-10-53" name="__codelineno-10-53"></a>                <span class="k">if</span> <span class="n">cur_substr</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-10-54" name="__codelineno-10-54"></a>                    <span class="n">is_bad</span> <span class="o">=</span> <span class="kc">True</span>
+<a id="__codelineno-10-55" name="__codelineno-10-55"></a>                    <span class="k">break</span>
+<a id="__codelineno-10-56" name="__codelineno-10-56"></a>                <span class="n">sub_tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cur_substr</span><span class="p">)</span>
+<a id="__codelineno-10-57" name="__codelineno-10-57"></a>                <span class="n">start</span> <span class="o">=</span> <span class="n">end</span>
+<a id="__codelineno-10-58" name="__codelineno-10-58"></a>
+<a id="__codelineno-10-59" name="__codelineno-10-59"></a>            <span class="c1"># 若分割失败（is_bad=True），将整个词标记为 unk_token</span>
+<a id="__codelineno-10-60" name="__codelineno-10-60"></a>            <span class="c1"># 否则，将子词列表 sub_tokens 添加到最终结果中</span>
+<a id="__codelineno-10-61" name="__codelineno-10-61"></a>            <span class="c1"># 示例 ：输入 "unaffable" 会被分割为 ["un", "##aff", "##able"]</span>
+<a id="__codelineno-10-62" name="__codelineno-10-62"></a>            <span class="k">if</span> <span class="n">is_bad</span><span class="p">:</span>
+<a id="__codelineno-10-63" name="__codelineno-10-63"></a>                <span class="n">output_tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">unk_token</span><span class="p">)</span>
+<a id="__codelineno-10-64" name="__codelineno-10-64"></a>            <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-10-65" name="__codelineno-10-65"></a>                <span class="n">output_tokens</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">sub_tokens</span><span class="p">)</span>
+<a id="__codelineno-10-66" name="__codelineno-10-66"></a>        <span class="k">return</span> <span class="n">output_tokens</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="unigram">unigram<a class="headerlink" href="#unigram" title="Permanent link">¶</a></h3>
+<p>BPE 和 WordPiece 的选词目标都是贪心的，即某个词在语料库中的频率或 PMI。</p>
+<p>Unigram 考虑选不选某个词对于整个语料库切词结果的影响。</p>
+<p>训练目标：找到一个词表 vocab，该词表在语料库上的（最优）切分的指标是所有词表里最优的。</p>
+<p>最优指标：</p>
+<p>假设句子 s 被切分成<span class="arithmatex">\(x_1, x_2, \ldots, x_k\)</span></p>
+<p><span class="arithmatex">\(\underset{\text{vocab}}{\text{Argmin}} \sum_{s \in \text{Corpus}} \underset{(x_1, \ldots, x_k) \in \text{Segment}(s, \text{vocab})}{\text{Min}} \text{UnigramPPL}(s)\)</span>
+即找到一个 vocab 使得语料中的每一个句子的 PPL 之和最小！</p>
+<p>UnigramPPL (Perplexity) 定义：</p>
+<p><span class="arithmatex">\(\begin{align*}\text{UnigramPPL}(s) &amp;= -\log(P(s)) &amp;= -\log(\prod_{x_i} P(x_i)) &amp;= \sum_{x_i} -\log(P(x_i))\end{align*}\)</span></p>
+<h4 id="_8">最优指标<a class="headerlink" href="#_8" title="Permanent link">¶</a></h4>
+<p>把句子 s 切成好多部分 ，像<span class="arithmatex">\(x_1, x_2, \ldots, x_k\)</span> 。</p>
+<p>要找到一个词表 vocab，让语料库 Corpus 里每个句子按照这个词表切分后的 UnigramPPL（困惑度 ）之和最小。</p>
+<p>UnigramPPL 就是用来衡量句子概率的一种方式，公式 <span class="arithmatex">\(-\log(P(s))\)</span> ，P (s) 是句子 s 出现的概率 ，通过对数运算转化 ，还可以写成 <span class="arithmatex">\(-\log(\prod_{x_i} P(x_i))\)</span> ，进一步变成 <span class="arithmatex">\(\sum_{x_i} -\log(P(x_i))\)</span> ，
+就是把句子里每个部分概率的对数加起来 。</p>
+<h4 id="_9">算法步骤<a class="headerlink" href="#_9" title="Permanent link">¶</a></h4>
+<p>先把所有的 ngram（n 个词组合在一起的片段 ，n 是提前定好的 ）都当作词表 vocab 的内容，然后统计这些 ngram 出现的频率 。
+把这些频率转化成 <span class="arithmatex">\(-\log P(\text{ngram})\)</span> 。</p>
+<p>代码上就是，只要词表 vocab 的大小比目标大小大，就循环：对词表里每个 ngram，先算出当前词表的 PPL（PPL_0 ） ；</p>
+<p>再对每个 ngram，去掉它得到新的词表 new_vocab，算出新的 PPL（PPL_new ） ，得到 PPL 的增加值（PPL_increase ） ；然后把让 PPL 上升值最小的那个 ngram 扔掉，最后重新计算每个 ngram 的频率 。</p>
+<h4 id="_10">例子<a class="headerlink" href="#_10" title="Permanent link">¶</a></h4>
+<p>假设我们有一个简单的语料库，包含以下三个句子：</p>
+<p>“我 喜欢 苹果”</p>
+<p>“你 喜欢 香蕉”</p>
+<p>“他 喜欢 橙子”</p>
+<ol>
+<li><strong>初始准备</strong></li>
+</ol>
+<p>我们先确定 n = 1（也就是单个词作为 ngram ），把所有出现的单个词 “我”“喜欢”“苹果”“你”“香蕉”“他”“橙子” 都作为初始词表 vocab 。
+然后统计它们的频率：</p>
+<p>“我” : 1</p>
+<p>“喜欢” : 3</p>
+<p>“苹果” : 1</p>
+<p>“你” : 1</p>
+<p>“香蕉” : 1</p>
+<p>“他” : 1</p>
+<p>“橙子” : 1</p>
+<p>接着按照算法，将频率转化为 <span class="arithmatex">\(-\log P(\text{ngram})\)</span> 。这里假设每个词出现的概率是其频率除以总词数（总词数是 9 ） ，比如 “我” 的概率是 <span class="arithmatex">\(1/9\)</span> ，那么 <span class="arithmatex">\(-\log(1/9) \approx 2.197\)</span> 。</p>
+<ol>
+<li><strong>迭代过程</strong></li>
+</ol>
+<p>假设我们目标词表大小是 5 ，当前词表大小是 7 ，大于目标大小，开始迭代：</p>
+<p>对于词表中的每个 ngram，先计算当前词表的 PPL（PPL_0 ） ，这一步比较复杂，要根据前面说的 UnigramPPL 公式，结合每个句子切分后的词的概率来计算 。</p>
+<p>然后对于每个 ngram，比如先看 “我” ，去掉 “我” 得到新的词表 new_vocab ，再计算新的 PPL（PPL_new ） ，算出 PPL 的增加值（PPL_increase ） 。把每个 ngram 都这样操作一遍 。</p>
+<p>发现去掉 “你” 和 “他” 时 PPL 上升值相对最小（假设 ），就把 “你” 和 “他” 扔掉 。</p>
+<p>重新计算剩下词 “我”“喜欢”“苹果”“香蕉”“橙子” 的频率 ，因为语料库句子切分情况变了 ，比如 “喜欢” 频率可能就变成 <span class="arithmatex">\(3/7\)</span> ，再重新计算 <span class="arithmatex">\(-\log P(\text{ngram})\)</span> 。</p>
+<ol>
+<li><strong>结束条件</strong></li>
+</ol>
+<p>不断重复上述过程，直到词表大小等于目标大小 5 ，这时得到的词表就是经过 Unigram 算法优化后的词表 ，用这个词表对语料库切词，
+能让句子的 UnigramPPL 之和相对最小 ，也就是切分效果在这个标准下是比较优的 。</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-11-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-11-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-11-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-11-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-11-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-11-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-11-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-11-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-11-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="n">While词表大小</span><span class="o">|</span><span class="n">vocab</span><span class="o">|&gt;</span><span class="n">目标大小</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2"></a>    <span class="k">for</span> <span class="n">ngram</span> <span class="ow">in</span> <span class="n">vocab</span><span class="p">:</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3"></a>        <span class="c1"># 计算扔掉ngram的PPL上升值</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4"></a>        <span class="n">PPL_0</span> <span class="o">=</span> <span class="n">compute_ppl</span><span class="p">(</span><span class="n">vocab</span><span class="p">)</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5"></a>        <span class="k">for</span> <span class="n">ngram</span> <span class="ow">in</span> <span class="n">vocab</span><span class="p">:</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6"></a>            <span class="n">new_vocab</span> <span class="o">=</span> <span class="n">vocab</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">ngram</span><span class="p">)</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7"></a>            <span class="n">PPL_new</span> <span class="o">=</span> <span class="n">compute_ppl</span><span class="p">(</span><span class="n">new_vocab</span><span class="p">)</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8"></a>            <span class="n">PPL_increase</span> <span class="o">=</span> <span class="n">PPL_new</span> <span class="o">-</span> <span class="n">PPL_0</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9"></a>        <span class="n">扔掉PPL上升值最小的ngram</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10"></a>        <span class="n">重新计算每个ngram的frequency</span>
+</code></pre></div></td></tr></table></div>
+<h3 id="bpe_2">BPE 的分词器在应用中是使用正向最大匹配进行分词吗？<a class="headerlink" href="#bpe_2" title="Permanent link">¶</a></h3>
+<p>分词 Tokenization 中 BPE 部分讲解 BPE 进行分词的过程讲解，并不是基于词表，而是基于 merge_rule 分词的。</p>
+<p>可以参考模型中 merge.txt 里面储存的就是规则，<a href="https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct/raw/main/merges.txt">https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct/raw/main/merges.txt</a>，并且这个文件中 rule 的顺序就是代表分词的优先级</p>
+<h3 id="bpe-wordpiece">BPE 与 WordPiece 有什么区别？<a class="headerlink" href="#bpe-wordpiece" title="Permanent link">¶</a></h3>
+<p>合并分数低计算方法不同，BPE 计算的是词频，WordPiece 用的是 PMI。</p>
+<p>如果一个词的各组成部分是常见的，WordPiece 倾向于不合并：</p>
+<p>例如 我是 虽然出现次数很多，但是 我，是 本身频率很高，WordPiece 倾向于不合并。</p>
+<p>应用方式不同，BPE 是用 merge_rule 全局遍历匹配，WordPiece 是贪心前向最大匹配。</p>
+<p>GPT2 使用 BBPE，Bert 使用 WordPiece。</p></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../tokenization/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Tokenization分词器">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Tokenization分词器
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../word_embedding/" class="md-footer__link md-footer__link--next" aria-label="Next: Word Embedding词嵌入">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Word Embedding词嵌入
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../../../../..", "features": ["announce.dismiss", "navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "search.share", "navigation.expand", "navigation.indexes", "content.tabs.link", "content.tooltips", "content.code.copy", "content.code.select", "content.action.edit", "content.action.view", "content.code.annotate"], "search": "../../../../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": {"\u003ctag\u003e": "\u003cidentifier\u003e"}, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+        <script src="https://kit.fontawesome.com/2b1d8a9758.js"></script>
+      
+        <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"></script>
+      
+        <script src="../../../../../../javascripts/extra.js"></script>
+      
+        <script src="../../../../../../javascripts/bannerSlider.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/gh/Wcowin/Wcowin.github.io@main/docs/javascripts/extra.js"></script>
+      
+        <script src="../../../../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://github.com/Wcowin/Wcowin.github.io/blob/main/docs/javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/gh/Wcowin/Wcowin.github.io@main/docs/javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+      
+        <script src="../../../../../../javascripts/backbound1.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mermaid@10.0.2/dist/add-html-label-6e56ed67.min.js"></script>
+      
+        <script src="https://res.zvo.cn/translate/translate.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/gh/Wcowin/Wcowin.github.io@main/docs/javascripts/view.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax @3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

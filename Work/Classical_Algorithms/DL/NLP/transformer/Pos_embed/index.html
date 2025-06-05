@@ -1,0 +1,4805 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://algebra-mcx.github.io/Academic-Profile/Work/Classical_Algorithms/DL/NLP/transformer/Pos_embed/">
+      
+      
+        <link rel="prev" href="../word_embedding/">
+      
+      
+        <link rel="next" href="../attention/">
+      
+      
+      <link rel="icon" href="../../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>Positional Embedding位置编码 - Chenxi Ma</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../../stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Wcowin/Wcowin.github.io@main/docs/stylesheets/link.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Wcowin/Wcowin.github.io@main/docs/stylesheets/card2.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Wcowin/Wcowin.github.io@main/docs/stylesheets/customize.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Wcowin/Wcowin.github.io@main/docs/stylesheets/ziti.css">
+    
+    <script>__md_scope=new URL("../../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#positional-embedding" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../../../.." title="Chenxi Ma" class="md-header__button md-logo" aria-label="Chenxi Ma" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Chenxi Ma
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Positional Embedding位置编码
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 2c-1.05 0-2.05.16-3 .46 4.06 1.27 7 5.04 7 9.54s-2.94 8.27-7 9.54c.95.3 1.95.46 3 .46a10 10 0 0 0 10-10A10 10 0 0 0 9 2"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/algebra-MCX/Academic-Profile" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Academic-Profile
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../../../../paper/method/blogs/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  AI
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../Others/git/git%E7%90%86%E8%A7%A3/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  其他有用技术
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../project/AI%20infra/c%E5%92%8Ccpp%E5%9F%BA%E7%A1%80/compile/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Projects
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../publications/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Publications
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../cv.md" class="md-tabs__link">
+          
+  
+  
+    
+  
+  CV
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../contact/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contact me
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../../tags/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Tags
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../../.." title="Chenxi Ma" class="md-nav__button md-logo" aria-label="Chenxi Ma" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Chenxi Ma
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/algebra-MCX/Academic-Profile" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Academic-Profile
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    AI
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            AI
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1_1" id="__nav_1_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Blogs
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            Blogs
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_1" id="__nav_1_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    论文写作
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            论文写作
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../paper/method/blogs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    如何找idea
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../paper/method/blogs_write/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    论文写作
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_1_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_2" id="__nav_1_1_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Classical Algorithms
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_1_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            Classical Algorithms
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_1_2_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_2_1" id="__nav_1_1_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    DL
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_1_2_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_1_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            DL
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_1_2_1_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_2_1_1" id="__nav_1_1_2_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    NLP
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_1_1_2_1_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_1_2_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            NLP
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_1_2_1_1_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_2_1_1_1" id="__nav_1_1_2_1_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    transformer
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="6" aria-labelledby="__nav_1_1_2_1_1_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_1_2_1_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            transformer
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../transformer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Transformer
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tokenization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Tokenization分词器
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BPE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Tokenization补充
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../word_embedding/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Word Embedding词嵌入
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Positional Embedding位置编码
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Positional Embedding位置编码
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      为什么需要位置编码？
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="为什么需要位置编码？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      一、位置编码的本质
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      二、为什么这么设计？从傅里叶级数出发理解
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      三、关键设计点：频率的指数衰减
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transformer" class="md-nav__link">
+    <span class="md-ellipsis">
+      四、Transformer中的位置编码机制解析
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      频率选择：为什么用指数方式？
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      相对位置编码
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="相对位置编码">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vs" class="md-nav__link">
+    <span class="md-ellipsis">
+      一、绝对位置编码 vs 相对位置编码
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      二、为什么相对位置要放在注意力里？
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      三、原始注意力机制回顾
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      四、引入绝对位置编码后的影响
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q-k" class="md-nav__link">
+    <span class="md-ellipsis">
+      五、目标：让注意力得分只依赖于相对位置 $ q - k $
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#r_q-k" class="md-nav__link">
+    <span class="md-ellipsis">
+      六、如何构造 $ R_{q-k} $？
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="六、如何构造 $ R_{q-k} $？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      方法一：人为设计（手工定义）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#learnable-embedding" class="md-nav__link">
+    <span class="md-ellipsis">
+      方法二：可学习嵌入（Learnable Embedding）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      方法三：结合卷积思想
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      七、如何整合进注意力机制？
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      八、举例说明
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rope" class="md-nav__link">
+    <span class="md-ellipsis">
+      九、旋转位置编码（RoPE）也是一种相对位置编码
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      主流位置编码方法
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="主流位置编码方法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      固定的正余弦位置编码（绝对位置编码）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      可学习的位置编码（绝对位置编码）
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="可学习的位置编码（绝对位置编码）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      具体实现
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      传统相对位置编码
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transformer-xl" class="md-nav__link">
+    <span class="md-ellipsis">
+      Transformer-XL的相对位置编码
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rope_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      ROPE
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alibi-attention-with-linear-biases" class="md-nav__link">
+    <span class="md-ellipsis">
+      ALiBi (Attention with Linear Biases)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ALiBi (Attention with Linear Biases)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      背景
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      原理
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    <span class="md-ellipsis">
+      优点
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    <span class="md-ellipsis">
+      与其他位置编码的对比
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    <span class="md-ellipsis">
+      各位置编码方法的对比与总结
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_24" class="md-nav__link">
+    <span class="md-ellipsis">
+      考点解析
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_25" class="md-nav__link">
+    <span class="md-ellipsis">
+      总结
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../attention/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Attention注意力
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../attention2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Attention(2)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FFN_activation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    FFN和激活函数
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Mask/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Mask掩码
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Normalization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Normalization
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Enco_Deco/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Encoder and Decoder
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_2_2" id="__nav_1_1_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    RL
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_1_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            RL
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../RL/PPO/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PPO
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_3" id="__nav_1_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    LLM
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            LLM
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_3_1" id="__nav_1_1_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    LLM Architecture
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_1_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            LLM Architecture
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_3_1_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_3_1_1" id="__nav_1_1_3_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Encoder-only
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_1_1_3_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_3_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            Encoder-only
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../LLM/LLM_Architecture/Encoder_only/%E9%A2%84%E8%AE%AD%E7%BB%83%E4%BB%BB%E5%8A%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Encoder-only预训练任务
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../LLM/LLM_Architecture/Encoder_only/BERT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    BERT
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../LLM/LLM_Architecture/Encoder_only/Sentence_BERT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Sentence-BERT
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_3_2" id="__nav_1_1_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Pre-training
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_1_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            Pre-training
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../LLM/Pre-training/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E9%A2%84%E8%AE%AD%E7%BB%83%E5%85%A8%E8%A7%A3%E6%9E%90%EF%BC%9A%E5%AE%9A%E4%B9%89%E3%80%81%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E3%80%81%E6%B5%81%E7%A8%8B%E5%8F%8A%E5%A4%9A%E9%98%B6%E6%AE%B5%E8%AE%AD%E7%BB%83%E9%80%BB%E8%BE%91/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    大模型预训练概述
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../LLM/Pre-training/%E9%A2%84%E8%AE%AD%E7%BB%83%E6%95%B0%E6%8D%AE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    预训练数据
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../LLM/Pre-training/%E6%89%A9%E5%85%85%E8%AF%8D%E8%A1%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    基于SentencePiece扩充LLaMa中文词表
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_4" id="__nav_1_1_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    paper解读
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_1_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_4">
+            <span class="md-nav__icon md-icon"></span>
+            paper解读
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_4_1" id="__nav_1_1_4_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    tech_report
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_1_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            tech_report
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_4_1_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_4_1_1" id="__nav_1_1_4_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Deepseek
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_1_1_4_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_4_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            Deepseek
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../paper/read/tech_report/Deepseek/%E6%95%B4%E4%BD%93%E8%A7%A3%E8%AF%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deepseek：基座模型发展
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../paper/read/tech_report/Deepseek/%E6%95%B4%E4%BD%93%E8%A7%A3%E8%AF%BB2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deepseek：reasoning
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../paper/read/tech_report/Deepseek/DeepSeek_v3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deepseek v3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../paper/read/tech_report/Deepseek/Deepseek_r1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deepseek r1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_4_2" id="__nav_1_1_4_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    EmbodiedAI
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_1_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            EmbodiedAI
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../paper/read/EmbodiedAI/VLA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    机器人基座模型与VLA概述
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../paper/read/EmbodiedAI/ALOHA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ALOHA机器人平台：低成本、高精度双臂操作及其进展深度解析
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../paper/read/EmbodiedAI/Gato%E5%92%8CRT-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    通用智能体与机器人Transformer：Gato和RT-1技术解析及与LLM Transformer的异同
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../paper/read/EmbodiedAI/Octo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Octo——机器人操控的通用框架
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../paper/read/EmbodiedAI/Crossformer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Cross-former
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../paper/read/EmbodiedAI/GR-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    GR-1
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../paper/read/EmbodiedAI/GR-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    GR-2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1_1_4_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_1_4_3" id="__nav_1_1_4_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    RM
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_1_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_1_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            RM
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../paper/read/RM/TTRL/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TTRL
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../paper/read/RM/LCPO/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LCPO
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    其他有用技术
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            其他有用技术
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    git和github
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            git和github
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Others/git/git%E7%90%86%E8%A7%A3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    git理解
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    cpp
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            cpp
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_1" id="__nav_2_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    C++基础语法
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            C++基础语法
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../Others/cpp/cpp%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    cpp基础语法
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Projects
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Projects
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    AI infra
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            AI infra
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1_1" id="__nav_3_1_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    c和cpp基础
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            c和cpp基础
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../project/AI%20infra/c%E5%92%8Ccpp%E5%9F%BA%E7%A1%80/compile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    conpile and link
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_1_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1_2" id="__nav_3_1_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    大模型推理框架
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            大模型推理框架
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../project/AI%20infra/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8E%A8%E7%90%86%E6%A1%86%E6%9E%B6/%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    项目结构
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Publications
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Publications
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../publications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Conferences
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    CV
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            CV
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../cv.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    个人简历
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../contact/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Contact me
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Tags
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Tags
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    个人标签
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      为什么需要位置编码？
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="为什么需要位置编码？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      一、位置编码的本质
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      二、为什么这么设计？从傅里叶级数出发理解
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      三、关键设计点：频率的指数衰减
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transformer" class="md-nav__link">
+    <span class="md-ellipsis">
+      四、Transformer中的位置编码机制解析
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      频率选择：为什么用指数方式？
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      相对位置编码
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="相对位置编码">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vs" class="md-nav__link">
+    <span class="md-ellipsis">
+      一、绝对位置编码 vs 相对位置编码
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      二、为什么相对位置要放在注意力里？
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      三、原始注意力机制回顾
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      四、引入绝对位置编码后的影响
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q-k" class="md-nav__link">
+    <span class="md-ellipsis">
+      五、目标：让注意力得分只依赖于相对位置 $ q - k $
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#r_q-k" class="md-nav__link">
+    <span class="md-ellipsis">
+      六、如何构造 $ R_{q-k} $？
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="六、如何构造 $ R_{q-k} $？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      方法一：人为设计（手工定义）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#learnable-embedding" class="md-nav__link">
+    <span class="md-ellipsis">
+      方法二：可学习嵌入（Learnable Embedding）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      方法三：结合卷积思想
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      七、如何整合进注意力机制？
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      八、举例说明
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rope" class="md-nav__link">
+    <span class="md-ellipsis">
+      九、旋转位置编码（RoPE）也是一种相对位置编码
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      主流位置编码方法
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="主流位置编码方法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      固定的正余弦位置编码（绝对位置编码）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      可学习的位置编码（绝对位置编码）
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="可学习的位置编码（绝对位置编码）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      具体实现
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      传统相对位置编码
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transformer-xl" class="md-nav__link">
+    <span class="md-ellipsis">
+      Transformer-XL的相对位置编码
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rope_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      ROPE
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alibi-attention-with-linear-biases" class="md-nav__link">
+    <span class="md-ellipsis">
+      ALiBi (Attention with Linear Biases)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ALiBi (Attention with Linear Biases)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      背景
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      原理
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    <span class="md-ellipsis">
+      优点
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    <span class="md-ellipsis">
+      与其他位置编码的对比
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    <span class="md-ellipsis">
+      各位置编码方法的对比与总结
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_24" class="md-nav__link">
+    <span class="md-ellipsis">
+      考点解析
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_25" class="md-nav__link">
+    <span class="md-ellipsis">
+      总结
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/algebra-MCX/Academic-Profile/edit/main/docs/Work/Classical_Algorithms/DL/NLP/transformer/Pos_embed.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/algebra-MCX/Academic-Profile/raw/main/docs/Work/Classical_Algorithms/DL/NLP/transformer/Pos_embed.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+<div><h1 id="positional-embedding">Positional Embedding<a class="headerlink" href="#positional-embedding" title="Permanent link">¶</a></h1>
+<p><strong>Transformer中使用的自注意力机制没有顺序概念，需要添加一个含有位置信息的embedding</strong></p>
+<p><img alt="F1" src="../../../../../images/algorithm_img/pos_embed.png"></p>
+<h2 id="_1">为什么需要位置编码？<a class="headerlink" href="#_1" title="Permanent link">¶</a></h2>
+<p>额外引入位置编码的原因很简单：如果没有位置信息，Transformer会将所有词并行处理，无法捕捉词语顺序带来的语义差异。比如“我打你”和“你打我”，字相同但语义相反，顺序至关重要。</p>
+<p>为了在并行计算中保留顺序信息，有两种方式可以将位置信息融入词向量：</p>
+<ol>
+<li><strong>乘法方式（阿达玛积）</strong>：通过权重调整词向量，相当于给模型增加一层结构；</li>
+</ol>
+<p>针对两个维度相同的矩阵<span class="arithmatex">\(A\)</span>和<span class="arithmatex">\(B\)</span>（行列数分别相等 ），它们的阿达玛乘积记作<span class="arithmatex">\(A \circ B\)</span> ，得到的结果是一个新矩阵<span class="arithmatex">\(C\)</span> 。
+新矩阵<span class="arithmatex">\(C\)</span>中每个元素<span class="arithmatex">\(C_{ij}\)</span> ，是矩阵<span class="arithmatex">\(A\)</span>和<span class="arithmatex">\(B\)</span>对应位置元素<span class="arithmatex">\(A_{ij}\)</span>与<span class="arithmatex">\(B_{ij}\)</span>的乘积，</p>
+<p>即<span class="arithmatex">\(C_{ij} = A_{ij} \cdot B_{ij}\)</span> 。</p>
+<p>例如：</p>
+<p>若<span class="arithmatex">\(A=\begin{pmatrix}1&amp;2\\3&amp;4\end{pmatrix}\)</span> ，<span class="arithmatex">\(B=\begin{pmatrix}5&amp;6\\7&amp;8\end{pmatrix}\)</span> ，
+那么<span class="arithmatex">\(A \circ B=\begin{pmatrix}1\times5&amp;2\times6\\3\times7&amp;4\times8\end{pmatrix}=\begin{pmatrix}5&amp;12\\21&amp;32\end{pmatrix}\)</span> 。 </p>
+<p>几何意义</p>
+<p>普通矩阵乘法能实现旋转、缩放等全局线性变换 </p>
+<p>阿达玛乘积更多是局部元素级别操作，可看作在每个维度上独立缩放对应位置元素 ，反映的是两个矩阵在每个元素上的局部交互 。</p>
+<p>2.<strong>加法方式</strong>：将位置信息作为偏置加到词向量上，相当于对不同位置的向量进行不同的平移操作。</p>
+<p>原版Transformer采用的是加法方式。这可能是因为乘法对词向量的影响更强、更复杂，而加法更像是神经网络中常见的偏置项，改动更温和。</p>
+<p>当然，并非所有模型都用加法。例如LLaMA使用的旋转位置编码（RoPE），就是通过乘法实现的。这部分我们会在讲相对位置编码时再详细展开。</p>
+<p>我们现在来看原版Transformer中用加法实现的位置编码。既然要用加法，那就要解决一个问题：<strong>P矩阵中的值应该怎么设定？</strong></p>
+<p>这个不能随意决定，必须保证这些值能体现出词语的顺序信息。具体做法是：</p>
+<p>将位置编号（自然数）映射到一个与词向量维度相同的连续空间中，这样就可以和词向量直接相加。</p>
+<p>论文中给出的绝对位置编码公式看起来很复杂，但我们可以借助“傅里叶级数”来理解它的设计思路。</p>
+<hr>
+<h3 id="_2">一、位置编码的本质<a class="headerlink" href="#_2" title="Permanent link">¶</a></h3>
+<p>绝对位置编码的本质是对每个位置编号 <span class="arithmatex">\(0,1,2,...,N\)</span> 进行升维，变成一个 D 维向量（D 是词向量维度），使得模型可以区分不同位置的词。</p>
+<p>这个向量是怎么构造的呢？</p>
+<ul>
+<li>每两个维度为一组；</li>
+<li>一组内分别使用 sin 和 cos 函数；</li>
+<li>函数的参数按一定规律变化；</li>
+<li>同一组内的括号内容相同。</li>
+</ul>
+<p>写出来就是这样的形式：</p>
+<div class="arithmatex">\[
+PE_{(pos, 2i)} = \sin\left(\frac{pos}{10000^{\frac{2i}{d}}}\right), \quad PE_{(pos, 2i+1)} = \cos\left(\frac{pos}{10000^{\frac{2i}{d}}}\right)
+\]</div>
+<hr>
+<p>我们现在来看原版Transformer中用加法实现的位置编码。既然要用加法，那就要解决一个问题：<strong>P矩阵中的值应该怎么设定？</strong></p>
+<p>这个不能随意决定，必须保证这些值能体现出词语的顺序信息。具体做法是：将位置编号（自然数）映射到一个与词向量维度相同的连续空间中，这样就可以和词向量直接相加。</p>
+<p>论文中给出的绝对位置编码公式看起来很复杂，但我们可以借助“傅里叶级数”来理解它的设计思路。</p>
+<hr>
+<h3 id="_3">二、为什么这么设计？从傅里叶级数出发理解<a class="headerlink" href="#_3" title="Permanent link">¶</a></h3>
+<p>虽然论文没有明确说明设计动机，但我们可以通过类比傅里叶级数来理解它的特性。</p>
+<p>在傅里叶级数中，周期函数可以表示为一系列正弦和余弦函数的叠加，频率依次递增：</p>
+<div class="arithmatex">\[
+f(x) = a_0 + \sum_{n=1}^\infty \left(a_n \cos\left(\frac{2\pi n x}{T}\right) + b_n \sin\left(\frac{2\pi n x}{T}\right)\right)
+\]</div>
+<p>这和位置编码的结构有些相似：</p>
+<ul>
+<li>都是 sin 和 cos 的组合；</li>
+<li>都有频率的变化；</li>
+<li>都是用来表示某种“信号”或“模式”。</li>
+</ul>
+<p>区别在于：</p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>傅里叶级数</th>
+<th>位置编码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>频率</td>
+<td>线性增长（1, 2, 3...）</td>
+<td>指数衰减（分母中有指数项）</td>
+</tr>
+<tr>
+<td>项数</td>
+<td>可以无限多</td>
+<td>有限</td>
+</tr>
+<tr>
+<td>系数</td>
+<td>可学习或计算得到</td>
+<td>固定值</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="_4">三、关键设计点：频率的指数衰减<a class="headerlink" href="#_4" title="Permanent link">¶</a></h3>
+<p>位置编码中，频率因子出现在分母的指数上，意味着随着维度增加，频率逐渐变小，也就是说：</p>
+<ul>
+<li>低频部分捕捉长距离依赖；</li>
+<li>高频部分捕捉局部细节；</li>
+<li>整体频率分布不均匀，呈指数递减趋势。</li>
+</ul>
+<p>这种设计可以让位置信息在多个尺度上被表达，增强模型对相对位置的感知能力。</p>
+<hr>
+<ul>
+<li>绝对位置编码通过 sin 和 cos 函数，将位置编号映射为高维向量；</li>
+<li>其设计灵感可能来自傅里叶级数；</li>
+<li>使用指数衰减的频率分布，使位置信息在不同维度上体现不同尺度的特征；</li>
+<li>这种方式不仅保留了位置顺序信息，还能让模型更好地处理长序列。</li>
+</ul>
+<p><img alt="F2" src="../../../../../images/algorithm_img/pos_embed2.png"></p>
+<p>我们可以从图中定性地看出函数 $ F(t) $ 的周期。根据傅里叶级数的原理，最小频率决定了整个函数的周期：即用 $ 2\pi $ 除以这个最小频率单位，就能得到周期 $ T $。</p>
+<p>在位置编码的设计中，我们也试图找出这样一个“最小刻度”$ \delta $，使得所有频率都是这个刻度的整数倍。这样，才能满足傅里叶级数的基本形式——只有当频率是基本频率的整数倍时，叠加后才是一个标准的周期函数。</p>
+<p>因此：</p>
+<ul>
+<li>所有非零系数对应的位置信息，可以看作是对某个周期函数的有限项展开；</li>
+<li>这个函数是关于位置 $ t $ 的函数，并且是周期性的；</li>
+<li>每一行（每个词向量对应的位置编码）都可以看作是这个周期函数在某一维度上的投影；</li>
+<li>把所有这些维度加起来，就构成了完整的位置编码矩阵 $ P $。</li>
+</ul>
+<blockquote>
+<p>位置编码本质上是一个周期函数的离散展开，每一维对应傅里叶级数中的一个频率分量。通过这种方式，模型可以在不同尺度上感知位置信息，同时保持结构的规律性和可扩展性。</p>
+</blockquote>
+<p>我们可以从图中定性地看出函数 $ F(t) $ 的周期。周期由最小的频率单位决定：用 $ 2\pi $ 除以这个最小频率，就能得到整个函数的周期。</p>
+<p>在位置编码中，我们也希望找到一个“最小刻度”$ \delta $，使得所有其他频率都是它的整数倍。这样才能符合傅里叶级数的基本形式。</p>
+<p>也就是说：</p>
+<ul>
+<li>所有非零项的频率都应是某个基本频率的整数倍；</li>
+<li>只有满足这个条件，叠加后的结果才是标准的周期函数；</li>
+<li>即使某些频率看起来更大，它们的本质仍可归结为更小基本频率的组合；</li>
+<li>因此，虽然位置编码按维度排列，但只要把这些项加起来，就可以看作是一个关于位置 $ t $ 的周期函数。</li>
+</ul>
+<p><img alt="F3" src="../../../../../images/algorithm_img/Pos_embed3.png"></p>
+<p>进一步地，我们可以把每个 sin 和 cos 看成一个向量（S 向量和 C 向量），它们拼接在一起就构成了一个更高维的向量。每一行代表一个位置的信息，把这些行合起来就是完整的位置编码矩阵 $ P $。</p>
+<p>所以：</p>
+<blockquote>
+<p><strong>位置编码矩阵 $ P $ 的每一行对应一个位置，每一列对应一个特定频率的 sin 或 cos 函数值。将这些值加起来，就相当于对一个周期函数进行离散采样。</strong></p>
+</blockquote>
+<p>这也解释了为什么我们能借助傅里叶级数来分析位置编码的结构与特性。</p>
+<h3 id="transformer">四、Transformer中的位置编码机制解析<a class="headerlink" href="#transformer" title="Permanent link">¶</a></h3>
+<p><img alt="F4" src="../../../../../images/algorithm_img/TPos_enbed.png"></p>
+<p>我们可以从频域的角度来看位置编码的作用：</p>
+<p>这个函数本质上是对位置信息做了一种<strong>频域变换</strong>，就像傅里叶级数把一个时域函数分解成多个频率分量一样。</p>
+<p>在Transformer的位置编码中：</p>
+<ul>
+<li><strong>每一列代表一个特定频率的 sin 或 cos 值；</strong></li>
+<li>不同列之间是<strong>正交的</strong>，就像图像中的 RGB 通道互不干扰；</li>
+<li>这保证了不同维度上的信息不会互相干扰，是模型有效学习的基础。</li>
+</ul>
+<hr>
+<h3 id="_5">频率选择：为什么用指数方式？<a class="headerlink" href="#_5" title="Permanent link">¶</a></h3>
+<ul>
+<li>如果我们简单地将频率均匀划分（等比增长），最小频率会很大，导致整体周期很小；</li>
+<li>这样一来，稍长一点的序列就会出现重复的位置编码；</li>
+<li>所以原版 Transformer 使用了<strong>指数递减的方式</strong>来设置频率：</li>
+</ul>
+<p>$$
+  \frac{pos}{10000^{\frac{2i}{d}}}
+  $$</p>
+<ul>
+<li>这样可以让<strong>最小频率尽可能小</strong>，从而让整个函数的周期非常大；</li>
+<li>结果就是：<strong>支持更长的输入序列（如上万个 token）而不重复。</strong></li>
+</ul>
+<hr>
+<p><img alt="F4" src="../../../../../images/algorithm_img/TPos_embed1.png"></p>
+<p>第三个关键特性：相对位置关系变为了“旋转角度”</p>
+<ul>
+<li>在原始的位置表示中，两个词之间的距离是数值上的差（比如位置 $ x $ 和 $ x+\delta $）；</li>
+<li>经过 sin/cos 编码后，它们之间的差异变成了<strong>向量空间中的旋转角度</strong>；</li>
+<li>换句话说，模型不再直接看“相隔几个位置”，而是看到“这两个词向量在某个维度上旋转了多少角度”。</li>
+</ul>
+<p>这种设计有助于模型更好地理解<strong>相对位置关系</strong>，也更容易泛化到未见过的长度。</p>
+<hr>
+<blockquote>
+<p>Transformer 的位置编码通过 sine/cosine 函数将位置信息映射到频域，每一列代表一个频率分量，列间保持正交性；使用指数方式控制频率分布，使得最小频率足够小、周期足够大，从而支持更长序列；同时，位置差异被转化为向量空间中的旋转角度，使模型能更好地捕捉相对位置信息。</p>
+</blockquote>
+<p><img alt="F5" src="../../../../../images/algorithm_img/TPos_embed2.png"></p>
+<p>我们可以从一组 sin 和 cos 的维度入手来看位置编码的结构。这一组确定之后，其他组的变化其实只是频率不同而已。</p>
+<p>我们来看这两个向量之间的关系：一个是位置 $ x $ 的编码，一个是位置 $ x + \delta $ 的编码。</p>
+<p><img alt="F6" src="../../../../../images/algorithm_img/TPos1.png"></p>
+<p>直接说结论：</p>
+<blockquote>
+<p>这两个向量之间差了一个<strong>旋转矩阵</strong>的作用。也就是说，原本在数值上相差 $ \delta $ 的两个位置，在经过 sine/cosine 编码后，变成了在向量空间中“旋转”了某个角度。</p>
+</blockquote>
+<hr>
+<ul>
+<li>如果你对线性代数熟悉一点就会发现，这个变换其实就是二维平面上的一个标准旋转；</li>
+<li>每一对 sin 和 cos 组成一个二维向量；</li>
+<li>当位置增加 $ \delta $ 时，这个向量就绕原点旋转了一个固定角度；</li>
+<li>所有维度合在一起，就是多个这样的二维旋转组合起来的大变换。</li>
+</ul>
+<p><img alt="F7" src="../../../../../images/algorithm_img/TPos.png"></p>
+<p>数学形式如下：</p>
+<div class="arithmatex">\[
+\begin{bmatrix}
+\sin(\omega x) \\
+\cos(\omega x)
+\end{bmatrix}
+\quad \xrightarrow{\text{+}\delta} \quad
+\begin{bmatrix}
+\sin(\omega(x+\delta)) \\
+\cos(\omega(x+\delta))
+\end{bmatrix}
+= R(\omega\delta)
+\begin{bmatrix}
+\sin(\omega x) \\
+\cos(\omega x)
+\end{bmatrix}
+\]</div>
+<p>其中 $ R(\omega\delta) $ 就是一个二维旋转矩阵。</p>
+<hr>
+<ul>
+<li>把每一组 sin/cos 看作一个小的二维旋转模块；</li>
+<li>整个大矩阵就是一个由这些小模块组成的“块对角矩阵”；</li>
+<li>每个模块对应不同的频率 $ \omega_i $；</li>
+<li>不同频率之间互不干扰（因为非对角线元素都是0）；</li>
+</ul>
+<p>所以：</p>
+<blockquote>
+<p>两个位置相差 $ \delta $ 的词向量，它们之间的差异被编码为一组不同频率下的“旋转操作”。</p>
+</blockquote>
+<hr>
+<ol>
+<li><strong>相对位置 → 向量旋转</strong><br>
+   原本是数值上的距离差，现在变成了向量空间中的角度差；</li>
+<li><strong>频率分布设计巧妙</strong><br>
+   使用指数方式控制频率，使得最小频率足够小、周期足够长，支持更长序列；</li>
+<li><strong>各维度正交</strong><br>
+   不同频率之间相互独立，信息不混杂，便于模型学习；</li>
+<li><strong>与旋转位置编码的区别</strong><br>
+   虽然都涉及“旋转”，但这里说的是绝对位置编码的内在结构，而旋转位置编码（如 RoPE）是一种显式的相对位置编码方法。</li>
+</ol>
+<h2 id="_6">相对位置编码<a class="headerlink" href="#_6" title="Permanent link">¶</a></h2>
+<p>我们前面讲的是<strong>绝对位置编码</strong>，它是直接给输入词向量加上一个位置信息，让每个词自己携带它的位置信息。</p>
+<p>而后来提出的<strong>相对位置编码</strong>，思路完全不同：它不是修饰数据本身，而是修饰<strong>注意力得分矩阵 A</strong>。因为在注意力机制中，Q 和 K 的点积就是用来衡量两个词之间的关系的，所以相对位置信息应该在这里体现。</p>
+<hr>
+<h3 id="vs">一、绝对位置编码 vs 相对位置编码<a class="headerlink" href="#vs" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>作用方式</th>
+<th>实现位置</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>绝对位置编码</td>
+<td>给词向量加位置信息</td>
+<td>输入层前</td>
+<td>每个词有固定“编号”</td>
+</tr>
+<tr>
+<td>相对位置编码</td>
+<td>修饰注意力得分</td>
+<td>注意力计算过程中</td>
+<td>强调两个词之间的相对距离</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="_7">二、为什么相对位置要放在注意力里？<a class="headerlink" href="#_7" title="Permanent link">¶</a></h3>
+<ul>
+<li>因为注意力机制是唯一真正比较两个词（Q 和 K）的地方；</li>
+<li>所以如果我们想表达“这个词在那个词之前/之后多少位”，就必须在这个点积结果上做文章；</li>
+<li>绝对位置可以在输入阶段处理，但相对位置必须等到 Q 和 K 被拿出来以后才能计算。</li>
+</ul>
+<hr>
+<h3 id="_8">三、原始注意力机制回顾<a class="headerlink" href="#_8" title="Permanent link">¶</a></h3>
+<p>在标准的 Transformer 中，注意力得分是这样计算的：</p>
+<div class="arithmatex">\[
+A_{q,k} = Q_q \cdot K_k^T
+\]</div>
+<p>其中：</p>
+<ul>
+<li>$ Q_q $ 是第 $ q $ 行的 query 向量；</li>
+<li>$ K_k $ 是第 $ k $ 列的 key 向量；</li>
+<li>得分矩阵 $ A $ 中的每个元素表示第 $ q $ 个词对第 $ k $ 个词的关注程度。(这里不是输入矩阵)</li>
+</ul>
+<p>这个得分只考虑了语义信息（由模型学习而来），没有包含任何位置信息。</p>
+<hr>
+<h3 id="_9">四、引入绝对位置编码后的影响<a class="headerlink" href="#_9" title="Permanent link">¶</a></h3>
+<p>如果我们给输入加上绝对位置编码（比如 sin/cos 编码）：</p>
+<div class="arithmatex">\[
+Q_q = W_Q (X_q + P_q), \quad K_k = W_K (X_k + P_k)
+\]</div>
+<p>那么注意力得分就变成了：</p>
+<div class="arithmatex">\[
+A_{q,k} = (W_Q X_q + W_Q P_q) \cdot (W_K X_k + W_K P_k)^T
+\]</div>
+<p>展开后得到四项：</p>
+<div class="arithmatex">\[
+A_{q,k} = \underbrace{W_Q X_q \cdot W_K X_k^T}_{\text{纯数据项}} + 
+\underbrace{W_Q X_q \cdot W_K P_k^T}_{\text{X-P项}} +
+\underbrace{W_Q P_q \cdot W_K X_k^T}_{\text{P-X项}} +
+\underbrace{W_Q P_q \cdot W_K P_k^T}_{\text{P-P项}}
+\]</div>
+<p>可以看到，除了第一项完全来自数据本身外，其余三项都与位置有关，分别依赖于：</p>
+<ul>
+<li>第二项：$ X_q $ 和 $ P_k $</li>
+<li>第三项：$ P_q $ 和 $ X_k $</li>
+<li>第四项：$ P_q $ 和 $ P_k $</li>
+</ul>
+<p>也就是说，这些项既和 $ q $ 有关，也和 $ k $ 有关，它们并不是纯粹的“相对位置”。</p>
+<hr>
+<h3 id="q-k">五、目标：让注意力得分只依赖于相对位置 $ q - k $<a class="headerlink" href="#q-k" title="Permanent link">¶</a></h3>
+<p>为了实现<strong>相对位置编码</strong>，我们要让注意力得分中涉及位置的部分只依赖于两个位置的差值 $ r = q - k $，而不是单独的 $ q $ 或 $ k $。</p>
+<p>这就要求我们把注意力得分中的位置相关项改写为如下形式：</p>
+<div class="arithmatex">\[
+f(q, k) = g_1(q) + g_2(q - k)
+\]</div>
+<p>或者更进一步地：</p>
+<div class="arithmatex">\[
+f(q, k) = U_q + R_{q-k}
+\]</div>
+<p>其中：</p>
+<ul>
+<li>$ U_q $：只与当前 query 的位置 $ q $ 有关；</li>
+<li>$ R_{q-k} $：只与相对位置 $ r = q - k $ 有关；</li>
+</ul>
+<p>这样做的好处是：</p>
+<ul>
+<li>模型可以学到某种“平移不变性”：无论你从哪一行开始看，相对位置的关系保持一致；</li>
+<li>更符合语言的本质：“我打你”和“你打我”的区别在于“我”和“你”的相对位置，而不是它们的绝对编号。</li>
+</ul>
+<hr>
+<h3 id="r_q-k">六、如何构造 $ R_{q-k} $？<a class="headerlink" href="#r_q-k" title="Permanent link">¶</a></h3>
+<h4 id="_10">方法一：人为设计（手工定义）<a class="headerlink" href="#_10" title="Permanent link">¶</a></h4>
+<p>我们可以直接设计一个向量 $ R_r $，它的每一维对应一个关于相对位置 $ r $ 的函数。例如：</p>
+<ul>
+<li>第0维：常数 1；</li>
+<li>第1维：$ r $</li>
+<li>第2维：$ r^2 $</li>
+<li>第3维：$ r^3 $</li>
+<li>……</li>
+</ul>
+<p>这种做法类似于多项式拟合，可以表达复杂的非线性关系。</p>
+<p>也可以使用其他函数，比如：</p>
+<ul>
+<li>正弦/余弦函数（类似绝对位置编码）</li>
+<li>指数函数、高斯函数等</li>
+</ul>
+<h4 id="learnable-embedding">方法二：可学习嵌入（Learnable Embedding）<a class="headerlink" href="#learnable-embedding" title="Permanent link">¶</a></h4>
+<p>这是最常用的方法，就是预先定义一个位置偏移范围（如 <span class="arithmatex">\(-L\)</span> 到 <span class="arithmatex">\(+L\)</span>），然后为每一个可能的相对位置 $ r $ 学习一个向量 $ R_r $。</p>
+<p>举个例子：</p>
+<ul>
+<li>如果最大序列长度是 512，那最多有 $ \pm 512 $ 的相对位置；</li>
+<li>那么我们就准备一个大小为 $ 1024 \times d $ 的可学习矩阵；</li>
+<li>每次查表取出对应的 $ R_{q-k} $ 即可。</li>
+</ul>
+<p>这种方法简单有效，在很多模型中都有应用。</p>
+<h4 id="_11">方法三：结合卷积思想<a class="headerlink" href="#_11" title="Permanent link">¶</a></h4>
+<p>也可以将 $ R_r $ 设计成类似 CNN 中的卷积核，让它在局部区域内共享参数或具有某种空间结构，从而捕捉局部依赖。</p>
+<hr>
+<h3 id="_12">七、如何整合进注意力机制？<a class="headerlink" href="#_12" title="Permanent link">¶</a></h3>
+<p>我们希望最终的注意力得分是这样的形式：</p>
+<div class="arithmatex">\[
+A_{q,k} = Q_q \cdot K_k^T + U_q + R_{q-k}
+\]</div>
+<p>或者更一般的形式：</p>
+<div class="arithmatex">\[
+A_{q,k} = Q_q \cdot K_k^T + b_q + c_{q-k}
+\]</div>
+<p>这里的 $ b_q $ 和 $ c_{q-k} $ 就是我们要加进去的位置偏置项：</p>
+<ul>
+<li>$ b_q $：与当前 query 有关的偏置；</li>
+<li>$ c_{q-k} $：与相对位置有关的偏置；</li>
+</ul>
+<p>具体实现时，可以在计算完原始注意力得分后，再加上这两个偏置项即可。</p>
+<hr>
+<h3 id="_13">八、举例说明<a class="headerlink" href="#_13" title="Permanent link">¶</a></h3>
+<p>假设我们有以下内容：</p>
+<ul>
+<li>位置编码 $ R_r $ 是一个可学习嵌入；</li>
+<li>当前 query 在第 3 行，key 在第 1 列，那么相对位置是 $ r = 3 - 1 = 2 $；</li>
+<li>查找 $ R_2 $，然后把这个向量加到注意力得分中。</li>
+</ul>
+<p>如果是加法实现，那最终得分就是：</p>
+<div class="arithmatex">\[
+A_{3,1} = Q_3 \cdot K_1^T + U_3 + R_2
+\]</div>
+<p>如果是乘法实现（如 RoPE），那就是：</p>
+<div class="arithmatex">\[
+A_{3,1} = Q_3 \cdot K_1^T \cdot \phi(2)
+\]</div>
+<p>其中 $ \phi(2) $ 是一个旋转因子，和相对位置有关。</p>
+<blockquote>
+<p>相对位置编码的核心思想是：通过修改注意力得分，使其不仅依赖于词的内容，还依赖于它们之间的相对距离 $ q - k $。这可以通过设计一个只与相对位置有关的向量 $ R_{q-k} $ 来实现，它可以是手动设计的函数、可学习的嵌入，甚至结合卷积的思想。</p>
+</blockquote>
+<p>它不同于绝对位置编码（修饰输入），而是直接作用于注意力机制内部，强调的是词与词之间的关系，更贴近自然语言的本质。</p>
+<hr>
+<h3 id="rope">九、旋转位置编码（RoPE）也是一种相对位置编码<a class="headerlink" href="#rope" title="Permanent link">¶</a></h3>
+<ul>
+<li>它不通过加法，而是通过乘法来引入相对位置信息； </li>
+<li>具体做法是让 Q 和 K 在内积时乘上一个与相对位置相关的旋转因子；</li>
+<li>数学形式如下：</li>
+</ul>
+<div class="arithmatex">\[
+A_{q,k} = Q_q \cdot K_k^T \cdot \phi(q - k)
+\]</div>
+<ul>
+<li>其中 $ \phi $ 是一个关于相对位置的函数，通常用复数或旋转矩阵表示；</li>
+<li>RoPE 的优点在于它天然支持长序列，并且可以很好地保留相对位置信息。</li>
+</ul>
+<blockquote>
+<p><strong>绝对位置编码是对输入数据进行修饰，让每个词自己带位置；相对位置编码是在注意力机制中进行修饰，强调两个词之间的相对关系。两者各有优劣，也常常结合使用。</strong></p>
+</blockquote>
+<p>虽然相对位置编码看起来更复杂，但它更符合语言的本质：我们理解句子时，往往不是靠“这是第几个词”，而是靠“这个词在另一个词的前后多远”。</p>
+<h2 id="_14">主流位置编码方法<a class="headerlink" href="#_14" title="Permanent link">¶</a></h2>
+<h3 id="_15">固定的正余弦位置编码（绝对位置编码）<a class="headerlink" href="#_15" title="Permanent link">¶</a></h3>
+<p>传统transformer使用的位置编码，上文已经讲过。</p>
+<p>$$</p>
+<p>PE(position,2i)=sin(\frac{position}{10000^{\frac{2i}{d}}})
+$$</p>
+<p>$$
+PE(position,2i+1)=cos(\frac{position}{10000^{\frac{2i}{d}}})</p>
+<p>$$</p>
+<p>特性：</p>
+<ul>
+<li>可插值性：当输入序列位置超过训练时最大长度，模型仍然可以通过正弦和余弦函数的周期性，将位置编码自然地扩展到更长的位置。</li>
+<li>平滑性：随着position的逐渐增加，编码向量的变化是平滑连续的</li>
+<li>无额外参数：所有参数均是按照固定公式生成，不会额外增加可学习的权重</li>
+</ul>
+<p><strong>生成的正余弦位置编码和token的词向量相加</strong></p>
+<h3 id="_16">可学习的位置编码（绝对位置编码）<a class="headerlink" href="#_16" title="Permanent link">¶</a></h3>
+<p>主要思想：允许位置编码在训练的时候学习，模型可以通过训练数据来决定如何在不同的维度上表示位置信息。</p>
+<p>比正余弦位置编码方式要灵活一些，但是训练时需要更多数据才可以覆盖到更长的序列范围们，还有如果序列位置超过训练时的最大长度，模型对超长序列的位置索引就没办法扩展。</p>
+<h4 id="_17">具体实现<a class="headerlink" href="#_17" title="Permanent link">¶</a></h4>
+<ul>
+<li>初始化矩阵<span class="arithmatex">\(P\in R^{L_{max}\times d_{model}}\)</span>,<span class="arithmatex">\(L_{max}\)</span>表示预先设定的最大序列长度</li>
+<li>对序列中第<span class="arithmatex">\(position\)</span>个token，它的位置编码是<span class="arithmatex">\(P[position]\)</span>这一行向量</li>
+<li>训练过程中，这个矩阵P会像词向量一样，随着反向传播更新，逐渐学习如何编码不同的位置</li>
+</ul>
+<p>在大多数深度学习框架可直接用训练嵌入层（nn.Embeddind）做，但是泛化性不如正余弦，增加参数量</p>
+<h3 id="_18">传统相对位置编码<a class="headerlink" href="#_18" title="Permanent link">¶</a></h3>
+<p>最早出现在<a href="https://arxiv.org/pdf/1803.02155">Self-Attention with Relative Position Representations</a>这篇论文里，思路是：</p>
+<ul>
+<li>不为每个token绝对位置编码向量，而是为每一种两个token之间相对位置编码向量</li>
+</ul>
+<h3 id="transformer-xl">Transformer-XL的相对位置编码<a class="headerlink" href="#transformer-xl" title="Permanent link">¶</a></h3>
+<p>详情可见这篇论文<a href="https://arxiv.org/pdf/1901.02860">Transformer-XL</a>提出了分割上下文
+和当前片段，并通过相对位置信息实现跨片段捕捉，实现更复杂，需要在注意力分数阶段额外添加一套机制处理相对距离。</p>
+<p>慢而且不能用kv cache</p>
+<h3 id="rope_1">ROPE<a class="headerlink" href="#rope_1" title="Permanent link">¶</a></h3>
+<p>RoPE的核心思想是通过在查询向量（Query）和键向量（Key）进行点乘之前，用一个二维旋转变换将它们映射到带有位置信息的空间中。</p>
+<p>如果我们将向量拆分成二维坐标对<span class="arithmatex">\((x_1, x_2)\)</span>，那么在二维平面做一个旋转：</p>
+<p><span class="arithmatex">\(\begin{pmatrix}
+x_1 \\
+x_2
+\end{pmatrix} \to 
+\begin{pmatrix}
+x_1 \cos \theta - x_2 \sin \theta \\
+x_1 \sin \theta + x_2 \cos \theta
+\end{pmatrix}\)</span></p>
+<p>而在RoPE中，不同维度对应不同的旋转角度，通常通过类似正余弦周期的方式来定义旋转角。</p>
+<p><img alt="F" src="../../../../../images/algorithm_img/ROPE.png"></p>
+<ul>
+<li><strong>二维表示</strong>：</li>
+</ul>
+<p><span class="arithmatex">\(f_{\{q, k\}}(x_m, m) = 
+\begin{pmatrix}
+\cos m \theta &amp; -\sin m \theta \\
+\sin m \theta &amp; \cos m \theta
+\end{pmatrix}
+\begin{pmatrix}
+W_{\{q, k\}}^{(11)} &amp; W_{\{q, k\}}^{(12)} \\
+W_{\{q, k\}}^{(21)} &amp; W_{\{q, k\}}^{(22)}
+\end{pmatrix}
+\begin{pmatrix}
+x_m^{(1)} \\
+x_m^{(2)}
+\end{pmatrix}\)</span></p>
+<ul>
+<li><strong>拓展到n维表示</strong>：</li>
+</ul>
+<p><span class="arithmatex">\(f_{\{q, k\}}(x_m, m) = R^d_{\theta, m} W_{\{q, k\}} x_m\)</span></p>
+<p><span class="arithmatex">\(R^d_{\theta, m} = 
+\begin{pmatrix}
+\cos m \theta_1 &amp; -\sin m \theta_1 &amp; 0 &amp; 0 &amp; \cdots &amp; 0 &amp; 0 \\
+\sin m \theta_1 &amp; \cos m \theta_1 &amp; 0 &amp; 0 &amp; \cdots &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; \cos m \theta_2 &amp; -\sin m \theta_2 &amp; \cdots &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; \sin m \theta_2 &amp; \cos m \theta_2 &amp; \cdots &amp; 0 &amp; 0 \\
+\vdots &amp; \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots &amp; \vdots \\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; \cdots &amp; \cos m \theta_{d/2} &amp; -\sin m \theta_{d/2} \\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; \cdots &amp; \sin m \theta_{d/2} &amp; \cos m \theta_{d/2}
+\end{pmatrix}\)</span></p>
+<ul>
+<li><strong>实际上更简洁的n维表示</strong>：</li>
+</ul>
+<p><span class="arithmatex">\(R^d_{\theta, m} x = 
+\begin{pmatrix}
+x_1 \\
+x_2 \\
+x_3 \\
+x_4 \\
+\vdots \\
+x_{d - 1} \\
+x_d
+\end{pmatrix}
+\otimes
+\begin{pmatrix}
+\cos m \theta_1 \\
+\cos m \theta_1 \\
+\cos m \theta_2 \\
+\cos m \theta_2 \\
+\vdots \\
+\cos m \theta_{d/2} \\
+\cos m \theta_{d/2}
+\end{pmatrix}
++
+\begin{pmatrix}
+-x_2 \\
+x_1 \\
+-x_4 \\
+x_3 \\
+\vdots \\
+-x_{d - 1} \\
+x_d
+\end{pmatrix}
+\otimes
+\begin{pmatrix}
+\sin m \theta_1 \\
+\sin m \theta_1 \\
+\sin m \theta_2 \\
+\sin m \theta_2 \\
+\vdots \\
+\sin m \theta_{d/2} \\
+\sin m \theta_{d/2}
+\end{pmatrix}\)</span></p>
+<p>优点：</p>
+<ul>
+<li>结合绝对位置和相对位置的优点：它可以在注意力分数层面上体现相对位置的位移特征，同时又保留了类似正余弦编码可以“外推”的特性。</li>
+<li>易于跨序列泛化：在更长序列或跨段情况下，RoPE依然可以很好地保持有效性。</li>
+<li>计算简单高效：只需要在向量乘法前做一次旋转变换。</li>
+</ul>
+<p>应用：</p>
+<ul>
+<li>在一些开源的大模型（如Llama）以及多模态大模型中，RoPE是非常常用的默认位置编码方式。</li>
+<li>
+<p>相较于原生的正余弦编码，RoPE在对齐长文本、处理较长上下文时往往展现出更好的性能。 </p>
+</li>
+<li>
+<p><strong><code>rotate_half(x)</code> 函数</strong>
+   </p><div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span>
+<span class="normal"><a href="#__codelineno-0-4">4</a></span>
+<span class="normal"><a href="#__codelineno-0-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">rotate_half</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="w">    </span><span class="sd">""""Rotates half the hidden dims of the input."""</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3"></a>    <span class="n">x1</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span><span class="p">]</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4"></a>    <span class="n">x2</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span> <span class="p">:]</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5"></a>    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="o">-</span><span class="n">x2</span><span class="p">,</span> <span class="n">x1</span><span class="p">),</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+</li>
+<li>
+<p><strong>功能</strong>：该函数将输入张量 <code>x</code> 的最后一个维度（假设为隐藏维度 <code>hdim</code>）分成两半，并对这两半进行旋转操作。</p>
+</li>
+<li>
+<p><strong>具体步骤</strong>：</p>
+<ol>
+<li><code>x1 = x[..., : x.shape[-1] // 2]</code>：提取 <code>x</code> 的最后一个维度的前一半。</li>
+<li><code>x2 = x[..., x.shape[-1] // 2 :]</code>：提取 <code>x</code> 的最后一个维度的后一半。</li>
+<li><code>torch.cat((-x2, x1), dim=-1)</code>：将 <code>-x2</code> 和 <code>x1</code> 沿着最后一个维度拼接起来，形成新的张量。</li>
+</ol>
+</li>
+<li>
+<p><strong>关键点</strong>：</p>
+<ul>
+<li><code>-x2</code> 表示对 <code>x2</code> 的每个元素取反（乘以 -1）。</li>
+<li><code>torch.cat(..., dim=-1)</code> 表示沿着最后一个维度进行拼接。</li>
+</ul>
+</li>
+<li>
+<p><strong><code>apply_rotary_pos_emb(q, k, cos, sin, position_ids)</code> 函数</strong>
+   </p><div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span>
+<span class="normal"><a href="#__codelineno-1-3">3</a></span>
+<span class="normal"><a href="#__codelineno-1-4">4</a></span>
+<span class="normal"><a href="#__codelineno-1-5">5</a></span>
+<span class="normal"><a href="#__codelineno-1-6">6</a></span>
+<span class="normal"><a href="#__codelineno-1-7">7</a></span>
+<span class="normal"><a href="#__codelineno-1-8">8</a></span>
+<span class="normal"><a href="#__codelineno-1-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">apply_rotary_pos_emb</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">cos</span><span class="p">,</span> <span class="n">sin</span><span class="p">,</span> <span class="n">position_ids</span><span class="p">):</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2"></a>    <span class="c1"># The first two dimensions of cos and sin are always 1, so we can `squeeze` them.</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3"></a>    <span class="n">cos</span> <span class="o">=</span> <span class="n">cos</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># [seq_len, dim]</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4"></a>    <span class="n">sin</span> <span class="o">=</span> <span class="n">sin</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># [seq_len, dim]</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5"></a>    <span class="n">cos</span> <span class="o">=</span> <span class="n">cos</span><span class="p">[</span><span class="n">position_ids</span><span class="p">]</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># [bs, 1, seq_len, dim]</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6"></a>    <span class="n">sin</span> <span class="o">=</span> <span class="n">sin</span><span class="p">[</span><span class="n">position_ids</span><span class="p">]</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># [bs, 1, seq_len, dim]</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7"></a>    <span class="n">q_embed</span> <span class="o">=</span> <span class="p">(</span><span class="n">q</span> <span class="o">*</span> <span class="n">cos</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">rotate_half</span><span class="p">(</span><span class="n">q</span><span class="p">)</span> <span class="o">*</span> <span class="n">sin</span><span class="p">)</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8"></a>    <span class="n">k_embed</span> <span class="o">=</span> <span class="p">(</span><span class="n">k</span> <span class="o">*</span> <span class="n">cos</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">rotate_half</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">*</span> <span class="n">sin</span><span class="p">)</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9"></a>    <span class="k">return</span> <span class="n">q_embed</span><span class="p">,</span> <span class="n">k_embed</span>
+</code></pre></div></td></tr></table></div>
+</li>
+<li>
+<p><strong>功能</strong>：该函数实现旋转位置编码（Rotary Position Embedding），对查询向量 <code>q</code> 和键向量 <code>k</code> 应用旋转位置编码。</p>
+</li>
+<li><strong>具体步骤</strong>：<ol>
+<li><strong>处理 <code>cos</code> 和 <code>sin</code></strong>：<ul>
+<li><code>cos = cos.squeeze(1).squeeze(0)</code>：去掉 <code>cos</code> 的前两个维度（通常是批量维度和序列长度维度），得到形状为 <code>[seq_len, dim]</code> 的余弦值。</li>
+<li><code>sin = sin.squeeze(1).squeeze(0)</code>：同理，得到形状为 <code>[seq_len, dim]</code> 的正弦值。</li>
+<li><code>cos = cos[position_ids].unsqueeze(1)</code>：根据 <code>position_ids</code> 索引出对应的余弦值，并增加一个维度（批量维度），得到形状为 <code>[bs, 1, seq_len, dim]</code>。</li>
+<li><code>sin = sin[position_ids].unsqueeze(1)</code>：同理，得到形状为 <code>[bs, 1, seq_len, dim]</code> 的正弦值。</li>
+</ul>
+</li>
+<li><strong>应用旋转位置编码</strong>：<ul>
+<li>对于查询向量 <code>q</code>：</li>
+<li><code>(q * cos)</code>：将 <code>q</code> 与 <code>cos</code> 相乘。</li>
+<li><code>(rotate_half(q) * sin)</code>：先对 <code>q</code> 调用 <code>rotate_half</code> 函数，然后与 <code>sin</code> 相乘。</li>
+<li>最终结果是：<code>q_embed = (q * cos) + (rotate_half(q) * sin)</code>。</li>
+<li>对于键向量 <code>k</code>：</li>
+<li>同理，<code>k_embed = (k * cos) + (rotate_half(k) * sin)</code>。</li>
+</ul>
+</li>
+<li><strong>返回结果</strong>：<ul>
+<li>返回经过旋转位置编码后的查询向量 <code>q_embed</code> 和键向量 <code>k_embed</code>。</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<hr>
+<ol>
+<li><strong><code>rotate_half(x)</code> 的作用</strong></li>
+<li>该函数的核心是对输入张量的最后一个维度（隐藏维度 <code>hdim</code>）进行分割，并对两部分进行旋转操作：<ul>
+<li>前一半 <code>x1</code> 不变；</li>
+<li>后一半 <code>x2</code> 取反（乘以 -1），并将其放在前面。</li>
+</ul>
+</li>
+<li>
+<p>这种操作相当于对向量进行了一种特殊的“旋转”，在旋转位置编码中起到关键作用。</p>
+</li>
+<li>
+<p><strong>旋转位置编码的数学原理</strong></p>
+</li>
+<li>
+<p>旋转位置编码的公式可以表示为：
+     $$
+     \text{rotated_vec} = (\text{vec} \cdot \cos(\theta)) + (\text{rotate_half(vec)} \cdot \sin(\theta))
+     $$
+     其中：</p>
+<ul>
+<li><span class="arithmatex">\(\text{vec}\)</span> 是原始向量（如查询向量 <code>q</code> 或键向量 <code>k</code>）；</li>
+<li><span class="arithmatex">\(\cos(\theta)\)</span> 和 <span class="arithmatex">\(\sin(\theta)\)</span> 是根据位置计算出的余弦和正弦值；</li>
+<li><span class="arithmatex">\(\text{rotate\_half(vec)}\)</span> 是对向量的特殊旋转操作。</li>
+</ul>
+</li>
+<li>
+<p>这种设计的目的是让模型能够更好地捕捉相对位置信息，同时保持位置信息的连续性和可插值性。</p>
+</li>
+<li>
+<p><strong>为什么使用 <code>rotate_half</code> 而不是逐对旋转？</strong></p>
+</li>
+<li>在传统的旋转位置编码中，通常会对向量的每一对相邻维度进行旋转。例如，对于向量 <span class="arithmatex">\((x_1, x_2, x_3, x_4)\)</span>，会分别对 <span class="arithmatex">\((x_1, x_2)\)</span> 和 <span class="arithmatex">\((x_3, x_4)\)</span> 进行旋转。</li>
+<li>
+<p>然而，在实际实现中，为了提高效率，通常会选择将整个向量分成两半，然后对两半进行整体旋转。这种做法等价于逐对旋转，但计算更高效。</p>
+</li>
+<li>
+<p>这种方法的合理性在于：</p>
+<ul>
+<li>向量的维度是可交换的，不会影响向量的加法和乘法运算。</li>
+<li>将向量分成两半并旋转，从实现角度来看更高效，且与原始公式等价。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<ul>
+<li><strong><code>rotate_half(x)</code></strong>：将输入张量的最后一个维度分成两半，对后一半取反并调整顺序，实现一种特殊的旋转操作。</li>
+<li><strong><code>apply_rotary_pos_emb(q, k, cos, sin, position_ids)</code></strong>：对查询向量 <code>q</code> 和键向量 <code>k</code> 应用旋转位置编码，通过 <code>cos</code> 和 <code>sin</code> 描述位置信息，并结合 <code>rotate_half</code> 实现旋转效果。</li>
+<li><strong>为什么选择分半旋转？</strong>：虽然传统方法是对每对相邻维度进行旋转，但分半旋转在实现上更高效，且不影响最终效果，因为向量维度是可交换的。</li>
+</ul>
+<hr>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span>
+<span class="normal"><a href="#__codelineno-2-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1"></a>rotate_half(x) 函数的作用是对输入张量的最后一个维度分成两半，对后一半取反并调整顺序，实现一种特殊的旋转操作。
+<a id="__codelineno-2-2" name="__codelineno-2-2"></a>apply_rotary_pos_emb 函数则利用 cos 和 sin 描述位置信息，并结合 rotate_half 对查询向量 q 和键向量 k 应用旋转位置编码。
+<a id="__codelineno-2-3" name="__codelineno-2-3"></a>分半旋转的方法在实现上更高效，且与逐对旋转等价，因为向量维度是可交换的。
+</code></pre></div></td></tr></table></div>
+<h3 id="alibi-attention-with-linear-biases">ALiBi (Attention with Linear Biases)<a class="headerlink" href="#alibi-attention-with-linear-biases" title="Permanent link">¶</a></h3>
+<h4 id="_19">背景<a class="headerlink" href="#_19" title="Permanent link">¶</a></h4>
+<p>ALiBi是近一年多来又一个备受关注的位置编码方案，来自论文《Train Short, Test Long: Attention with Linear Biases Enables Input Length Extrapolation》(Press et al., 2022)。它不再显式地提供一个向量去与词向量相加或拼接，而是通过一种线性偏置(linear bias)的形式直接作用在自注意力的打分上。</p>
+<h4 id="_20">原理<a class="headerlink" href="#_20" title="Permanent link">¶</a></h4>
+<p>在自注意力中，常见的打分函数是：</p>
+<div class="arithmatex">\[
+\text{score}(Q, K) = \frac{QK^T}{\sqrt{d_k}}
+\]</div>
+<p>ALiBi在计算score时，加入一个与query和key的距离（或者说key的位置与query的位置之差）相关的线性项：</p>
+<div class="arithmatex">\[
+\text{score}(Q, K) += \alpha \times (\text{distance})
+\]</div>
+<p>其中 <span class="arithmatex">\(\alpha\)</span> 可以是可训练的常数或固定常数，<span class="arithmatex">\(\text{distance}\)</span> 表示当前Key相对于Query的相对位置。
+- 对距离更大的token，可以给注意力打分增加惩罚或不同程度的偏置。</p>
+<h4 id="_21">优点<a class="headerlink" href="#_21" title="Permanent link">¶</a></h4>
+<ul>
+<li>无需显式保存位置编码向量：节省了存储，也不需要像RoPE那样做旋转操作。</li>
+<li>良好的外推能力：在训练时只用较短序列，但是测试时可以处理更长序列，并能保持较好的性能。</li>
+<li>实现简洁：只需要在注意力打分时加一个基于距离的简单线性偏置即可。</li>
+</ul>
+<h4 id="_22">与其他位置编码的对比<a class="headerlink" href="#_22" title="Permanent link">¶</a></h4>
+<ul>
+<li>ALiBi相对于固定正余弦、可学习位置或RoPE的区别在于，它把位置信息内置到了注意力打分过程，不再额外显式生成位置编码向量。</li>
+<li>在一些长文本测试（zero-shot extrapolation）中，ALiBi有时优于经典的绝对位置编码和相对位置编码。</li>
+</ul>
+<h3 id="_23">各位置编码方法的对比与总结<a class="headerlink" href="#_23" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>实现方式</th>
+<th>是否可外推</th>
+<th>参数数量</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sinusoidal</td>
+<td>固定正余弦公式</td>
+<td>可以</td>
+<td>无额外参数</td>
+<td>原版Transformer中最经典的做法，易实现，可处理超长序列（插值方式）</td>
+</tr>
+<tr>
+<td>Learnable Positional</td>
+<td>训练一个可学习嵌入表</td>
+<td>不可以</td>
+<td>成比例增加</td>
+<td>灵活，易实现，但无法泛化到超出训练时长度的序列</td>
+</tr>
+<tr>
+<td>Relative Positional</td>
+<td>基于token之间距离的可学习向量</td>
+<td>视实现</td>
+<td>需要额外参数</td>
+<td>强调相对距离信息，在NLP任务尤其是语言模型中表现较好</td>
+</tr>
+<tr>
+<td>RoPE (旋转位置编码)</td>
+<td>对Q/K做旋转变换引入位置信息</td>
+<td>可以</td>
+<td>无额外参数</td>
+<td>大模型常用，可提升长序列处理能力，具有较好的连续外推能力</td>
+</tr>
+<tr>
+<td>ALiBi (线性偏置)</td>
+<td>在注意力打分时添加线性距离偏置</td>
+<td>可以</td>
+<td>少量可训练</td>
+<td>近期流行的新方法，拥有良好外推能力且实现简单，不需要显式位置向量</td>
+</tr>
+</tbody>
+</table>
+<p>选择哪种位置编码往往取决于：</p>
+<ul>
+<li>任务要求：是否需要更强的长序列处理能力？是否更依赖局部相对关系？</li>
+<li>模型规模：大模型通常更倾向于RoPE或ALiBi，以方便长序列处理。</li>
+<li>实现难度：Sinusoidal或可学习位置编码最简单，但不一定适合所有情况。</li>
+</ul>
+<h3 id="_24">考点解析<a class="headerlink" href="#_24" title="Permanent link">¶</a></h3>
+<ol>
+<li>
+<p>位置编码与词向量的加法/拼接方式有区别吗？</p>
+<p>a. 大多数实现直接选择相加，因为这样不会改变维度，也最简单。</p>
+<p>b. 少数情况下也会选择拼接，但需要把下游网络的维度调大，较麻烦。</p>
+</li>
+<li>
+<p>序列长度非常大时怎么办?</p>
+<p>a. 固定正余弦可以外推，但可能存在数值不稳定或分辨率不足的问题；</p>
+<p>b. 如果采用可学习embedding，超长长度会带来巨大参数开销。</p>
+<p>c. RoPE或ALiBi在大多数大模型中被证明效果更佳。</p>
+</li>
+<li>
+<p>为什么正弦和余弦有助于插值和外推?</p>
+<p>a. 正弦和余弦是周期函数，模型可以学习到它们的周期模式，并在未见过的位置上也能维持规律性。</p>
+</li>
+<li>
+<p>多头注意力下，每个头的位置信息是如何处理的?</p>
+<p>a. 位置编码一般与输入向量在词向量维度同一空间，因此对多头注意力并没有额外影响。多头注意力关注通道拆分后，位置编码已经注入到这些向量中。</p>
+</li>
+</ol>
+<h3 id="_25">总结<a class="headerlink" href="#_25" title="Permanent link">¶</a></h3>
+<ul>
+<li>
+<p>位置编码是Transformer模型中解决“自注意力不自带顺序信息”的关键模块，保证模型能够理解序列的位置信息。</p>
+</li>
+<li>
+<p>主流方法包括：</p>
+<ul>
+<li>固定正余弦位置编码 (经典、无额外参数、可外推)，</li>
+<li>可学习位置编码 (灵活但不易外推)，</li>
+<li>相对位置编码 (突出相对距离对注意力的影响)，</li>
+<li>RoPE (通过旋转引入位置)，</li>
+<li>ALiBi (在注意力打分上做线性偏置)。 </li>
+</ul>
+</li>
+</ul></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../word_embedding/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Word Embedding词嵌入">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Word Embedding词嵌入
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../attention/" class="md-footer__link md-footer__link--next" aria-label="Next: Attention注意力">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Attention注意力
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../../../../..", "features": ["announce.dismiss", "navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "search.share", "navigation.expand", "navigation.indexes", "content.tabs.link", "content.tooltips", "content.code.copy", "content.code.select", "content.action.edit", "content.action.view", "content.code.annotate"], "search": "../../../../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": {"\u003ctag\u003e": "\u003cidentifier\u003e"}, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+        <script src="https://kit.fontawesome.com/2b1d8a9758.js"></script>
+      
+        <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"></script>
+      
+        <script src="../../../../../../javascripts/extra.js"></script>
+      
+        <script src="../../../../../../javascripts/bannerSlider.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/gh/Wcowin/Wcowin.github.io@main/docs/javascripts/extra.js"></script>
+      
+        <script src="../../../../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://github.com/Wcowin/Wcowin.github.io/blob/main/docs/javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/gh/Wcowin/Wcowin.github.io@main/docs/javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/gitalk@latest/dist/gitalk.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+      
+        <script src="../../../../../../javascripts/backbound1.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mermaid@10.0.2/dist/add-html-label-6e56ed67.min.js"></script>
+      
+        <script src="https://res.zvo.cn/translate/translate.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/gh/Wcowin/Wcowin.github.io@main/docs/javascripts/view.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax @3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
